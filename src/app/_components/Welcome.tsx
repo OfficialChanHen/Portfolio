@@ -18,6 +18,7 @@ export default function Welcome({ setIsMain }: WelcomeProps) {
     const [isClickLocked, setIsClickLocked] = useState(false); // prevents spam click
     const tl = gsap.timeline();
 
+    // Welcome text faded in and out
     useGSAP(() => {
         const welcomeSplit = SplitText.create(".welcome", {
             type: "chars, words, lines",
@@ -58,9 +59,9 @@ export default function Welcome({ setIsMain }: WelcomeProps) {
         });
     }, { scope: containerRef })
     
+    // Enter text appears and floats
     useGSAP(() => {
         if(phase === "enter") {
-            
             const enterSplit = SplitText.create(".enter",{
                 type: "chars, words, lines",
                 mask: "lines"
@@ -76,24 +77,22 @@ export default function Welcome({ setIsMain }: WelcomeProps) {
                 },
                 onComplete: () => {
                     enterSplit.chars.forEach((char) => {
-                        const randomFloat = () => {
-                            gsap.to(char, {
+                        gsap.to(char, {
                             y: gsap.utils.random(-12, 12),
                             x: gsap.utils.random(-6, 6),
                             rotation: gsap.utils.random(-8, 8),
                             duration: gsap.utils.random(2, 4),
                             ease: "sine.inOut",
-                            onComplete: randomFloat, // recursively calls itself with new random values
-                            });
-                        };
-
-                        gsap.delayedCall(Math.random() * 1.5, randomFloat); // stagger the start
+                            repeat: -1,
+                            yoyo: true
+                        });
                     });
                 }
             });
         };
-    }, { dependencies: [phase], scope: containerRef })
+    }, { dependencies: [phase], scope: containerRef})
 
+    // Enter texts fades and transition into main screen
     const { contextSafe } = useGSAP({ scope: containerRef });
     const handleEnterClick = contextSafe(() => {
         if (!isClickLocked) {
