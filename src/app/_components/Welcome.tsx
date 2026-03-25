@@ -8,7 +8,11 @@ import SpinningCircle from "@/app/_components/SpinningCircle";
 
 gsap.registerPlugin(useGSAP, SplitText);
 
-export default function Welcome() {
+type WelcomeProps = {
+    setIsMain: React.Dispatch<React.SetStateAction<boolean>>
+};
+
+export default function Welcome({ setIsMain }: WelcomeProps) {
     const containerRef = useRef<HTMLDivElement>(null);
     const [phase, setPhase] = useState<"welcome" | "enter">("welcome");
     const [isClickLocked, setIsClickLocked] = useState(false); // prevents spam click
@@ -20,9 +24,19 @@ export default function Welcome() {
             mask: "lines",
         });
 
+        tl.from(".circle", {
+            opacity: 0,
+            duration: 2,
+            ease: "sine.out",
+            stagger: {
+                amount: 2,
+                from: "start"
+            }
+        })
+
         tl.from(welcomeSplit.chars, {
             opacity: 0,
-            duration: 3,
+            duration: 2,
             ease: "power2.out",
             stagger: {
                 amount: 2,
@@ -32,7 +46,7 @@ export default function Welcome() {
 
         tl.to(welcomeSplit.chars, {
             opacity: 0,
-            duration: 3,
+            duration: 2,
             ease: "power2.out",
             stagger: {
                 amount: 2,
@@ -54,7 +68,7 @@ export default function Welcome() {
 
             gsap.from(enterSplit.chars, {
                 opacity: 0,
-                duration: 3,
+                duration: 2,
                 ease: "power2.out",
                 stagger: {
                     amount: 2,
@@ -73,13 +87,10 @@ export default function Welcome() {
                             });
                         };
 
-                        gsap.delayedCall(Math.random() * 2, randomFloat); // stagger the start
+                        gsap.delayedCall(Math.random() * 1.5, randomFloat); // stagger the start
                     });
                 }
             });
-
-            return () => {
-            };
         };
     }, { dependencies: [phase], scope: containerRef })
 
@@ -103,8 +114,7 @@ export default function Welcome() {
                     from: "end" 
                 },
                 onComplete: () => {
-                    enterSplit.revert();
-                    // e.g. navigate to next page or show next screen here
+                    setIsMain(true);
                 },
             })
         }
@@ -113,21 +123,22 @@ export default function Welcome() {
     return(
         <div className="h-screen w-screen bg-background flex flex-col justify-center items-center font-mono italics overflow-hidden">
             <div className="relative flex flex-col" ref={containerRef}>
-                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 drop-shadow-xl/90 w-80 h-80 md:w-120 md:h-120 lg:w-160 lg:h-160">
-                    <SpinningCircle
-                        duration={20}
-                        color="var(--color-secondary)"
-                        strokeWidth={5}
-                    />
-                </div>
-
-
                 <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 drop-shadow-md/90 w-120 h-120 md:w-180 md:h-180 lg:w-220 lg:h-220">
                     <SpinningCircle
+                        className="circle"
                         duration={20}
                         color="var(--color-primary)"
                         strokeWidth={5}
                         initialRotation={180}
+                    />
+                </div>
+
+                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 drop-shadow-xl/90 w-80 h-80 md:w-120 md:h-120 lg:w-160 lg:h-160">
+                    <SpinningCircle
+                        className="circle"
+                        duration={20}
+                        color="var(--color-secondary)"
+                        strokeWidth={5}
                     />
                 </div>
 
