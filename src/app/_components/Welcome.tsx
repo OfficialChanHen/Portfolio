@@ -19,6 +19,7 @@ export default function Welcome({ setIsMain }: WelcomeProps) {
     const tl = gsap.timeline();
 
     // Welcome text faded in and out
+    const speed = 1.5;
     useGSAP(() => {
         const welcomeSplit = SplitText.create(".welcome", {
             type: "chars, words, lines",
@@ -27,30 +28,30 @@ export default function Welcome({ setIsMain }: WelcomeProps) {
 
         tl.from(".circle", {
             opacity: 0,
-            duration: 2,
+            duration: speed,
             ease: "sine.out",
             stagger: {
-                amount: 2,
+                amount: speed,
                 from: "start"
             }
         })
 
         tl.from(welcomeSplit.chars, {
             opacity: 0,
-            duration: 2,
+            duration: speed,
             ease: "power2.out",
             stagger: {
-                amount: 2,
+                amount: speed,
                 from: "start"
             }
         });
 
         tl.to(welcomeSplit.chars, {
             opacity: 0,
-            duration: 2,
+            duration: speed,
             ease: "power2.out",
             stagger: {
-                amount: 2,
+                amount: speed,
                 from: "end"
             },
             onComplete: () => {
@@ -69,10 +70,10 @@ export default function Welcome({ setIsMain }: WelcomeProps) {
 
             gsap.from(enterSplit.chars, {
                 opacity: 0,
-                duration: 2,
+                duration: speed,
                 ease: "power2.out",
                 stagger: {
-                    amount: 2,
+                    amount: speed,
                     from: "start"
                 },
                 onComplete: () => {
@@ -106,10 +107,10 @@ export default function Welcome({ setIsMain }: WelcomeProps) {
 
             tl.to(enterSplit.chars, {
                 opacity: 0,
-                duration: 2,
+                duration: speed,
                 ease: "power2.out",
                 stagger: { 
-                    amount: 2, 
+                    amount: speed, 
                     from: "end" 
                 },
                 
@@ -117,10 +118,10 @@ export default function Welcome({ setIsMain }: WelcomeProps) {
 
             tl.to(".circle", {
                 opacity: 0,
-                duration: 2,
+                duration: speed,
                 ease: "sine.out",
                 stagger: {
-                    amount: 2,
+                    amount: speed,
                     from: "end"
                 },
                 onComplete: () => {

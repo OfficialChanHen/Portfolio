@@ -40,17 +40,21 @@ function WarpLines() {
         return { positions, velocities}
     }, []);
 
-    const maxWarp = 0.005;    // can go beyond 1 if you want extra punch
-    const slowDownAfter = 3; // seconds of full warp
+    const maxWarp = 4;    // can go beyond 1 if you want extra punch
+    const slowDownAfter = 2; // seconds of full warp
     const warpFactor = useRef(0); // 0 = slow, 1 = full warp speed;
     const starRef = useRef<THREE.LineSegments>(null);
     const timeAtMax = useRef<number | null>(null); // when we first hit max
     const shouldRecycleLines = useRef(true);
+    const timer = new THREE.Timer();
 
-    useFrame((state) => {
-        const dt = state.clock.getDelta();
-        const t = state.clock.elapsedTime;
+    useFrame(() => {
+        console.log(warpFactor.current)
+        timer.update();                      // once per frame (timestamp optional)
+        const dt = timer.getDelta();         // seconds since last update()
+        const t = timer.getElapsed();        // total seconds
         // smooth ramp of warpFactor to 1
+
         // 1) RAMP UP TO MAX WARP
         if (warpFactor.current < maxWarp) {
             warpFactor.current = Math.min(maxWarp, warpFactor.current + dt * 1.5);
@@ -85,8 +89,8 @@ function WarpLines() {
         
         for (let i = 0; i < lineCount; i++) {
             // Accelerate
-            velAttr[2 * i] = Math.min(maxSpeed, velAttr[2 * i] * 1.01);
-            velAttr[2 * i + 1] = Math.min(maxSpeed, velAttr[2 * i + 1] * 1.009);
+            velAttr[2 * i] = Math.min(maxSpeed, velAttr[2 * i] * 1.0075);
+            velAttr[2 * i + 1] = Math.min(maxSpeed, velAttr[2 * i + 1] * 1.007);
 
             // Update positions of start and end points of lines
             posAttr[6 * i + 2] += velAttr[2 * i] * warpFactor.current;
@@ -98,7 +102,7 @@ function WarpLines() {
                 posAttr[6 * i + 2] = z;
                 posAttr[6 * i + 5] = z;
                 velAttr[2 * i] *= 0.9;
-                velAttr[2 * i + 1] *= 0.5;
+                velAttr[2 * i + 1] *= 0.7;
             }
         }
 

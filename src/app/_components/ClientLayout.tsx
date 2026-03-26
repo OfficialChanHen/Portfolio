@@ -8,7 +8,7 @@ export default function ClientLayout({
 }: {
     children: React.ReactNode;
 }) {
-    const [isMain, setIsMain] = useState(true);
+    const [isMain, setIsMain] = useState(false);
 
     return isMain ? <main>{children}</main>: <Welcome setIsMain={setIsMain}/>;
 }
