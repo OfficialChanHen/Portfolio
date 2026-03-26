@@ -40,14 +40,36 @@ function WarpLines() {
         return { positions, velocities}
     }, []);
 
+    const maxWarp = 0.005;    // can go beyond 1 if you want extra punch
+    const slowDownAfter = 3; // seconds of full warp
     const warpFactor = useRef(0); // 0 = slow, 1 = full warp speed;
     const starRef = useRef<THREE.LineSegments>(null);
+    const timeAtMax = useRef<number | null>(null); // when we first hit max
+    const shouldRecycleLines = useRef(true);
 
     useFrame((state) => {
         const dt = state.clock.getDelta();
-
+        const t = state.clock.elapsedTime;
         // smooth ramp of warpFactor to 1
-        warpFactor.current = Math.min(1, warpFactor.current + dt * 0.2);
+        // 1) RAMP UP TO MAX WARP
+        if (warpFactor.current < maxWarp) {
+            warpFactor.current = Math.min(maxWarp, warpFactor.current + dt * 1.5);
+        }
+
+        // 2) ONCE AT MAX, remember the time and start cooldown
+        if (warpFactor.current >= maxWarp && timeAtMax.current === null) {
+            timeAtMax.current = t;
+        }
+
+        // 3) SLOW DOWN AFTER `slowDownAfter` seconds at max
+        if (timeAtMax.current !== null && t > timeAtMax.current + slowDownAfter) {
+            const reduce = 0.000005;
+            warpFactor.current = Math.max(0, warpFactor.current - reduce); // don't go fully to 0
+
+            if (shouldRecycleLines.current) {
+                shouldRecycleLines.current = false;
+            };
+        }
 
         const geom = starRef.current?.geometry;
         if (!geom) return;
@@ -71,7 +93,7 @@ function WarpLines() {
             posAttr[6 * i + 5] += velAttr[2 * i + 1] * warpFactor.current;
 
             // When pass screen, set them at new starting spots
-            if(posAttr[6 * i + 5] > 200) {
+            if(shouldRecycleLines.current && posAttr[6 * i + 5] > 200) {
                 let z = Math.random() * 200 - 100;
                 posAttr[6 * i + 2] = z;
                 posAttr[6 * i + 5] = z;
