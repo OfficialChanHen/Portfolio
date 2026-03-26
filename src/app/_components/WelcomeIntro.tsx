@@ -4,11 +4,7 @@ import { useState } from 'react';
 import Welcome from '@/app/_components/Welcome';
 import Warp from '@/app/_components/Warp';
 
-type WelcomeintroProps = {
-    setToMain: React.Dispatch<React.SetStateAction<boolean>>
-};
-
-export default function WelcomeIntro({ setToMain }: WelcomeintroProps) {
+export default function WelcomeIntro() {
     const [toWarp, setToWarp] = useState<boolean>(false);
 
     return (
@@ -19,7 +15,7 @@ export default function WelcomeIntro({ setToMain }: WelcomeintroProps) {
                 </div>
                 :
                 <div className='h-screen w-screen bg-background'>
-                    <Warp setToMain={setToMain}/>
+                    <Warp/>
                 </div>
             }
         </>

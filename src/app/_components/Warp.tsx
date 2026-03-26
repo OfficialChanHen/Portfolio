@@ -1,19 +1,25 @@
 'use client';
 
 import { Canvas, useFrame } from '@react-three/fiber';
-import { useMemo, useRef } from 'react';
+import { useMemo, useRef, useEffect  } from 'react';
 import * as THREE from 'three';
+import { useRouter } from 'next/navigation';
 
-type WarpProps = {
-    setToMain: React.Dispatch<React.SetStateAction<boolean>>
-};
+export default function Warp() {
+    const router = useRouter();
+    const hasNavigated = useRef(false);  // NEW: Prevent repeats
+    const maxWarp = 4;    // can go beyond 1 if you want extra punch
+    const slowDownAfter = 2; // seconds of full warp
+    const warpFactor = useRef(0); // 0 = slow, 1 = full warp speed;
+    const starRef = useRef<THREE.LineSegments>(null);
+    const timeAtMax = useRef<number | null>(null); // when we first hit max
+    const shouldRecycleLines = useRef(true);
+    const timer = new THREE.Timer();
 
-export default function Warp({setToMain}: WarpProps) {
     function WarpLines() {
         const lineCount = 1000;
         const baseSpeed = 0.01;
         const maxSpeed = 500;
-        const exp = 0.1;
 
         const { positions, velocities } = useMemo(() => {
             const positions = new Float32Array(lineCount * 6);
@@ -44,14 +50,6 @@ export default function Warp({setToMain}: WarpProps) {
             return { positions, velocities}
         }, []);
 
-        const maxWarp = 4;    // can go beyond 1 if you want extra punch
-        const slowDownAfter = 2; // seconds of full warp
-        const warpFactor = useRef(0); // 0 = slow, 1 = full warp speed;
-        const starRef = useRef<THREE.LineSegments>(null);
-        const timeAtMax = useRef<number | null>(null); // when we first hit max
-        const shouldRecycleLines = useRef(true);
-        const timer = new THREE.Timer();
-
         useFrame(() => {
             timer.update();                      // once per frame (timestamp optional)
             const dt = timer.getDelta();         // seconds since last update()
@@ -75,10 +73,6 @@ export default function Warp({setToMain}: WarpProps) {
 
                 if (shouldRecycleLines.current) {
                     shouldRecycleLines.current = false;
-                }
-
-                if (t > timeAtMax.current + slowDownAfter + 1) {
-                    setToMain(true);
                 }
             }
 
@@ -116,6 +110,22 @@ export default function Warp({setToMain}: WarpProps) {
             positions.needsUpdate = true;
             velocities.needsUpdate = true;
         })
+
+        useEffect(() => {
+            const checkNavigate = () => {
+            const t = timer.getElapsed();
+            if (timeAtMax.current !== null && 
+                t > timeAtMax.current + slowDownAfter + 1 && 
+                !hasNavigated.current) {
+                hasNavigated.current = true;
+                router.push('/home');
+            }
+            };
+
+            // Poll every 100ms (efficient, not frame-rate)
+            const interval = setInterval(checkNavigate, 100);
+            return () => clearInterval(interval);
+        }, []);
 
         return (
             <lineSegments ref={starRef}>
