@@ -27,39 +27,49 @@ export default function Home() {
     }, []);
 
     useGSAP(() => {
-        gsap.to(".box", {
-            opacity: 0,
-            stagger: {
-                amount: 0.5,
-                from: "center",
-                grid: "auto",
-            }
-        })
+        if (mounted === true) {
+            gsap.to(".box", {
+                opacity: 0,
+                stagger: {
+                    amount: 0.5,
+                    from: "center",
+                    grid: "auto",
+                },
+                onComplete: () => {
+                    gsap.set(boxContainerRef.current, { display: "none" });
+                }
+            })
+        }
+        
 
     }, { scope: boxContainerRef, dependencies: [maxBoxes] })
 
     if (mounted === false) {
-        return <div className="h-screen w-screen bg-black animate-pulse" />;
+        return <div className="h-screen w-screen bg-background" />;
     }
 
     function BoxGrid() {
         return (
             <div 
-                className="h-screen w-screen bg-linear-to-b from-secondary to-highlight 
+                className="box-container absolute z-10 h-screen w-screen  
                             grid grid-cols-[repeat(auto-fill,minmax(100px,1fr))] 
                             grid-rows-[repeat(auto-fill,minmax(100px,1fr))] gap-0 overflow-hidden"
                 ref={boxContainerRef}
             >
-            {Array.from({ length: maxBoxes }).map((_, i) => (
-                <div key={i} className="box bg-background"/>
-            ))}
+                {Array.from({ length: maxBoxes }).map((_, i) => (
+                    <div key={i} className="box bg-background"/>
+                ))}
             </div>
         );
     };
 
 
     return(
-        <BoxGrid></BoxGrid>
-
+        <div className='relative h-screen w-screen flex flex-col justify-between items-center bg-linear-to-b from-secondary to-highlight'>
+            <BoxGrid></BoxGrid>
+            <div className='header w-screen h-[4rem] flex flex-row bg-background border-b-1 border-black drop-shadow-sm/50'></div>
+            <div className='footer w-screen h-[4rem] flex flex-row bg-background border-t-1 border-black drop-shadow-sm/50'></div>
+        </div>
+        
     );
 }
