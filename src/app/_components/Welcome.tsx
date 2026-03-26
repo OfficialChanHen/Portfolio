@@ -104,13 +104,24 @@ export default function Welcome({ setIsMain }: WelcomeProps) {
                 mask: "lines",
             });
 
-            gsap.to(enterSplit.chars, {
+            tl.to(enterSplit.chars, {
                 opacity: 0,
-                duration: 3,
+                duration: 2,
                 ease: "power2.out",
                 stagger: { 
                     amount: 2, 
                     from: "end" 
+                },
+                
+            })
+
+            tl.to(".circle", {
+                opacity: 0,
+                duration: 2,
+                ease: "sine.out",
+                stagger: {
+                    amount: 2,
+                    from: "end"
                 },
                 onComplete: () => {
                     setIsMain(true);
