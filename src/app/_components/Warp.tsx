@@ -21,7 +21,7 @@ export default function Warp({ isMobile }: WarpProps) {
     const timer = new THREE.Timer();
 
     function WarpLines() {
-        const lineCount = isMobile ? 100 : 1000;
+        const lineCount = isMobile ? 500 : 1000;
         const baseSpeed = isMobile ? 0.1 : 0.01;
         const maxSpeed = 500;
 
