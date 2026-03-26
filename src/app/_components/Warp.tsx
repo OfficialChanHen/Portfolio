@@ -22,7 +22,7 @@ export default function Warp({ isMobile }: WarpProps) {
 
     function WarpLines() {
         const lineCount = isMobile ? 500 : 1000;
-        const baseSpeed = isMobile ? 0.1 : 0.01;
+        const baseSpeed = isMobile ? 1 : 0.01;
         const maxSpeed = 500;
 
         const { positions, velocities } = useMemo(() => {
