@@ -9,10 +9,10 @@ import SpinningCircle from "@/app/_components/SpinningCircle";
 gsap.registerPlugin(useGSAP, SplitText);
 
 type WelcomeProps = {
-    setIsMain: React.Dispatch<React.SetStateAction<boolean>>
+    setToWarp: React.Dispatch<React.SetStateAction<boolean>>
 };
 
-export default function Welcome({ setIsMain }: WelcomeProps) {
+export default function Welcome({ setToWarp }: WelcomeProps) {
     const containerRef = useRef<HTMLDivElement>(null);
     const [phase, setPhase] = useState<"welcome" | "enter">("welcome");
     const [isClickLocked, setIsClickLocked] = useState(false); // prevents spam click
@@ -28,10 +28,10 @@ export default function Welcome({ setIsMain }: WelcomeProps) {
 
         tl.from(".circle", {
             opacity: 0,
-            duration: speed,
+            duration: speed - 0.5,
             ease: "sine.out",
             stagger: {
-                amount: speed,
+                amount: speed - 0.5,
                 from: "start"
             }
         })
@@ -76,19 +76,18 @@ export default function Welcome({ setIsMain }: WelcomeProps) {
                     amount: speed,
                     from: "start"
                 },
-                onComplete: () => {
-                    enterSplit.chars.forEach((char) => {
-                        gsap.to(char, {
-                            y: gsap.utils.random(-12, 12),
-                            x: gsap.utils.random(-6, 6),
-                            rotation: gsap.utils.random(-8, 8),
-                            duration: gsap.utils.random(2, 4),
-                            ease: "sine.inOut",
-                            repeat: -1,
-                            yoyo: true
-                        });
-                    });
-                }
+            });
+
+            enterSplit.chars.forEach((char) => {
+                gsap.to(char, {
+                    y: gsap.utils.random(-12, 12),
+                    x: gsap.utils.random(-6, 6),
+                    rotation: gsap.utils.random(-8, 8),
+                    duration: gsap.utils.random(2, 4),
+                    ease: "sine.inOut",
+                    repeat: -1,
+                    yoyo: true
+                });
             });
         };
     }, { dependencies: [phase], scope: containerRef})
@@ -118,14 +117,14 @@ export default function Welcome({ setIsMain }: WelcomeProps) {
 
             tl.to(".circle", {
                 opacity: 0,
-                duration: speed,
+                duration: speed - 0.5,
                 ease: "sine.out",
                 stagger: {
-                    amount: speed,
+                    amount: speed - 0.5,
                     from: "end"
                 },
                 onComplete: () => {
-                    setIsMain(true);
+                    setToWarp(true);
                 },
             })
         }

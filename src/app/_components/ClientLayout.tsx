@@ -1,14 +1,14 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import Welcome from '@/app/_components/Welcome';
+import WelcomeIntro from '@/app/_components/WelcomeIntro';
 
 export default function ClientLayout({
     children,
 }: {
     children: React.ReactNode;
 }) {
-    const [isMain, setIsMain] = useState(false);
+    const [toMain, setToMain] = useState<boolean>(false);
 
-    return isMain ? <main>{children}</main>: <Welcome setIsMain={setIsMain}/>;
+    return toMain === false ? <WelcomeIntro setToMain={setToMain}/> : <main>{children}</main> ;
 }
