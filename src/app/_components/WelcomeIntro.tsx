@@ -4,7 +4,11 @@ import { useState } from 'react';
 import Welcome from '@/app/_components/Welcome';
 import Warp from '@/app/_components/Warp';
 
-export default function WelcomeIntro() {
+type WelcomeIntroProps = {
+    isMobile: boolean;
+}
+
+export default function WelcomeIntro({ isMobile }: WelcomeIntroProps) {
     const [toWarp, setToWarp] = useState<boolean>(false);
 
     return (
@@ -15,7 +19,7 @@ export default function WelcomeIntro() {
                 </div>
                 :
                 <div className='h-screen w-screen bg-background'>
-                    <Warp/>
+                    <Warp isMobile={isMobile}/>
                 </div>
             }
         </>

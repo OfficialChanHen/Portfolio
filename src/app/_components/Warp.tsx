@@ -5,7 +5,11 @@ import { useMemo, useRef, useEffect  } from 'react';
 import * as THREE from 'three';
 import { useRouter } from 'next/navigation';
 
-export default function Warp() {
+type WarpProps = {
+    isMobile: boolean;
+}
+
+export default function Warp({ isMobile }: WarpProps) {
     const router = useRouter();
     const hasNavigated = useRef(false);  // NEW: Prevent repeats
     const maxWarp = 4;    // can go beyond 1 if you want extra punch
@@ -17,8 +21,8 @@ export default function Warp() {
     const timer = new THREE.Timer();
 
     function WarpLines() {
-        const lineCount = 1000;
-        const baseSpeed = 0.01;
+        const lineCount = isMobile ? 100 : 1000;
+        const baseSpeed = isMobile ? 0.05: 0.01;
         const maxSpeed = 500;
 
         const { positions, velocities } = useMemo(() => {
@@ -113,13 +117,13 @@ export default function Warp() {
 
         useEffect(() => {
             const checkNavigate = () => {
-            const t = timer.getElapsed();
-            if (timeAtMax.current !== null && 
-                t > timeAtMax.current + slowDownAfter + 1 && 
-                !hasNavigated.current) {
-                hasNavigated.current = true;
-                router.push('/home');
-            }
+                const t = timer.getElapsed();
+                if (timeAtMax.current !== null && 
+                    t > timeAtMax.current + slowDownAfter + 1 && 
+                    !hasNavigated.current) {
+                    hasNavigated.current = true;
+                    router.push('/home');
+                }
             };
 
             // Poll every 100ms (efficient, not frame-rate)
