@@ -3,7 +3,8 @@
 :root {
   --primary: #150322;
   --secondary: #210535;
-  --highlight: #7B337D;
+  --tertiary: #7B337D;
+  --highlight: #C874B2;
   --background: #09010F;
   --foreground: #FFFFFF;
 }
@@ -13,6 +14,7 @@
   --color-foreground: var(--foreground);
   --color-primary: var(--primary);
   --color-secondary: var(--secondary);
+  --color-tertiary: var(--tertiary);
   --color-highlight: var(--highlight);
   --font-sans: var(--font-geist-sans);
   --font-geist-mono: var(--font-geist-mono);

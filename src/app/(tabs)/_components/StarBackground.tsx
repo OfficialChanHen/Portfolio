@@ -115,12 +115,12 @@ function CameraRig() {
 export default function StarBackground() {
     return (
         <div
-            className="fixed inset-0 pointer-events-none z-0 bg-linear-to-b from-secondary to-highlight"
+            className="fixed inset-0 pointer-events-none z-0 bg-linear-to-b from-secondary to-tertiary"
         >
             <Canvas
+                className="w-full h-full"
                 camera={{ position: [0, 0, 5], fov: 75, near: 0.1, far: 1000 }}
                 gl={{ alpha: true, antialias: true }}
-                style={{width: "100%", height: "100%"}}
             >
                 <CameraRig />
                 <StarField />
