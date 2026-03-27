@@ -153,12 +153,12 @@ export default function Warp({ isMobile }: WarpProps) {
 
     return (
         <Canvas 
-        camera={{
-            fov: 60,
-            near: 1,
-            far: 500,
-            position: [0, 0, 200],
-        }}
+            camera={{
+                fov: 60,
+                near: 1,
+                far: 500,
+                position: [0, 0, 200],
+            }}
         >
             <WarpLines/>
         </Canvas>

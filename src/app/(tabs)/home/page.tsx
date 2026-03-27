@@ -3,6 +3,7 @@
 import { useEffect, useState, useRef } from 'react';
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
+import StarBackground from "@/app/(tabs)/home/_componentss/StarBackground";
 
 gsap.registerPlugin(useGSAP);
 
@@ -63,12 +64,13 @@ export default function Home() {
         );
     };
 
-
+    const barStyle = 'header w-screen h-[4rem] flex flex-row bg-background border-white/10 backdrop-blur-md opacity-30';
     return(
         <div className='relative h-screen w-screen flex flex-col justify-between items-center bg-linear-to-b from-secondary to-highlight'>
-            <BoxGrid></BoxGrid>
-            <div className='header w-screen h-[4rem] flex flex-row bg-background border-b-1 border-black drop-shadow-sm/50'></div>
-            <div className='footer w-screen h-[4rem] flex flex-row bg-background border-t-1 border-black drop-shadow-sm/50'></div>
+            <BoxGrid/>
+            <StarBackground/>
+            <div className={`header border-b-2 ${barStyle}`}></div>
+            <div className={`footer border-t-2 ${barStyle}`}></div>
         </div>
         
     );
