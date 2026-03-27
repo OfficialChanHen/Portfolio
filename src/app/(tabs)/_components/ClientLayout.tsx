@@ -3,6 +3,7 @@
 import Header from "@/app/(tabs)/_components/Header";
 import Footer from "@/app/(tabs)/_components/Footer";
 import BoxFade from "@/app/(tabs)/_components/BoxFade";
+import { useState } from 'react';
 
 export default function ClientTabsLayout({
     children,
@@ -10,14 +11,19 @@ export default function ClientTabsLayout({
     children: React.ReactNode;
 }>) {
 
-    const barStyle = 'w-full bg-background/30 border-white/10 backdrop-blur-lg';
+    const [boxReady, setBoxReady] = useState(false);
+    const barStyle = 'w-full bg-background/30 border-white/10 backdrop-blur-lg text-[0.75rem] md:text-[1rem]';
     
     return (
-        <div className="h-screen w-screen flex flex-col justify-between font-mono">
-            <BoxFade/>
-            <Header className={barStyle}/>
-            <main className="flex-1">{children}</main>
-            <Footer className={barStyle}/>
+        <div className="h-screen w-screen flex flex-col font-mono">
+            <BoxFade setBoxReady={setBoxReady}/>
+            {boxReady && (
+                <>
+                    <Header className={`sticky top-0 z-10 ${barStyle}`}/>
+                    <main className="flex-1">{children}</main>
+                    <Footer className={`sticky bottom-0 z-10 ${barStyle}`}/>
+                </>
+            )}
         </div>
     );
 }

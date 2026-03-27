@@ -1,10 +1,16 @@
+'use client';
+
 import { useEffect, useState, useRef } from 'react';
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 
 gsap.registerPlugin(useGSAP);
 
-export default function BoxFade() {
+type BoxFadeProps = {
+    setBoxReady: (value: boolean) => void;
+}
+
+export default function BoxFade({ setBoxReady }: BoxFadeProps) {
     const [mounted, setMounted] = useState(false);
     const [maxBoxes, setMaxBoxes] = useState<number>(0);
     const boxContainerRef = useRef<HTMLDivElement>(null);
@@ -20,6 +26,7 @@ export default function BoxFade() {
 
         updateSize(); // Initial
         window.addEventListener('resize', updateSize);
+        setBoxReady(true);
         
         return () => window.removeEventListener('resize', updateSize);
     }, []);

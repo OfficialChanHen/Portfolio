@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono, DM_Mono} from "next/font/google";
+import { headers } from "next/headers";
+import { MobileProvider } from "@/app/_providers/MobileProvider";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -25,18 +27,32 @@ export const metadata: Metadata = {
   description: "Chan Hen's Portfolio Page",
 };
 
-export default function RootLayout({
+async function isServerMobile() {
+  const headersList = await headers();
+  const userAgent = headersList.get("user-agent") || "";
+  const isMobile = /android.+mobile|ip(hone|[oa]d)/i.test(userAgent);
+
+  return isMobile;
+}
+
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+
+  const isMobile = await isServerMobile();
 
   return (
     <html
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} ${dmMono.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full flex flex-col">
+        <MobileProvider initialIsMobile={isMobile}>
+          {children}
+        </MobileProvider>
+      </body>
     </html>
   );
 }

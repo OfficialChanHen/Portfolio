@@ -4,12 +4,13 @@ import { Canvas, useFrame } from '@react-three/fiber';
 import { useMemo, useRef, useEffect  } from 'react';
 import * as THREE from 'three';
 import { useRouter } from 'next/navigation';
+import { useMobile } from '@/app/_providers/MobileProvider';
 
 type WarpProps = {
-    isMobile: boolean;
 }
 
-export default function Warp({ isMobile }: WarpProps) {
+export default function Warp() {
+    const isMobile = useMobile();
     const router = useRouter();
     const hasNavigated = useRef(false);  // NEW: Prevent repeats
     const maxWarp = 4;    // can go beyond 1 if you want extra punch

@@ -5,10 +5,9 @@ import Welcome from '@/app/_components/Welcome';
 import Warp from '@/app/_components/Warp';
 
 type WelcomeIntroProps = {
-    isMobile: boolean;
 }
 
-export default function WelcomeIntro({ isMobile }: WelcomeIntroProps) {
+export default function WelcomeIntro() {
     const [toWarp, setToWarp] = useState<boolean>(false);
 
     return (
@@ -19,7 +18,7 @@ export default function WelcomeIntro({ isMobile }: WelcomeIntroProps) {
                 </div>
                 :
                 <div className='h-screen w-screen bg-background'>
-                    <Warp isMobile={isMobile}/>
+                    <Warp/>
                 </div>
             }
         </>
