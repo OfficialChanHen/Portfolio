@@ -19,9 +19,9 @@ export default function ClientTabsLayout({
             <BoxFade setBoxReady={setBoxReady}/>
             {boxReady && (
                 <>
-                    <Header className={`sticky top-0 z-10 ${barStyle}`}/>
-                    <main className="flex-1">{children}</main>
-                    <Footer className={`sticky bottom-0 z-10 ${barStyle}`}/>
+                    <Header className={`fixed top-0 left-0 z-10 ${barStyle}`}/>
+                    <main className="flex-1 py-16">{children}</main>
+                    <Footer className={`fixed bottom-0 left-0 z-10 ${barStyle}`}/>
                 </>
             )}
         </div>
