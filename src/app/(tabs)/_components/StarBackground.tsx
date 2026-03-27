@@ -8,7 +8,7 @@ function StarField() {
     const { positions } = useMemo(() => {
     const positions = new Float32Array(10000 * 3);
     for (let i = 0; i < 10000; i++) {
-        positions[i * 3]     = (Math.random() - 0.5) * 2000;
+        positions[i * 3] = (Math.random() - 0.5) * 2000;
         positions[i * 3 + 1] = (Math.random() - 0.5) * 2000;
         positions[i * 3 + 2] = (Math.random() - 0.5) * 2000;
     }
@@ -29,7 +29,7 @@ function StarField() {
             args={[positions, 3]}
         />
         </bufferGeometry>
-        <pointsMaterial color={0xffffff} size={0.7} transparent />
+        <pointsMaterial color={0xffffff} size={0.8} transparent />
     </points>
     );
 }
@@ -54,7 +54,7 @@ function Nebula({
     const positions = useMemo(() => {
         const arr = new Float32Array(count * 3);
         for (let i = 0; i < count; i++) {
-            arr[i * 3]     = (Math.random() - 0.5) * spread;
+            arr[i * 3] = (Math.random() - 0.5) * spread;
             arr[i * 3 + 1] = (Math.random() - 0.5) * spread;
             arr[i * 3 + 2] = (Math.random() - 0.5) * spread;
         }
@@ -115,7 +115,7 @@ function CameraRig() {
 export default function StarBackground() {
     return (
         <div
-            className="fixed inset-0 pointer-events-none z-0 bg-linear-to-b from-secondary to-tertiary"
+            className="fixed inset-0 pointer-events-none z-5 bg-linear-to-b from-secondary to-tertiary"
         >
             <Canvas
                 className="w-full h-full"
