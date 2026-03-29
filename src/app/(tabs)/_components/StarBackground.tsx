@@ -112,7 +112,11 @@ function CameraRig() {
     return null;
 }
 
-export default function StarBackground() {
+export default function StarBackground({
+    children,
+}: Readonly<{
+    children: React.ReactNode;
+}>) {
     return (
         <div
             className="fixed inset-0 pointer-events-none z-5 bg-linear-to-b from-secondary to-tertiary"

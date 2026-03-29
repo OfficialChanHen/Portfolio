@@ -4,6 +4,7 @@ import Header from "@/app/(tabs)/_components/Header";
 import Footer from "@/app/(tabs)/_components/Footer";
 import BoxFade from "@/app/(tabs)/_components/BoxFade";
 import { useState } from 'react';
+import StarBackground from "./StarBackground";
 
 export default function ClientTabsLayout({
     children,
@@ -20,7 +21,9 @@ export default function ClientTabsLayout({
             {boxReady && (
                 <>
                     <Header className={`fixed top-0 left-0 z-10 ${barStyle}`}/>
-                    <main className="h-full w-full">{children}</main>
+                    <StarBackground>
+                        <main className="h-full w-full">{children}</main>
+                    </StarBackground>
                     <Footer className={`fixed bottom-0 left-0 z-10 ${barStyle}`}/>
                 </>
             )}
