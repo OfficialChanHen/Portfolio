@@ -21,9 +21,7 @@ export default function ClientTabsLayout({
             {boxReady && (
                 <>
                     <Header className={`fixed top-0 left-0 z-10 ${barStyle}`}/>
-                    <StarBackground>
-                        <main className="h-full w-full">{children}</main>
-                    </StarBackground>
+                    <main className="h-full w-full">{children}</main>
                     <Footer className={`fixed bottom-0 left-0 z-10 ${barStyle}`}/>
                 </>
             )}

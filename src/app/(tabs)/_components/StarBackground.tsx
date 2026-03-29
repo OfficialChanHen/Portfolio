@@ -1,6 +1,10 @@
+'use client';
+
 import { useRef, useMemo, useEffect } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import * as THREE from "three";
+import { usePathname } from "next/navigation";
+import Planet from "@/app/(tabs)/_components/Planet";
 
 function StarField() {
     const ref = useRef<THREE.Points>(null);
@@ -112,14 +116,12 @@ function CameraRig() {
     return null;
 }
 
-export default function StarBackground({
-    children,
-}: Readonly<{
-    children: React.ReactNode;
-}>) {
+export default function StarBackground() {
+    const pathName = usePathname();
+
     return (
         <div
-            className="fixed inset-0 pointer-events-none z-5 bg-linear-to-b from-secondary to-tertiary"
+            className="fixed inset-0 min-h-screen min-w-screen flex flex-col pointer-events-none -z-10 bg-linear-to-b from-secondary to-tertiary"
         >
             <Canvas
                 className="w-full h-full"
@@ -128,6 +130,7 @@ export default function StarBackground({
             >
                 <CameraRig />
                 <StarField />
+                {pathName === '/home' && <Planet color1="#210535" color2="#C874B2"/>}
                 {/**
                 <Nebula
                     count={1000}
