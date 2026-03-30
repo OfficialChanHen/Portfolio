@@ -154,7 +154,6 @@ export default function StarBackground() {
                             ringColor="#7B337D"
                         />
                     </> 
-                    
                 }
                 {/**
                 <Nebula
