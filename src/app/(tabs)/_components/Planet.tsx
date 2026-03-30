@@ -1,18 +1,42 @@
 'use client'
 
-import { useFrame } from "@react-three/fiber";
-import { cp } from "fs";
+import { useFrame, useThree } from "@react-three/fiber";
 import { useRef, useMemo } from "react";
 import * as THREE from "three";
 
 type SphereProps = {
-    color1: string;
-    color2: string;
+    sphereColor1: string;
+    sphereColor2: string;
+    spherePosition?: {x: number, y: number, z: number};
+    ringColor: string;
+    ringPosition?: {x: number, y: number, z: number};
 }
 
-export default function Planet({ color1, color2 }: SphereProps) {
-    const colorVec1 = new THREE.Color(color1);
-    const colorVec2 = new THREE.Color(color2);
+export default function Planet({ 
+    sphereColor1, 
+    sphereColor2,
+    spherePosition = {x: 0, y: 0, z: 0},
+    ringColor,
+    ringPosition = spherePosition,
+}: SphereProps) {
+    const colorVec1 = new THREE.Color(sphereColor1);
+    const colorVec2 = new THREE.Color(sphereColor2);
+
+    const { viewport, size } = useThree();
+    const scaleX = viewport.width / 10;
+    const scaleY = viewport.height / 15
+    const scaleZ = viewport.distance / 5;
+    spherePosition = {
+        x: spherePosition.x * scaleX,
+        y: spherePosition.y * scaleY,
+        z: spherePosition.z * scaleZ
+    }
+
+    ringPosition = {
+        x: ringPosition.x * scaleX,
+        y: ringPosition.y * scaleY,
+        z: ringPosition.z * scaleZ
+    }
 
     const material = useMemo(() => new THREE.ShaderMaterial({
         uniforms: {
@@ -70,13 +94,13 @@ export default function Planet({ color1, color2 }: SphereProps) {
     return (
         <>
             <ambientLight intensity={1} />
-            <mesh material={material} ref={planetRef}>
+            <mesh material={material} ref={planetRef} position={[spherePosition.x, spherePosition.y, spherePosition.z]}>
                 <sphereGeometry args={[1, 64, 64]}/>
             </mesh>
 
-            <mesh ref={ringRef} rotation={[Math.PI / 2.3, 0, 0]}>
-                <torusGeometry args={[1.7, 0.03, 16, 100]}/>
-                <meshStandardMaterial color={"#7B337D"} opacity={0.6} transparent={true}/>
+            <mesh ref={ringRef} rotation={[Math.PI / 2.3, 0, 0]} position={[ringPosition.x, ringPosition.y, ringPosition.z]}>
+                <torusGeometry args={[1.5, 0.03, 16, 100]}/>
+                <meshStandardMaterial color={ringColor} opacity={0.6} transparent={true}/>
             </mesh>
         </>
     )

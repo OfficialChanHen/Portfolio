@@ -130,7 +130,32 @@ export default function StarBackground() {
             >
                 <CameraRig />
                 <StarField />
-                {pathName === '/home' && <Planet color1="#210535" color2="#C874B2"/>}
+                {
+                    pathName === '/home' &&
+                    <>  
+                        <Planet 
+                            sphereColor1="#A98307" 
+                            sphereColor2="#f0d785"
+                            spherePosition={{x: -10, y: 20, z: -20}} 
+                            ringColor="#7B337D"
+                        />
+                        
+                        <Planet 
+                            sphereColor1="#210535" 
+                            sphereColor2="#063971"
+                            spherePosition={{x: 15, y: 5, z: -30}} 
+                            ringColor="#7B337D"
+                        />
+                        
+                        <Planet 
+                            sphereColor1="#2abe14" 
+                            sphereColor2="#35682D"
+                            spherePosition={{x: -2, y: -8, z: -10}}  
+                            ringColor="#7B337D"
+                        />
+                    </> 
+                    
+                }
                 {/**
                 <Nebula
                     count={1000}
