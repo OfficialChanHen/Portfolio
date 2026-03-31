@@ -13,15 +13,15 @@ export default function ClientTabsLayout({
 }>) {
 
     const [boxReady, setBoxReady] = useState(false);
-    const barStyle = 'w-full bg-background/30 border-white/10 backdrop-blur-xs text-[0.75rem] md:text-[1rem]';
+    const barStyle = 'w-full z-100 bg-background/30 border-white/10 backdrop-blur-xs text-[0.75rem] md:text-[1rem]';
     
     return (
-        <div className="h-screen w-screen z-0 overflow-x-hidden flex flex-col font-mono bg-background/30 ">
+        <div className="h-screen w-screen z-0 flex flex-col font-mono bg-background/30 ">
             <BoxFade setBoxReady={setBoxReady}/>
             {boxReady && (
                 <>
-                    <Header className={`fixed top-0 left-0 z-10 ${barStyle}`}/>
-                    <main className="h-full w-full flex-1">{children}</main>
+                    <Header className={`${barStyle}`}/>
+                    <main className="overflow-x-hidden h-full w-full  flex-1">{children}</main>
                     <Footer className={`${barStyle}`}/>
                 </>
             )}
