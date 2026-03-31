@@ -13,25 +13,42 @@ export default function Introduction() {
     const titles = ["Software Engineer", "Web Developer", "Creative Technologist", "Volleyball Enthusiast", "Horror Connoisseur"];
     const currentIndex = useRef(0);
     const titleRef = useRef<HTMLSpanElement>(null);
+    const textContainer = useRef<HTMLDivElement>(null);
     const tl = gsap.timeline();
 
     useGSAP(() => {
-        if (!titleRef.current) return;
+        if (!titleRef.current || !textContainer.current) return;
+
+        gsap.fromTo(".rocket",
+            { x: 0, y: 0, opacity: 0 },
+            {
+                x: 0,
+                y: textContainer.current.offsetHeight,
+                duration: 1.5,
+                ease: "power2.inOut",
+                delay: 1,
+                keyframes: {
+                    opacity: [0, 1, 1, 0],  // invisible → visible → visible → invisible
+                    easeEach: "none"
+                }
+            }
+        );
 
         tl.from(".intro-text", {
-            x: -50,
-            y: 50,
+            x: 0,
+            y: -20,
             opacity: 0,
             duration: 0.75,
             ease: "power2.in",
             stagger: {
                 from: "start",
-                amount: 0.5
-            }
+                amount: 0.75
+            },
+            delay: 1,
         });
 
         tl.from(".headshot-container", {
-            x: 50,
+            x: 0,
             y: 50,
             opacity: 0,
             duration: 0.75,
@@ -76,7 +93,7 @@ export default function Introduction() {
             });
         };
 
-        const interval = setInterval(cycle, 2500);
+        const interval = setInterval(cycle, 3000);
         return () => clearInterval(interval);
     }, { scope: introContainer });
 
@@ -84,10 +101,12 @@ export default function Introduction() {
         <div ref={introContainer} className="max-w-[1000px] w-full flex flex-col md:flex-row justify-center md:justify-between items-center gap-10 text-center md:text-left">
 
             {/* Introduction Text */}
-            <div className="relative flex flex-col justify-center gap-2">
-                <div className='absolute top-0 left-[48%] z-20 rotate-135 md:left-[25%] border border-white'>
+            <div ref={textContainer} className="relative flex flex-col justify-center gap-2">
+                {/* Rocket */}
+                <div className='rocket absolute top-0 left-[48%] md:-left-8 z-20 rotate-135'>
                     <Rocket size={20}/>
                 </div>
+
                 <div className="intro-text w-fit mx-auto md:mx-0 flex flex-row justify-center md:justify-start items-center gap-2 px-3 py-2 text-[0.75rem] md:text-[1rem] bg-highlight/20 backdrop-blur-xs text-highlight border border-highlight rounded-full">
                     <Sparkles size={20}/>
                     <span>Welcome To My Space</span>

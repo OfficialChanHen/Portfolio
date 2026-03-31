@@ -55,7 +55,7 @@ export default function BoxFade({ setBoxReady }: BoxFadeProps) {
 
     return (
         <div 
-            className="box-container absolute z-20 h-screen w-screen  
+            className="box-container absolute z-200 h-screen w-screen  
                         grid grid-cols-[repeat(auto-fill,minmax(100px,1fr))] 
                         grid-rows-[repeat(auto-fill,minmax(100px,1fr))] gap-0 overflow-hidden"
             ref={boxContainerRef}
