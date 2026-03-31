@@ -16,7 +16,7 @@ export default function ClientTabsLayout({
     const barStyle = 'w-full bg-background/30 border-white/10 backdrop-blur-xs text-[0.75rem] md:text-[1rem]';
     
     return (
-        <div className="h-screen w-screen z-0 flex flex-col font-mono bg-background/30 ">
+        <div className="h-screen w-screen z-0 overflow-x-hidden flex flex-col font-mono bg-background/30 ">
             <BoxFade setBoxReady={setBoxReady}/>
             {boxReady && (
                 <>
