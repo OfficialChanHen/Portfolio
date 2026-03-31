@@ -10,9 +10,9 @@ export default function Footer({ className }: FooterProps) {
     const isMobile = useMobile();
 
     return(
-        <div className={`footer border-t-2 p-5 ${className}`}>
+        <div className={`${className} footer border-t-2 p-5`}>
             <div className="flex justify-center">
-                <div className="inline-flex flex-col justify-center items-center gap-2 text-[0.65rem] md:text-[0.75rem]">
+                <div className="inline-flex flex-col justify-center items-center gap-2 text-[0.70rem] md:text-[0.80rem]">
                     <span className="w-full text-left">
                         {`"Looking at the stars always makes me dream,`}
                         {isMobile && <br/>}

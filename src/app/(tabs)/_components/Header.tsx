@@ -2,15 +2,13 @@
 
 import { useState } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
-import { Menu, X } from 'lucide-react';
+import { Menu, X, CodeXml } from 'lucide-react';
 
 type HeaderProps = {
     className?: string;
 }
 
 export default function Header({ className }: HeaderProps) {
-    type pageNavs = "home"|"about"|"projects"|"contact";
-    const [currPage, setCurrentPage] = useState<pageNavs>("home");
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
     const router = useRouter();
     const pathname = usePathname();
@@ -27,7 +25,6 @@ export default function Header({ className }: HeaderProps) {
     };
 
     function handleOnClick(path: string, label: string) {
-        setCurrentPage(label.toLowerCase() as pageNavs);
         setMobileMenuOpen(false);
         router.push(path);
     }
@@ -42,12 +39,16 @@ export default function Header({ className }: HeaderProps) {
     const selectedStyle = "text-highlight after:absolute after:bottom-[-1px] after:left-0 after:h-[2px] after:w-full after:bg-highlight";
         
     return(
-        <div className={`header sticky top-0 z-10 border-b-2 ${className}`}>
-            <div className="flex flex-row justify-between items-center">
-                <span className="p-5">Chan Hen</span>
+        <div className={`${className} header sticky top-0 z-10 flex flex-col justify-center items-center border-b-2`}>
+            <div className="max-w-[1080px] w-full md:h-full flex flex-row justify-between items-center px-10">
+                <div className='flex flex-row justify-center items-center py-3 gap-2'>
+                    <CodeXml className='text-highlight'/>
+                    <span className="text-[1.5rem]">Chan Hen</span>
+                </div>
+                
 
                 {/* desktop tabs */}
-                <div className="hidden md:flex h-full flex-row justify-center items-center px-5 gap-4">
+                <div className="hidden md:flex h-full flex-row justify-center items-center gap-4">
                     {navLinks.map(({ path, label }) => (
                         <div
                             key={path}
@@ -62,15 +63,15 @@ export default function Header({ className }: HeaderProps) {
                 {/* mobile hamburger */}
                 <button
                     onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                    className="md:hidden text-white p-5"
+                    className="md:hidden text-white py-5"
                 >
                     {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
                 </button>
             </div>
 
             {/* mobile dropdown */}
-            <div className={`md:hidden bg-background/30 border-t border-white/10 backdrop-blur-sm transition-all duration-300 ease-in-out ${mobileMenuOpen ? "max-h-64 opacity-100" : "max-h-0 opacity-0"}`}>
-                <div className="px-4 py-4 space-y-3">
+            <div className={`w-full md:hidden bg-background/30 border-t border-white/10 backdrop-blur-sm transition-all duration-300 ease-in-out ${mobileMenuOpen ? "max-h-64 opacity-100" : "max-h-0 opacity-0 pointer-events-none"}`}>
+                <div className="px-10 py-5 space-y-3">
                     {navLinks.map(({ path, label }) => (
                         <div
                             key={path}

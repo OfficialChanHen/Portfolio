@@ -137,7 +137,7 @@ export default function StarBackground() {
                             sphereColor1="#A98307" 
                             sphereColor2="#f0d785"
                             spherePosition={{x: -10, y: 20, z: -20}} 
-                            ringColor="#7B337D"
+                            ringColor="#534104"
                         />
                         
                         <Planet 
@@ -151,7 +151,7 @@ export default function StarBackground() {
                             sphereColor1="#2abe14" 
                             sphereColor2="#35682D"
                             spherePosition={{x: -2, y: -8, z: -10}}  
-                            ringColor="#7B337D"
+                            ringColor="#0d3f05"
                         />
                     </> 
                 }
