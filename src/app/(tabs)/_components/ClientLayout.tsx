@@ -3,20 +3,32 @@
 import Header from "@/app/(tabs)/_components/Header";
 import Footer from "@/app/(tabs)/_components/Footer";
 import BoxFade from "@/app/(tabs)/_components/BoxFade";
-import { useState } from 'react';
-import StarBackground from "./StarBackground";
+import { useState, useEffect } from 'react';
+import { usePathname } from 'next/navigation';
+import gsap from "gsap";
+import { useGSAP } from "@gsap/react";
+
+gsap.registerPlugin(useGSAP);
 
 export default function ClientTabsLayout({
     children,
 }: Readonly<{
     children: React.ReactNode;
 }>) {
+    const pathname = usePathname();
+
+    useGSAP(() => {
+        gsap.fromTo("main", 
+            { opacity: 0 }, 
+            { opacity: 1, duration: 0.4, ease: "power1.out" }
+        );
+    }, { dependencies: [pathname] });
 
     const [boxReady, setBoxReady] = useState(false);
     const barStyle = 'w-full z-100 bg-background/30 border-white/10 backdrop-blur-xs text-[0.75rem] md:text-[1rem]';
     
     return (
-        <div className="min-h-screen w-screen z-0 flex flex-col font-mono bg-background/30 ">
+        <div className="min-h-screen max-w-screen z-0 flex flex-col font-mono bg-background/30 ">
             <BoxFade setBoxReady={setBoxReady}/>
             {boxReady && (
                 <>

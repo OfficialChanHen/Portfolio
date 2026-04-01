@@ -39,16 +39,16 @@ export default function Header({ className }: HeaderProps) {
     const selectedStyle = "text-highlight after:absolute after:bottom-[-1px] after:left-0 after:h-[2px] after:w-full after:bg-highlight";
         
     return(
-        <div className={`${className} header sticky top-0 flex flex-col justify-center items-center border-b-2`}>
-            <div className="max-w-[1080px] w-full md:h-full flex flex-row justify-between items-center px-10">
-                <div className='flex flex-row justify-center items-center py-3 gap-2'>
+        <div className={`${className} header sticky top-0 min-h-16 flex flex-col justify-center items-center border-b-2`}>
+            <div className="max-w-[1080px] w-full h-16 flex flex-row justify-between items-stretch px-10">
+                <div className='flex flex-row justify-center items-center gap-2'>
                     <CodeXml className='text-highlight'/>
                     <span className="text-[1.5rem]">Chan Hen</span>
                 </div>
                 
 
                 {/* desktop tabs */}
-                <div className="hidden md:flex h-full flex-row justify-center items-center gap-4">
+                <div className="hidden md:flex h-full flex-row justify-center items-stretch gap-4">
                     {navLinks.map(({ path, label }) => (
                         <div
                             key={path}

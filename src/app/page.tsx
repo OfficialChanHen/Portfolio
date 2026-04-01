@@ -1,6 +1,6 @@
 import WelcomeIntro from "@/app/_components/WelcomeIntro";
 
-export default async function WelcomePage() {
+export default function WelcomePage() {
     return(
         <WelcomeIntro/>
     )
