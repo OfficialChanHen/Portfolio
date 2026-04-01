@@ -124,12 +124,24 @@ export default function Introduction() {
                         Software Engineer
                     </span>
                 </div>
-                <span className="intro-text text-[0.75rem] md:text-[1rem] text-white/50">Crafting digital experiences across the universe</span>
+                <span className="intro-text text-[0.75rem] md:text-[1rem] text-white/50">
+                    Crafting digital experiences across the universe
+                </span>
+
+                {/* Intro Buttons */}
+                <div className='intro-text flex flex-row justify-start items-center gap-10'>
+                    <button className='bg-primary/40 hover:bg-tertiary/40 backdrop-blur-xs border border-primary rounded-md p-3 cursor-pointer duration-500 hover:scale-110 transition-all'>
+                        View Projects
+                    </button>
+                    <button className='bg-highlight/40 backdrop-blur-xs text-white border border-primary rounded-md p-3 cursor-pointer'>
+                        Connect with me!
+                    </button>
+                </div>
             </div>
             
             {/* Image */}
-            <div className='headshot-container overflow-hidden p-10'>
-                <div className="relative z-10 w-[clamp(200px,30vw,400px)] aspect-[1/1] w-1/2 p-2 border-t border-b border-highlight/80 rounded-full">
+            <div className='headshot-container p-10'>
+                <div className="relative z-10 w-[clamp(210px,30vw,410px)] aspect-[1/1] p-2 border-t border-b border-highlight/80 rounded-full">
                     <div className="headshot absolute z-20 top-[50%] left-[0%] -translate-x-1/2 -translate-y-1/2 bg-highlight/20 backdrop-blur-xs border border-highlight text-highlight rounded-full p-2">
                         <FileBracesCorner size={20} />
                     </div>
