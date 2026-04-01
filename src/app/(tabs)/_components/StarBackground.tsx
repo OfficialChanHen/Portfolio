@@ -130,30 +130,36 @@ export default function StarBackground() {
             >
                 <CameraRig />
                 <StarField />
-                {
-                    pathName === '/home' &&
+                {pathName === '/home' &&
                     <>  
-                        <Planet 
-                            sphereColor1="#A98307" 
-                            sphereColor2="#f0d785"
-                            spherePosition={{x: -10, y: 20, z: -20}} 
-                            ringColor="#534104"
-                        />
-                        
-                        <Planet 
-                            sphereColor1="#210535" 
-                            sphereColor2="#063971"
-                            spherePosition={{x: 15, y: 5, z: -30}} 
-                            ringColor="#7B337D"
-                        />
-                        
-                        <Planet 
-                            sphereColor1="#2abe14" 
-                            sphereColor2="#35682D"
-                            spherePosition={{x: -2, y: -8, z: -10}}  
-                            ringColor="#0d3f05"
-                        />
+                        <Planet sphereColor1="#A98307" sphereColor2="#f0d785" spherePosition={{x: -10, y: 20, z: -20}} ringColor="#534104"/>
+                        <Planet sphereColor1="#210535" sphereColor2="#063971" spherePosition={{x: 15, y: 5, z: -30}} ringColor="#7B337D"/>
+                        <Planet sphereColor1="#2abe14" sphereColor2="#35682D" spherePosition={{x: -2, y: -8, z: -10}} ringColor="#0d3f05"/>
                     </> 
+                }
+
+                {pathName === '/about' &&
+                    <>
+                        <Planet sphereColor1="#8B0000" sphereColor2="#FF6B6B" spherePosition={{x: 12, y: 15, z: -25}} ringColor="#4a0000"/>
+                        <Planet sphereColor1="#003366" sphereColor2="#0099CC" spherePosition={{x: -18, y: -5, z: -35}} ringColor="#001a33"/>
+                        <Planet sphereColor1="#4B0082" sphereColor2="#9B59B6" spherePosition={{x: 5, y: -12, z: -15}} ringColor="#2d0050"/>
+                    </>
+                }
+
+                {pathName === '/projects' &&
+                    <>
+                        <Planet sphereColor1="#FF6600" sphereColor2="#FFD700" spherePosition={{x: -15, y: 10, z: -20}} ringColor="#7a3100"/>
+                        <Planet sphereColor1="#006666" sphereColor2="#00CCCC" spherePosition={{x: 18, y: -8, z: -30}} ringColor="#003333"/>
+                        <Planet sphereColor1="#1a1a2e" sphereColor2="#16213e" spherePosition={{x: -5, y: -15, z: -12}} ringColor="#0f3460"/>
+                    </>
+                }
+
+                {pathName === '/contact' &&
+                    <>
+                        <Planet sphereColor1="#2C3E50" sphereColor2="#4CA1AF" spherePosition={{x: 10, y: 18, z: -22}} ringColor="#1a252f"/>
+                        <Planet sphereColor1="#6D3B47" sphereColor2="#F7A278" spherePosition={{x: -20, y: 3, z: -32}} ringColor="#3d1f28"/>
+                        <Planet sphereColor1="#1B4332" sphereColor2="#40916C" spherePosition={{x: 3, y: -10, z: -18}} ringColor="#0d2318"/>
+                    </>
                 }
                 {/**
                 <Nebula
