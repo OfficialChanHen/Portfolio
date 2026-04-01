@@ -5,6 +5,7 @@ import Introduction from "@/app/(tabs)/_components/Introduction";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { useRef, useState } from "react";
+import SpotifyNowPlaying from "@/app/_components/NowPlaying";
 
 gsap.registerPlugin(useGSAP);
 
@@ -41,6 +42,8 @@ export default function Home() {
         <div className="relative w-full flex flex-col justify-start md:justify-center items-center p-10 gap-5">
             <StarBackground/>
             <Introduction setIntroDone={setIntroDone}/>
+
+            <SpotifyNowPlaying/>
 
             {/* Call to action */}
             <div className='job-container opacity-0 -translate-y-5 w-full max-w-[1080px] px-5 py-3 bg-highlight/20 backdrop-blur-xs text-white/80 text-[0.75rem] md:text-[1rem] border border-highlight rounded-md '>

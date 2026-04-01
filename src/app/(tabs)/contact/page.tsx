@@ -25,7 +25,11 @@ export default function contacts() {
                 <span className="text-[1rem] md:text-[1.5rem] text-white/80">Have a project in mind or just want to chat? I'd love to hear from you!</span>
             </div>
 
-            {/* Job Call */}
+            {/* Email */}
+            <div className="flex flex-col xl:flex-row">
+                <div className="flex">test</div>
+                <div>test2</div>
+            </div>
         </div>
     );
 }
