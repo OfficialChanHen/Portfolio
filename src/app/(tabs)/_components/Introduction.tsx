@@ -7,12 +7,18 @@ import { AiOutlinePython } from "react-icons/ai";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { TextPlugin } from "gsap/TextPlugin";
-import { useRef } from "react";
+import { useRef, Dispatch, SetStateAction } from "react";
 import Link from 'next/link';
 
 gsap.registerPlugin(useGSAP, TextPlugin);
 
-export default function Introduction() {
+type IntroductionProps = {
+    setIntroDone: Dispatch<SetStateAction<boolean>>
+}
+
+export default function Introduction({ 
+    setIntroDone 
+}: IntroductionProps ) {
     const introContainer = useRef<HTMLDivElement>(null);
     const titles = ["Software Engineer", "Web Developer", "Creative Technologist", "Volleyball Enthusiast", "Horror Connoisseur"];
     const currentIndex = useRef(0);
@@ -81,7 +87,10 @@ export default function Introduction() {
                 opacity: 0,
                 duration: 0.75,
                 ease: "power2.in",
-                onComplete: () => startRotation()
+                onComplete: () => {
+                    startRotation()
+                    setIntroDone(true);
+                }
             })
 
             sessionStorage.setItem('introAnimated', 'true');
@@ -89,9 +98,8 @@ export default function Introduction() {
             gsap.set(".intro-text", { opacity: 1, y: 0 });
             gsap.set(".headshot-container", { opacity: 1, y: 0 });
             startRotation();
-        }   
-
-            
+            setIntroDone(true);
+        }
     
         const cycle = () => {
             const next = titles[(currentIndex.current + 1) % titles.length];

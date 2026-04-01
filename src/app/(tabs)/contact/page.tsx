@@ -22,7 +22,7 @@ export default function contacts() {
                     </span>
                 </div>
 
-                <span className="text-[1rem] md:text-[1.5rem] text-white/80">Have a porject in mind or just want to chat? I'd Love to hear from you!</span>
+                <span className="text-[1rem] md:text-[1.5rem] text-white/80">Have a project in mind or just want to chat? I'd love to hear from you!</span>
             </div>
 
             {/* Job Call */}
