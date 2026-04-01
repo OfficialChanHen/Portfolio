@@ -32,7 +32,7 @@ export default function ClientTabsLayout({
             {boxReady && (
                 <>
                     <Header className={`${barStyle}`}/>
-                    <main className="overflow-hidden h-full w-full flex-1">{children}</main>
+                    <main className="overflow-hidden h-full w-full flex-1 flex flex-col justify-center items-center">{children}</main>
                     <Footer className={`${barStyle}`}/>
                 </>
             )}

@@ -130,7 +130,7 @@ export default function Introduction({
     }, { scope: introContainer });
 
     return(
-        <div ref={introContainer} className="max-w-[1000px] w-full flex flex-col md:flex-row justify-center md:justify-between items-center gap-10 text-center md:text-left">
+        <div ref={introContainer} className="max-w-[1080px] w-full flex flex-col md:flex-row justify-center md:justify-between items-center gap-10 text-center md:text-left">
             
             {/* Introduction Container */}
             <div ref={textContainer} className="relative flex flex-col justify-center gap-2">
