@@ -195,7 +195,10 @@ export default function Contacts() {
                         <div className="relative w-[clamp(24px,2vw,30px)] h-[clamp(24px,2vw,30px)] flex flex-row justify-center items-center p-5 bg-tertiary/60 border border-tertiary group-hover:border-highlight rounded-md text-tertiary group-hover:text-highlight transition-colors ease-in-out duration-300">
                             <Mail className="absolute top-[50%] left-[50%] -translate-x-1/2 -translate-y-1/2 w-[clamp(18px,2vw,20px)] h-[clamp(18px,2vw,20px)]"/>
                         </div>
-                        <span className="group-hover:text-white transition-colors ease-in-out duration-300">Email (officialchanhen@gmail.com)</span>
+                        <div className="flex flex-col justify-center items-start">
+                            <span className="group-hover:text-white transition-colors ease-in-out duration-300">Email</span>
+                            <span className="text-white/60 group-hover:text-white transition-colors ease-in-out duration-300">Chan Hen</span>
+                        </div>
                     </div>
 
                     <a 
@@ -205,7 +208,10 @@ export default function Contacts() {
                         <div className="relative w-[clamp(24px,2vw,30px)] h-[clamp(24px,2vw,30px)] flex flex-row justify-center items-center p-5 bg-tertiary/60 border border-tertiary group-hover:border-highlight rounded-md text-tertiary group-hover:text-highlight transition-colors ease-in-out duration-300">
                             <FiGithub className="absolute top-[50%] left-[50%] -translate-x-1/2 -translate-y-1/2 w-[clamp(18px,2vw,20px)] h-[clamp(18px,2vw,20px)]"/>
                         </div>
-                        <span className="group-hover:text-white transition-colors ease-in-out duration-300">Github (OfficialChanHen)</span>
+                        <div className="flex flex-col justify-center items-start">
+                            <span className="group-hover:text-white transition-colors ease-in-out duration-300">Github</span>
+                            <span className="text-white/60 group-hover:text-white transition-colors ease-in-out duration-300">OfficialChanHen</span>
+                        </div>
                     </a>
 
                     <a 
@@ -215,7 +221,11 @@ export default function Contacts() {
                         <div className="relative w-[clamp(24px,2vw,30px)] h-[clamp(24px,2vw,30px)] flex flex-row justify-center items-center p-5 bg-tertiary/60 border border-tertiary group-hover:border-highlight rounded-md text-tertiary group-hover:text-highlight transition-colors ease-in-out duration-300">
                             <FiLinkedin className="absolute top-[50%] left-[50%] -translate-x-1/2 -translate-y-1/2 w-[clamp(18px,2vw,20px)] h-[clamp(18px,2vw,20px)]"/>
                         </div>
-                        <span className="group-hover:text-white transition-colors ease-in-out duration-300">Linkedin (Chan Hen)</span>
+                        <div className="flex flex-col justify-center items-start">
+                            <span className="group-hover:text-white transition-colors ease-in-out duration-300">Linkedin</span>
+                            <span className="text-white/60 group-hover:text-white transition-colors ease-in-out duration-300">Chan Hen</span>
+                        </div>
+                        
                     </a>
                 </div>
             </div>
