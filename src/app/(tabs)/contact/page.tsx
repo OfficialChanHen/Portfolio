@@ -1,7 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { MailCheck, MailX } from 'lucide-react';
+import { MailCheck, MailX, Mail, Send } from 'lucide-react';
+import { FiGithub, FiLinkedin } from "react-icons/fi"
 
 type FormData = {
   name: string;
@@ -83,10 +84,10 @@ export default function Contacts() {
             </div>
 
             
-            <div className="flex flex-col w-full xl:flex-row">
+            <div className="flex flex-col w-full lg:flex-row gap-5">
                 {/* Email Form */}
                 <form 
-                    className="flex flex-col justify-start items-start w-full md:max-w-[50%] gap-5 bg-primary/60 border border-primary p-10 rounded-md"
+                    className="flex flex-col justify-start items-start w-full gap-5 bg-primary/60 border border-primary p-10 rounded-md"
                     onSubmit={handleSubmit}
                 >
                     <span className="text-[1rem] md:text-[1.25rem]">Send A Message</span>
@@ -158,7 +159,16 @@ export default function Contacts() {
                         disabled={status === "sending"}
                         className="w-full px-5 py-3 text-[0.75rem] md:text-[1rem] rounded-md cursor-pointer text-white tracking-widest transition-[box-shadow] duration-500 bg-highlight backdrop-blur-xs border-none shadow-[0_0_25px] shadow-highlight hover:shadow-[0_0_5px,_0_0_25px,_0_0_50px,_0_0_100px] hover:shadow-highlight active:scale-[0.97] disabled:opacity-50"
                     >
-                        {status === "sending" ? "Sending..." : "Send Message"}
+                        
+                        {status === "sending" ? 
+                            "Sending..." 
+                            : 
+                            <div className="flex flex-row justify-center items-center gap-2">
+                                <Send className="w-[clamp(18px,2vw,20px)] h-[clamp(18px,2vw,20px)]"/>
+                                <span>Send Message</span>
+                            </div>  
+                            
+                        }
                     </button>
 
                     {status === "success" && (
@@ -170,13 +180,44 @@ export default function Contacts() {
 
                     {status === "error" && (
                         <div className="inline-flex flex-row justify-start items-center gap-2 text-red-400 text-[0.75rem] md:text-[1rem]"> 
-                            <MailCheck className="w-[clamp(18px,2vw,20px)] h-[clamp(18px,2vw,20px)]"/>
+                            <MailX className="w-[clamp(18px,2vw,20px)] h-[clamp(18px,2vw,20px)]"/>
                             <span className="">Something went wrong. Please try again.</span>
                         </div>
                     )}
 
                 </form>
-                <div>test3</div>
+                <div className="self-start flex flex-col justify-start items-start gap-5 w-full bg-primary/60 border border-primary p-10 rounded-md">
+                    <span className="text-[1rem] md:text-[1.25rem]">Connect On Socials</span>
+
+                    <div 
+                        className="group flex flex-row items-center gap-4 text-[0.75rem] md:text-[1rem] text-white/80"
+                    >
+                        <div className="relative w-[clamp(24px,2vw,30px)] h-[clamp(24px,2vw,30px)] flex flex-row justify-center items-center p-5 bg-tertiary/60 border border-tertiary group-hover:border-highlight rounded-md text-tertiary group-hover:text-highlight transition-colors ease-in-out duration-300">
+                            <Mail className="absolute top-[50%] left-[50%] -translate-x-1/2 -translate-y-1/2 w-[clamp(18px,2vw,20px)] h-[clamp(18px,2vw,20px)]"/>
+                        </div>
+                        <span className="group-hover:text-white transition-colors ease-in-out duration-300">Email (officialchanhen@gmail.com)</span>
+                    </div>
+
+                    <a 
+                        className="group flex flex-row items-center gap-4 text-[0.75rem] md:text-[1rem] text-white/80"
+                        href="https://github.com/OfficialChanHen" target="_blank" rel="noopener noreferrer"
+                    >
+                        <div className="relative w-[clamp(24px,2vw,30px)] h-[clamp(24px,2vw,30px)] flex flex-row justify-center items-center p-5 bg-tertiary/60 border border-tertiary group-hover:border-highlight rounded-md text-tertiary group-hover:text-highlight transition-colors ease-in-out duration-300">
+                            <FiGithub className="absolute top-[50%] left-[50%] -translate-x-1/2 -translate-y-1/2 w-[clamp(18px,2vw,20px)] h-[clamp(18px,2vw,20px)]"/>
+                        </div>
+                        <span className="group-hover:text-white transition-colors ease-in-out duration-300">Github (OfficialChanHen)</span>
+                    </a>
+
+                    <a 
+                        className="group flex flex-row items-center gap-4 text-[0.75rem] md:text-[1rem] text-white/80"
+                        href="https://www.linkedin.com/in/chan-hen-13727b233/" target="_blank" rel="noopener noreferrer"
+                    >
+                        <div className="relative w-[clamp(24px,2vw,30px)] h-[clamp(24px,2vw,30px)] flex flex-row justify-center items-center p-5 bg-tertiary/60 border border-tertiary group-hover:border-highlight rounded-md text-tertiary group-hover:text-highlight transition-colors ease-in-out duration-300">
+                            <FiLinkedin className="absolute top-[50%] left-[50%] -translate-x-1/2 -translate-y-1/2 w-[clamp(18px,2vw,20px)] h-[clamp(18px,2vw,20px)]"/>
+                        </div>
+                        <span className="group-hover:text-white transition-colors ease-in-out duration-300">Linkedin (Chan Hen)</span>
+                    </a>
+                </div>
             </div>
         </div>
     );
