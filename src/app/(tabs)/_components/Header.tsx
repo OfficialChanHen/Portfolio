@@ -24,7 +24,7 @@ export default function Header({ className }: HeaderProps) {
         return pathname.startsWith(path);
     };
 
-    function handleOnClick(path: string, label: string) {
+    function handleOnClick(path: string) {
         setMobileMenuOpen(false);
         router.push(path);
     }
@@ -39,8 +39,8 @@ export default function Header({ className }: HeaderProps) {
     const selectedStyle = "text-highlight after:absolute after:bottom-[-1px] after:left-0 after:h-[2px] after:w-full after:bg-highlight";
         
     return(
-        <div className={`${className} header sticky top-0 min-h-16 flex flex-col justify-center items-center px-10 border-b-2`}>
-            <div className="max-w-[1080px] w-full h-16 flex flex-row justify-between items-stretch">
+        <div className={`${className} header sticky top-0 min-h-16 flex flex-col justify-center items-center border-b-2`}>
+            <div className="max-w-[1160px] w-full h-16 flex flex-row justify-between items-stretch px-10">
                 <div className='flex flex-row justify-center items-center gap-2'>
                     <CodeXml className='text-highlight'/>
                     <span className="text-[1.5rem]">Chan Hen</span>
@@ -53,7 +53,7 @@ export default function Header({ className }: HeaderProps) {
                         <div
                             key={path}
                             className={`${tabStyles} ${isActive(path) && selectedStyle}`}
-                            onClick={() => handleOnClick(path, label)}
+                            onClick={() => handleOnClick(path)}
                         >
                             {label}
                         </div>
@@ -75,7 +75,7 @@ export default function Header({ className }: HeaderProps) {
                     {navLinks.map(({ path, label }) => (
                         <div
                             key={path}
-                            onClick={() => handleOnClick(path, label)}
+                            onClick={() => handleOnClick(path)}
                             className={`block px-4 py-2 rounded-lg transition-colors hover:cursor-pointer ${
                                 isActive(path)
                                     ? "bg-highlight/20 text-highlight"

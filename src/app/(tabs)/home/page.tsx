@@ -4,13 +4,12 @@ import StarBackground from "@/app/(tabs)/_components/StarBackground";
 import Introduction from "@/app/(tabs)/_components/Introduction";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
-import { useRef, useState } from "react";
+import { useState } from "react";
 import SpotifyNowPlaying from "@/app/_components/NowPlaying";
 
 gsap.registerPlugin(useGSAP);
 
 export default function Home() {
-    const jobContainer = useRef<HTMLDivElement>(null);
     const [introDone, setIntroDone] = useState(false);
 
     useGSAP(() => {
