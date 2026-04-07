@@ -5,8 +5,9 @@ import { MailCheck, MailX, Mail, Send, Rocket } from 'lucide-react';
 import { FiGithub, FiLinkedin } from "react-icons/fi";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 
-gsap.registerPlugin(useGSAP);
+gsap.registerPlugin(useGSAP, ScrollTrigger);
 
 type FormData = {
     name: string;
@@ -20,8 +21,9 @@ import { MessagesSquare } from 'lucide-react';
 
 export default function Contacts() {
     const textContainer = useRef<HTMLDivElement>(null);
-    const tl = gsap.timeline();
-
+    const formContainer = useRef<HTMLFormElement>(null);
+    const socialContainer = useRef<HTMLDivElement>(null);
+    /*
     useGSAP(() => {
         if (!textContainer.current) return;
 
@@ -101,6 +103,118 @@ export default function Contacts() {
         });
 
     }, {});
+    */
+    useGSAP(() => {
+  if (!textContainer.current || !formContainer.current || !socialContainer.current) return;
+
+  const formTl = gsap.timeline({ paused: true });
+  formTl
+    .from(formContainer.current, {
+      y: -20,
+      opacity: 0,
+      duration: 0.75,
+      ease: "power2.inOut",
+    })
+    .fromTo(
+      ".form",
+      {
+        x: -30,
+        y: 30,
+        opacity: 0,
+      },
+      {
+        x: 0,
+        y: 0,
+        opacity: 1,
+        duration: 0.75,
+        ease: "power2.inOut",
+        stagger: {
+          from: "start",
+          amount: 0.75,
+        },
+      },
+      "-=0.25"
+    );
+
+  const socialTl = gsap.timeline({ paused: true });
+  socialTl
+    .from(socialContainer.current, {
+      y: -20,
+      opacity: 0,
+      duration: 0.75,
+      ease: "power2.inOut",
+    })
+    .from(
+      ".social",
+      {
+        x: -30,
+        y: 30,
+        opacity: 0,
+        duration: 0.75,
+        ease: "power2.inOut",
+        stagger: {
+          from: "start",
+          amount: 0.75,
+        },
+      },
+      "-=0.25"
+    );
+
+  const playOrTrigger = (el: HTMLElement, tl: gsap.core.Timeline) => {
+    if (ScrollTrigger.isInViewport(el, 0.2)) {
+      tl.play();
+    } else {
+      ScrollTrigger.create({
+        trigger: el,
+        start: "top 80%",
+        once: true,
+        onEnter: () => tl.play(),
+      });
+    }
+  };
+
+  const introTl = gsap.timeline({
+    onComplete: () => {
+      playOrTrigger(formContainer.current as HTMLElement, formTl);
+      playOrTrigger(socialContainer.current as HTMLElement, socialTl);
+    },
+  });
+
+  introTl
+    .fromTo(
+      ".rocket",
+      {
+        x: 0,
+        y: -30,
+        opacity: 0,
+      },
+      {
+        x: 0,
+        y: textContainer.current.offsetHeight,
+        duration: 1.25,
+        ease: "power2.inOut",
+        keyframes: {
+          opacity: [0, 1, 1, 0],
+          easeEach: "none",
+        },
+      },
+      0
+    )
+    .from(
+      ".intro-text",
+      {
+        y: -20,
+        opacity: 0,
+        duration: 0.65,
+        ease: "power2.inOut",
+        stagger: {
+          from: "start",
+          amount: 0.65,
+        },
+      },
+      0
+    );
+});
 
 
     const [formData, setFormData] = useState<FormData>({
@@ -180,6 +294,7 @@ export default function Contacts() {
             <div className="flex flex-col w-full lg:flex-row gap-5">
                 {/* Email Form */}
                 <form 
+                    ref={formContainer}
                     className="form-container flex flex-col justify-start items-start w-full gap-5 bg-primary/60 border border-primary p-10 rounded-md"
                     onSubmit={handleSubmit}
                 >
@@ -282,7 +397,7 @@ export default function Contacts() {
                 </form>
 
                 {/* Social Connections */}
-                <div className="social-container self-start flex flex-col justify-start items-start gap-5 w-full bg-primary/60 border border-primary p-10 rounded-md">
+                <div ref={socialContainer} className="social-container self-start flex flex-col justify-start items-start gap-5 w-full bg-primary/60 border border-primary p-10 rounded-md">
                     <span className="social text-[1rem] md:text-[1.25rem]">Connect On Socials</span>
 
                     <div 
