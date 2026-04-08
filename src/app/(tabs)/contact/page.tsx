@@ -6,6 +6,9 @@ import { FiGithub, FiLinkedin } from "react-icons/fi";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import StarBackground from "@/app/(tabs)/_components/StarBackground";
+import { MessagesSquare } from 'lucide-react';
+import playOrTrigger from "@/app/utils/playOrTrigger";
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
 
@@ -16,206 +19,104 @@ type FormData = {
     message: string;
 };
 
-import StarBackground from "@/app/(tabs)/_components/StarBackground";
-import { MessagesSquare } from 'lucide-react';
-
 export default function Contacts() {
     const textContainer = useRef<HTMLDivElement>(null);
     const formContainer = useRef<HTMLFormElement>(null);
     const socialContainer = useRef<HTMLDivElement>(null);
-    /*
+    
     useGSAP(() => {
-        if (!textContainer.current) return;
+        if (!textContainer.current || !formContainer.current || !socialContainer.current) return;
 
-        gsap.fromTo(".rocket",
-            { x: 0, y: -30, opacity: 0 },
-            {
-                x: 0,
-                y: textContainer.current.offsetHeight,
-                duration: 1.25,
-                ease: "power2.inOut",
-                delay: 1,
-                keyframes: {
-                    opacity: [0, 1, 1, 0],  // invisible → visible → visible → invisible
-                    easeEach: "none"
-                }
-            }
-        );
-
-        tl.from(".intro-text", {
-            x: 0,
-            y: -20,
-            opacity: 0,
-            duration: 0.65,
-            ease: "power2.inOut",
-            stagger: {
-                from: "start",
-                amount: 0.65
-            },
-            delay: 1.05,
-        });
-
-        tl.from(".form-container", {
-            x: 0,
-            y: -20,
-            opacity: 0,
-            duration: 0.75,
-            ease: "power2.inOut"
-        });
-
-        tl.fromTo(".form",
-            {
-                x: -30,
-                y: 30,
+        const formTl = gsap.timeline({ paused: true });
+        formTl
+            .from(formContainer.current, {
+                y: -20,
                 opacity: 0,
-            },
-            {
-                x: 0,
-                y: 0,
-                opacity: 1,
                 duration: 0.75,
                 ease: "power2.inOut",
-                stagger: {
-                    from: "start",
-                    amount: 0.75
-                }
-            }
-        );
+            })
+            .fromTo(".form",
+                {
+                    x: -30,
+                    y: 30,
+                    opacity: 0,
+                },
+                {
+                    x: 0,
+                    y: 0,
+                    opacity: 1,
+                    duration: 0.75,
+                    ease: "power2.inOut",
+                    stagger: {
+                        from: "start",
+                        amount: 0.75,
+                    },
+                },
+                "-=0.25"
+            );
 
-        tl.from(".social-container", {
-            x: 0,
-            y: -20,
-            opacity: 0,
-            duration: 0.75,
-            ease: "power2.inOut"
+        const socialTl = gsap.timeline({ paused: true });
+        socialTl
+            .from(socialContainer.current, {
+                y: -20,
+                opacity: 0,
+                duration: 0.75,
+                ease: "power2.inOut",
+            })
+            .from(".social", {
+                    x: -30,
+                    y: 30,
+                    opacity: 0,
+                    duration: 0.75,
+                    ease: "power2.inOut",
+                    stagger: {
+                        from: "start",
+                        amount: 0.75,
+                    },
+                },
+                "-=0.25"
+            );
+
+        const introTl = gsap.timeline({
+            onComplete: () => {
+                playOrTrigger(formContainer.current as HTMLElement, formTl);
+                playOrTrigger(socialContainer.current as HTMLElement, socialTl);
+            },
         });
 
-        tl.from(".social", {
-            x: -30,
-            y: 30,
-            opacity: 0,
-            duration: 0.75,
-            ease: "power2.inOut",
-            stagger: {
-                from: "start",
-                amount: 0.75
-            }
-        });
-
-    }, {});
-    */
-    useGSAP(() => {
-  if (!textContainer.current || !formContainer.current || !socialContainer.current) return;
-
-  const formTl = gsap.timeline({ paused: true });
-  formTl
-    .from(formContainer.current, {
-      y: -20,
-      opacity: 0,
-      duration: 0.75,
-      ease: "power2.inOut",
-    })
-    .fromTo(
-      ".form",
-      {
-        x: -30,
-        y: 30,
-        opacity: 0,
-      },
-      {
-        x: 0,
-        y: 0,
-        opacity: 1,
-        duration: 0.75,
-        ease: "power2.inOut",
-        stagger: {
-          from: "start",
-          amount: 0.75,
-        },
-      },
-      "-=0.25"
-    );
-
-  const socialTl = gsap.timeline({ paused: true });
-  socialTl
-    .from(socialContainer.current, {
-      y: -20,
-      opacity: 0,
-      duration: 0.75,
-      ease: "power2.inOut",
-    })
-    .from(
-      ".social",
-      {
-        x: -30,
-        y: 30,
-        opacity: 0,
-        duration: 0.75,
-        ease: "power2.inOut",
-        stagger: {
-          from: "start",
-          amount: 0.75,
-        },
-      },
-      "-=0.25"
-    );
-
-  const playOrTrigger = (el: HTMLElement, tl: gsap.core.Timeline) => {
-    if (ScrollTrigger.isInViewport(el, 0.2)) {
-      tl.play();
-    } else {
-      ScrollTrigger.create({
-        trigger: el,
-        start: "top 80%",
-        once: true,
-        onEnter: () => tl.play(),
-      });
-    }
-  };
-
-  const introTl = gsap.timeline({
-    onComplete: () => {
-      playOrTrigger(formContainer.current as HTMLElement, formTl);
-      playOrTrigger(socialContainer.current as HTMLElement, socialTl);
-    },
-  });
-
-  introTl
-    .fromTo(
-      ".rocket",
-      {
-        x: 0,
-        y: -30,
-        opacity: 0,
-      },
-      {
-        x: 0,
-        y: textContainer.current.offsetHeight,
-        duration: 1.25,
-        ease: "power2.inOut",
-        keyframes: {
-          opacity: [0, 1, 1, 0],
-          easeEach: "none",
-        },
-      },
-      0
-    )
-    .from(
-      ".intro-text",
-      {
-        y: -20,
-        opacity: 0,
-        duration: 0.65,
-        ease: "power2.inOut",
-        stagger: {
-          from: "start",
-          amount: 0.65,
-        },
-      },
-      0
-    );
-});
-
+        introTl
+            .fromTo(".rocket", {
+                    x: 0,
+                    y: -30,
+                    opacity: 0,
+                },
+                {
+                    x: 0,
+                    y: textContainer.current.offsetHeight,
+                    duration: 1.6,
+                    ease: "power2.inOut",
+                    delay: 1,
+                    keyframes: {
+                        opacity: [0, 1, 1, 0],
+                        easeEach: "none",
+                    },
+                },
+                0
+            )
+            .from(".intro-text", {
+                    y: -20,
+                    opacity: 0,
+                    duration: 0.65,
+                    ease: "power2.inOut",
+                    stagger: {
+                        from: "start",
+                        amount: 0.65,
+                    },
+                    delay: 1.25,
+                },
+                0
+            );
+    });
 
     const [formData, setFormData] = useState<FormData>({
         name: "",
@@ -295,7 +196,7 @@ export default function Contacts() {
                 {/* Email Form */}
                 <form 
                     ref={formContainer}
-                    className="form-container flex flex-col justify-start items-start w-full gap-5 bg-primary/60 border border-primary p-10 rounded-md"
+                    className="flex flex-col justify-start items-start w-full gap-5 bg-primary/60 border border-primary p-10 rounded-md"
                     onSubmit={handleSubmit}
                 >
                     <span className="form text-[1rem] md:text-[1.25rem]">Send A Message</span>
@@ -397,7 +298,7 @@ export default function Contacts() {
                 </form>
 
                 {/* Social Connections */}
-                <div ref={socialContainer} className="social-container self-start flex flex-col justify-start items-start gap-5 w-full bg-primary/60 border border-primary p-10 rounded-md">
+                <div ref={socialContainer} className="self-start flex flex-col justify-start items-start gap-5 w-full bg-primary/60 border border-primary p-10 rounded-md">
                     <span className="social text-[1rem] md:text-[1.25rem]">Connect On Socials</span>
 
                     <div 

@@ -7,10 +7,12 @@ import { AiOutlinePython } from "react-icons/ai";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { TextPlugin } from "gsap/TextPlugin";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useRef, Dispatch, SetStateAction } from "react";
 import Link from 'next/link';
+import playOrTrigger from '@/app/utils/playOrTrigger';
 
-gsap.registerPlugin(useGSAP, TextPlugin);
+gsap.registerPlugin(useGSAP, TextPlugin, ScrollTrigger);
 
 type IntroductionProps = {
     setIntroDone: Dispatch<SetStateAction<boolean>>
@@ -24,16 +26,36 @@ export default function Introduction({
     const currentIndex = useRef(0);
     const titleRef = useRef<HTMLSpanElement>(null);
     const textContainer = useRef<HTMLDivElement>(null);
-    const tl = gsap.timeline();
+    const headshotContainer = useRef<HTMLDivElement>(null);
 
-    const navEntry = performance.getEntriesByType("navigation")[0] as PerformanceNavigationTiming;
-    const isRefresh = navEntry?.type === "reload";
+    function cycle() {
+        if (!titleRef.current) return;
+        const next = titles[(currentIndex.current + 1) % titles.length];
 
-    const wasNavigated = sessionStorage.getItem('introAnimated');
-    const hasAnimated = wasNavigated && !isRefresh;
+        // Slide current out upward
+        gsap.to(titleRef.current, {
+            y: -30,
+            opacity: 0,
+            duration: 0.4,
+            ease: "power2.in",
+            onComplete: () => {
+                // Swap text and reset position below
+                if (!titleRef.current) return;
+                currentIndex.current = (currentIndex.current + 1) % titles.length;
+                titleRef.current.textContent = next;
+
+                gsap.fromTo(titleRef.current,
+                    { y: 30, opacity: 0 },
+                    { y: 0, opacity: 1, duration: 0.4, ease: "power2.out" }
+                );
+            }
+        });
+    };
 
     function startRotation() {
-        gsap.to(".headshot-container", {
+        if (!headshotContainer.current) return;
+
+        gsap.to(headshotContainer.current, {
             rotate: 360,
             duration: 25,
             ease: "none",
@@ -48,40 +70,19 @@ export default function Introduction({
         });
     }
 
-
     useGSAP(() => {
-        if (!titleRef.current || !textContainer.current) return;
+        if (!textContainer.current || !titleRef.current || !headshotContainer.current ) return;
 
-        if (!hasAnimated) {
-            gsap.fromTo(".rocket",
-                { x: 0, y: 0, opacity: 0 },
-                {
-                    x: 0,
-                    y: textContainer.current.offsetHeight,
-                    duration: 1.5,
-                    ease: "power2.inOut",
-                    delay: 1,
-                    keyframes: {
-                        opacity: [0, 1, 1, 0],  // invisible → visible → visible → invisible
-                        easeEach: "none"
-                    }
-                }
-            );
+        const introTl = gsap.timeline({
+            onComplete: () => {
+                playOrTrigger(headshotContainer.current as HTMLElement, headshotTl);
+            }
 
-            tl.from(".intro-text", {
-                x: 0,
-                y: -20,
-                opacity: 0,
-                duration: 0.75,
-                ease: "power2.inOut",
-                stagger: {
-                    from: "start",
-                    amount: 0.75
-                },
-                delay: 1,
-            });
+        });
 
-            tl.from(".headshot-container", {
+        const headshotTl = gsap.timeline({ paused: true });
+        headshotTl
+            .from(headshotContainer.current, {
                 x: 0,
                 y: 50,
                 opacity: 0,
@@ -93,37 +94,36 @@ export default function Introduction({
                 }
             })
 
-            sessionStorage.setItem('introAnimated', 'true');
-        } else {
-            gsap.set(".intro-text", { opacity: 1, y: 0 });
-            gsap.set(".headshot-container", { opacity: 1, y: 0 });
-            startRotation();
-            setIntroDone(true);
-        }
-    
-        const cycle = () => {
-            const next = titles[(currentIndex.current + 1) % titles.length];
-
-            // Slide current out upward
-            tl.to(titleRef.current, {
-                y: -30,
-                opacity: 0,
-                duration: 0.4,
-                ease: "power2.in",
-                onComplete: () => {
-                    // Swap text and reset position below
-                    if (!titleRef.current) return;
-                    currentIndex.current = (currentIndex.current + 1) % titles.length;
-                    titleRef.current.textContent = next;
-
-                    gsap.fromTo(titleRef.current,
-                        { y: 30, opacity: 0 },
-                        { y: 0, opacity: 1, duration: 0.4, ease: "power2.out" }
-                    );
-                }
-            });
-        };
-
+        introTl
+            .fromTo(".rocket",
+                { x: 0, y: -30, opacity: 0 },
+                {
+                    x: 0,
+                    y: textContainer.current.offsetHeight,
+                    duration: 1.5,
+                    ease: "power2.inOut",
+                    delay: 1,
+                    keyframes: {
+                        opacity: [0, 1, 1, 0],  // invisible → visible → visible → invisible
+                        easeEach: "none"
+                    }
+                },
+                0
+            )
+            .from(".intro-text", {
+                    x: 0,
+                    y: -20,
+                    opacity: 0,
+                    duration: 0.75,
+                    ease: "power2.inOut",
+                    stagger: {
+                        from: "start",
+                        amount: 0.75
+                    },
+                    delay: 1,
+                },
+                0
+            );
 
         const interval = setInterval(cycle, 3000);
         return () => clearInterval(interval);
@@ -189,7 +189,7 @@ export default function Introduction({
             </div>
             
             {/* Image */}
-            <div className='headshot-container m-10'>
+            <div ref={headshotContainer} className='m-10'>
                 <div className="relative overflow-visible z-10 w-[clamp(210px,50vw,410px)] h-[clamp(210px,50vw,410px)] p-2 border-t border-b border-highlight/80 rounded-full">
                     <div className="headshot absolute z-20 top-[50%] left-[0%] -translate-x-1/2 -translate-y-1/2 bg-highlight/20 backdrop-blur-xs border border-highlight text-highlight rounded-full p-2">
                         <FaReact className='w-[clamp(16px,2vw,24px)] h-[clamp(16px,2vw,24px)]' />

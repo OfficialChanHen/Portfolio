@@ -4,18 +4,22 @@ import StarBackground from "@/app/(tabs)/_components/StarBackground";
 import Introduction from "@/app/(tabs)/_components/Introduction";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import SpotifyNowPlaying from "@/app/_components/NowPlaying";
+import playOrTrigger from "@/app/utils/playOrTrigger";
 
 gsap.registerPlugin(useGSAP);
 
 export default function Home() {
     const [introDone, setIntroDone] = useState(false);
+    const jobContainer = useRef<HTMLDivElement>(null);
 
     useGSAP(() => {
-        if (!introDone) return;
+        if (!introDone || !jobContainer.current) return;
 
-        gsap.to(".job-container", 
+
+        const jobTl = gsap.timeline({ paused: true });
+        jobTl.to(jobContainer.current, 
             {
                 y: 0,
                 opacity: 1,
@@ -33,6 +37,7 @@ export default function Home() {
                 }
             }
         );
+        playOrTrigger(jobContainer.current as HTMLElement, jobTl);
 
         
     }, { dependencies: [introDone] })
@@ -45,7 +50,7 @@ export default function Home() {
             <SpotifyNowPlaying/>
 
             {/* Call to action */}
-            <div className='job-container opacity-0 -translate-y-5 w-full max-w-[1080px] px-5 py-3 bg-highlight/20 backdrop-blur-xs text-white/80 text-[0.75rem] md:text-[1rem] border border-highlight rounded-md '>
+            <div ref={jobContainer} className='opacity-0 -translate-y-5 w-full max-w-[1080px] px-5 py-3 bg-highlight/20 backdrop-blur-xs text-white/80 text-[0.75rem] md:text-[1rem] border border-highlight rounded-md '>
                 <div className='flex flex-row justify-start items-center gap-2 text-highlight mb-2'>
                     <div className='job-icon w-[clamp(10px,2vw,14px)] h-[clamp(10px,2vw,14px)] bg-highlight rounded-full'/>
                     <span>Available For Work</span>
