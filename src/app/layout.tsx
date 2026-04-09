@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono, DM_Mono} from "next/font/google";
 import { headers } from "next/headers";
-import { MobileProvider } from "@/app/_providers/MobileProvider";
+import { MobileProvider } from "@/providers/MobileProvider";
+import { NavigationModeProvider } from "@/providers/NavigationModeProvider";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -49,9 +50,11 @@ export default async function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} ${dmMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
-        <MobileProvider initialIsMobile={isMobile}>
-          {children}
-        </MobileProvider>
+        <NavigationModeProvider>
+          <MobileProvider initialIsMobile={isMobile}>
+            {children}
+          </MobileProvider>
+        </NavigationModeProvider>
       </body>
     </html>
   );

@@ -1,6 +1,6 @@
 'use client';
 
-import { useMobile } from "@/app/_providers/MobileProvider";
+import { useMobile } from "@/providers/MobileProvider";
 
 type FooterProps = {
     className?: string;

@@ -9,6 +9,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import StarBackground from "@/app/(tabs)/_components/StarBackground";
 import { MessagesSquare } from 'lucide-react';
 import playOrTrigger from "@/app/utils/playOrTrigger";
+import { useNavigationMode } from "@/providers/NavigationModeProvider";
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
 
@@ -24,6 +25,8 @@ export default function Contacts() {
     const formContainer = useRef<HTMLFormElement>(null);
     const socialContainer = useRef<HTMLDivElement>(null);
     
+    const navigationMode = useNavigationMode();
+    const delayTime = navigationMode === "soft" ? 0.4 : 0.6;
     useGSAP(() => {
         if (!textContainer.current || !formContainer.current || !socialContainer.current) return;
 
@@ -95,7 +98,7 @@ export default function Contacts() {
                     y: textContainer.current.offsetHeight,
                     duration: 1.6,
                     ease: "power2.inOut",
-                    delay: 1,
+                    delay: delayTime,
                     keyframes: {
                         opacity: [0, 1, 1, 0],
                         easeEach: "none",
@@ -112,7 +115,7 @@ export default function Contacts() {
                         from: "start",
                         amount: 0.65,
                     },
-                    delay: 1.25,
+                    delay: delayTime + 0.25,
                 },
                 0
             );
@@ -196,7 +199,7 @@ export default function Contacts() {
                 {/* Email Form */}
                 <form 
                     ref={formContainer}
-                    className="flex flex-col justify-start items-start w-full gap-5 bg-primary/60 border border-primary p-10 rounded-md"
+                    className="flex flex-col justify-start items-start w-full gap-5 bg-primary/60 border border-primary backdrop-blur-xs p-10 rounded-xl"
                     onSubmit={handleSubmit}
                 >
                     <span className="form text-[1rem] md:text-[1.25rem]">Send A Message</span>
@@ -266,7 +269,7 @@ export default function Contacts() {
                     <button
                         type="submit"
                         disabled={status === "sending"}
-                        className="form group w-full px-5 py-3 text-[0.75rem] md:text-[1rem] rounded-md cursor-pointer text-white tracking-widest bg-highlight backdrop-blur-xs border-none shadow-[0_0_25px] shadow-highlight hover:shadow-[0_0_5px,_0_0_20px,_0_0_50px] hover:shadow-highlight hover:scale-105 transition-all ease-in-out duration-500"
+                        className="form group w-full px-5 py-3 text-[0.75rem] md:text-[1rem] rounded-md cursor-pointer text-white tracking-widest bg-highlight border-none shadow-[0_0_25px] shadow-highlight hover:shadow-[0_0_5px,_0_0_20px,_0_0_50px] hover:shadow-highlight hover:scale-105 transition-all ease-in-out duration-500"
                     >
                         {status === "sending" ? (
                             "Sending..."
@@ -298,7 +301,7 @@ export default function Contacts() {
                 </form>
 
                 {/* Social Connections */}
-                <div ref={socialContainer} className="self-start flex flex-col justify-start items-start gap-5 w-full bg-primary/60 border border-primary p-10 rounded-md">
+                <div ref={socialContainer} className="self-start flex flex-col justify-start items-start gap-5 w-full bg-primary/60 border border-primary backdrop-blur-xs p-10 rounded-xl">
                     <span className="social text-[1rem] md:text-[1.25rem]">Connect On Socials</span>
 
                     <div 

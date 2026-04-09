@@ -11,6 +11,8 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useRef, Dispatch, SetStateAction } from "react";
 import Link from 'next/link';
 import playOrTrigger from '@/app/utils/playOrTrigger';
+import { useNavigationDelay } from '@/hooks/useNavigationDelay';
+import { useNavigationMode } from '@/providers/NavigationModeProvider';
 
 gsap.registerPlugin(useGSAP, TextPlugin, ScrollTrigger);
 
@@ -70,6 +72,8 @@ export default function Introduction({
         });
     }
 
+    const navigationMode = useNavigationMode();
+    const delayTime = navigationMode === "soft" ? 0.4 : 0.7;
     useGSAP(() => {
         if (!textContainer.current || !titleRef.current || !headshotContainer.current ) return;
 
@@ -102,7 +106,7 @@ export default function Introduction({
                     y: textContainer.current.offsetHeight,
                     duration: 1.5,
                     ease: "power2.inOut",
-                    delay: 1,
+                    delay: delayTime,
                     keyframes: {
                         opacity: [0, 1, 1, 0],  // invisible → visible → visible → invisible
                         easeEach: "none"
@@ -120,7 +124,7 @@ export default function Introduction({
                         from: "start",
                         amount: 0.75
                     },
-                    delay: 1,
+                    delay: delayTime + 0.1,
                 },
                 0
             );

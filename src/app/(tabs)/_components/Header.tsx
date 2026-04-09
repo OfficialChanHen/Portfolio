@@ -1,8 +1,9 @@
 'use client';
 
 import { useState } from 'react';
-import { useRouter, usePathname } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 import { Menu, X, CodeXml } from 'lucide-react';
+import Link from 'next/link';
 
 type HeaderProps = {
     className?: string;
@@ -10,7 +11,6 @@ type HeaderProps = {
 
 export default function Header({ className }: HeaderProps) {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-    const router = useRouter();
     const pathname = usePathname();
 
     const navLinks = [
@@ -23,11 +23,6 @@ export default function Header({ className }: HeaderProps) {
     function isActive(path: string) {
         return pathname.startsWith(path);
     };
-
-    function handleOnClick(path: string) {
-        setMobileMenuOpen(false);
-        router.push(path);
-    }
 
     const tabStyles = `
                         h-full flex flex-col justify-center items-center border-b-2 border-transparent hover:cursor-pointer hover:text-highlight
@@ -50,13 +45,13 @@ export default function Header({ className }: HeaderProps) {
                 {/* desktop tabs */}
                 <div className="hidden md:flex h-full flex-row justify-center items-stretch gap-4">
                     {navLinks.map(({ path, label }) => (
-                        <div
+                        <Link
                             key={path}
                             className={`${tabStyles} ${isActive(path) && selectedStyle}`}
-                            onClick={() => handleOnClick(path)}
+                            href={`${path}`}
                         >
                             {label}
-                        </div>
+                        </Link>
                     ))}
                 </div>
 
@@ -73,17 +68,18 @@ export default function Header({ className }: HeaderProps) {
             <div className={`w-full md:hidden bg-background/30 border-t border-white/10 backdrop-blur-sm transition-all duration-300 ease-in-out ${mobileMenuOpen ? "max-h-64 opacity-100" : "max-h-0 opacity-0 pointer-events-none"}`}>
                 <div className="px-10 py-5 space-y-3">
                     {navLinks.map(({ path, label }) => (
-                        <div
+                        <Link
                             key={path}
-                            onClick={() => handleOnClick(path)}
                             className={`block px-4 py-2 rounded-lg transition-colors hover:cursor-pointer ${
                                 isActive(path)
                                     ? "bg-highlight/20 text-highlight"
                                     : "text-white"
                             }`}
+                            href={`${path}`}
+                            onClick={() => setMobileMenuOpen(false)}
                         >
                             {label}
-                        </div>
+                        </Link>
                     ))}
                 </div>
             </div>

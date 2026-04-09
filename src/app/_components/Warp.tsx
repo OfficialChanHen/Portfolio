@@ -4,7 +4,7 @@ import { Canvas, useFrame } from '@react-three/fiber';
 import { useMemo, useRef, useEffect  } from 'react';
 import * as THREE from 'three';
 import { useRouter } from 'next/navigation';
-import { useMobile } from '@/app/_providers/MobileProvider';
+import { useMobile } from '@/providers/MobileProvider';
 
 type WarpProps = {
 }
