@@ -11,7 +11,6 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useRef, Dispatch, SetStateAction } from "react";
 import Link from 'next/link';
 import playOrTrigger from '@/app/utils/playOrTrigger';
-import { useNavigationDelay } from '@/hooks/useNavigationDelay';
 import { useNavigationMode } from '@/providers/NavigationModeProvider';
 
 gsap.registerPlugin(useGSAP, TextPlugin, ScrollTrigger);
