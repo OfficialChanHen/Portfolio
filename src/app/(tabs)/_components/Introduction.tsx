@@ -167,13 +167,13 @@ export default function Introduction({
                 {/* Intro Buttons */}
                 <div className='intro-text flex flex-col md:flex-row justify-center md:justify-start items-center py-3 gap-5 text-[0.7rem] md:text-[1rem]'>
                     <Link href="/projects">
-                        <button className="group inline-flex items-center justify-center gap-2 px-5 py-3 rounded-md cursor-pointer text-white tracking-widest transition-[box-shadow] duration-500 bg-primary/40 backdrop-blur-xs border-none shadow-[0_0_25px] shadow-tertiary hover:shadow-[0_0_5px,_0_0_25px,_0_0_50px,_0_0_100px] hover:shadow-tertiary text-nowrap">
+                        <button className="group inline-flex items-center justify-center gap-2 px-5 py-3 rounded-md cursor-pointer text-white tracking-widest backdrop-blur-xs bg-primary/40 border-none shadow-[0_0_25px] shadow-tertiary hover:shadow-[0_0_5px,_0_0_25px,_0_0_50px,_0_0_100px] hover:scale-105 hover:shadow-tertiary text-nowrap transition-all ease-in-out duration-500">
                             <span>View Projects</span>
                             <ArrowBigRight className="transition-transform duration-300 group-hover:translate-x-2 w-[clamp(16px,2vw,24px)] h-[clamp(16px,2vw,24px)]"/>
                         </button>
                     </Link>
                     <Link href="/contact">
-                        <button className="group inline-flex items-center justify-center gap-2 px-5 py-3 rounded-md cursor-pointer text-white tracking-widest transition-[box-shadow] duration-500 bg-highlight backdrop-blur-xs border-none shadow-[0_0_25px] shadow-highlight hover:shadow-[0_0_5px,_0_0_25px,_0_0_50px,_0_0_100px] hover:shadow-highlight">
+                        <button className="group inline-flex items-center justify-center w-full px-5 py-3 gap-2 rounded-md cursor-pointer text-white tracking-widest bg-highlight border-none shadow-[0_0_25px] shadow-highlight hover:shadow-[0_0_5px,_0_0_20px,_0_0_50px] hover:shadow-highlight hover:scale-105 transition-all ease-in-out duration-500">
                             <Mail className="w-[clamp(16px,2vw,20px)] h-[clamp(16px,2vw,20px)]"/>
                             <span>Connect</span>
                         </button>
