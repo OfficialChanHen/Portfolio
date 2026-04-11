@@ -3,10 +3,10 @@
 import { useEffect, useState } from "react";
 
 type NowPlaying = {
-  isPlaying: boolean;
-  title?: string;
-  artist?: string;
-  songUrl?: string;
+    isPlaying: boolean;
+    title?: string;
+    artist?: string;
+    songUrl?: string;
 };
 
 export default function SpotifyNowPlaying() {

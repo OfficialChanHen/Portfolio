@@ -5,7 +5,7 @@ import Introduction from "@/app/(tabs)/_components/Introduction";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { useState, useRef } from "react";
-import SpotifyNowPlaying from "@/app/_components/NowPlaying";
+import SpotifyNowPlaying from "@/app/_components/SpotifyNowPlaying";
 import playOrTrigger from "@/app/utils/playOrTrigger";
 
 gsap.registerPlugin(useGSAP);

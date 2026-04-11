@@ -1,17 +1,18 @@
 'use client'
 
 import StarBackground from "@/app/(tabs)/_components/StarBackground";
+import SpotifyTopTracks from "@/app/_components/SpotifyTopTracks";
 import { AppWindow, Database, Wrench, BookOpenText, Rocket, Download, Zap, BugOff, Users } from "lucide-react";
 import { useRef } from 'react';
 
 export default function About() {
     const textContainer = useRef<HTMLDivElement>(null);
-    const techContainer = "w-full flex flex-col justify-start items-start bg-secondary rounded-xl backdrop-blur-xs p-10 gap-5 border-2 border-tertiary";
+    const techContainer = "w-full flex flex-col justify-start items-start bg-secondary rounded-xl backdrop-blur-xs p-10 gap-5 border border-tertiary";
 
     return(
         <div className="w-full h-full flex flex-col justify-start md:justify-center items-center">
             <StarBackground/>
-            {/* First page */}
+            {/* Background page */}
             <div className="min-w-screen min-h-[calc(100vh-64px)] flex flex-col justify-start items-center p-10 gap-10 bg-primary">
                 {/* Header Info */}
                 <div ref={textContainer} className="relative flex flex-col justify-center items-center text-center gap-2">
@@ -96,15 +97,20 @@ export default function About() {
                 </div>
             </div>
 
-            {/* Second Page */}
+            {/* Value Page */}
             <div className="min-w-screen min-h-[calc(100vh-64px)] flex flex-col justify-center items-center p-10 gap-10 bg-secondary">
+                {/* Header */}
                 <h2 className="intro-text text-[2.5rem] md:text-[3.5rem]">
                     {"What I "}
                     <span className="bg-gradient-to-t from-white via-highlight to-tertiary bg-clip-text text-transparent">
                         Value
                     </span>
                 </h2>
+
+                {/* Values */}
                 <div className="md:w-full max-w-[1080px] flex flex-col md:flex-row justify-center md:items-stretch gap-5">
+
+                    {/* Code */}
                     <div className="group w-full flex flex-col justify-start items-center gap-3 text-[1rem] md:text-[1.5rem]">
                         <div className="relative w-[clamp(60px,8vw,84px)] h-[clamp(60px,8vw,84px)] flex flex-row justify-center items-center p-5 bg-gradient-to-br from-white/5 to-white/[0.02] border border-white/10 text-cyan-200 rounded-xl group-hover:scale-105 transition-transform ease-in-out duration-300">
                             <div className="absolute top-[50%] left-[50%] -translate-x-1/2 -translate-y-1/2 w-[clamp(72px,10vw,96px)] h-[clamp(72px,10vw,96px)] flex flex-row justify-center items-center p-5 rounded-2xl bg-gradient-to-r from-cyan-400 to-blue-500 opacity-0 group-hover:opacity-30 blur-xl transition-opacity duration-300"/>
@@ -113,6 +119,8 @@ export default function About() {
                         <span className="font-bold group-hover:text-cyan-200 transition-color ease-in-out duration-300">Code</span>
                         <span className="text-[0.75rem] md:text-[1rem] text-white/80 text-center group-hover:text-white transition-color ease-in-out duration-300">Engineering clean, scalable code designed for growth and built to last.</span>
                     </div>
+
+                    {/* Performance */}
                     <div className="group w-full flex flex-col justify-start items-center gap-3 text-[1rem] md:text-[1.5rem]">
                         <div className="relative w-[clamp(60px,8vw,84px)] h-[clamp(60px,8vw,84px)] flex flex-row justify-center items-center p-5 bg-gradient-to-br from-white/5 to-white/[0.02] border border-white/10 text-yellow-200 rounded-xl group-hover:scale-105 transition-transform ease-in-out duration-300">
                             <div className="absolute top-[50%] left-[50%] -translate-x-1/2 -translate-y-1/2 w-[clamp(64px,8vw,96px)] h-[clamp(72px,10vw,96px)] flex flex-row justify-center items-center p-5 rounded-2xl bg-gradient-to-r from-yellow-400 to-orange-500 opacity-0 group-hover:opacity-30 blur-xl transition-opacity duration-300"/>
@@ -121,6 +129,8 @@ export default function About() {
                         <span className="font-bold group-hover:text-yellow-200 transition-color ease-in-out duration-300">Performance</span>
                         <span className="text-[0.75rem] md:text-[1rem] text-white/80 text-center group-hover:text-white transition-color ease-in-out duration-300">Optimizing every interaction for speed, responsiveness, and a smoother user experience.</span>
                     </div>
+
+                    {/* Collaboration */}
                     <div className="group w-full flex flex-col justify-start items-center gap-3 text-[1rem] md:text-[1.5rem]">
                         <div className="relative w-[clamp(60px,8vw,84px)] h-[clamp(60px,8vw,84px)] flex flex-row justify-center items-center p-5 bg-gradient-to-br from-white/5 to-white/[0.02] border border-white/10 text-purple-300  rounded-xl group-hover:scale-105 transition-transform ease-in-out duration-300">
                             <div className="absolute top-[50%] left-[50%] -translate-x-1/2 -translate-y-1/2 w-[clamp(72px,10vw,96px)] h-[clamp(72px,10vw,96px)] flex flex-row justify-center items-center p-5 rounded-2xl bg-gradient-to-r from-pink-400 to-purple-500 opacity-0 group-hover:opacity-30 blur-xl transition-opacity duration-300"/>
@@ -131,6 +141,14 @@ export default function About() {
                     </div>
                 </div>
             </div>
+
+            {/* Music Page */}
+            <div className="min-w-screen min-h-[calc(100vh-64px)] flex flex-col justify-center items-center p-10 gap-10 bg-primary">
+                <SpotifyTopTracks/>
+            </div>
+
+            {/* Games Page */}
+            <div className="min-w-screen min-h-[calc(100vh-64px)] flex flex-col justify-center items-center p-10 gap-10 bg-secondary"></div>
         </div>
     )
 }
