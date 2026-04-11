@@ -56,6 +56,21 @@ export default function Contacts() {
                     },
                 },
                 "-=0.25"
+            )
+            .fromTo(".form-button",
+                {
+                    x: -30,
+                    y: 30,
+                    opacity: 0,
+                },
+                {
+                    x: 0,
+                    y: 0,
+                    opacity: 1,
+                    duration: 0.75,
+                    ease: "power2.inOut",
+                },
+                "-=1"
             );
 
         const socialTl = gsap.timeline({ paused: true });
@@ -70,14 +85,13 @@ export default function Contacts() {
                     x: -30,
                     y: 30,
                     opacity: 0,
-                    duration: 0.75,
+                    duration: 0.5,
                     ease: "power2.inOut",
                     stagger: {
                         from: "start",
-                        amount: 0.75,
+                        amount: 0.5,
                     },
                 },
-                "-=0.25"
             );
 
         const introTl = gsap.timeline({
@@ -184,12 +198,12 @@ export default function Contacts() {
                     <span>Send A Signal</span>
                 </div>
                 
-                <div className="intro-text flex flex-row justify-center items-center md:justify-center md:items-start tracking-tight gap-[2ch]">
-                    <span className="text-[2.5rem] md:text-[3.5rem]">Get In</span>
-                    <span className="text-[2.5rem] md:text-[3.5rem] bg-gradient-to-r from-highlight via-tertiary to-highlight bg-clip-text text-transparent">
+                <h2 className="intro-text text-[2.5rem] md:text-[3.5rem]">
+                    Get In {" "}
+                    <span className="bg-gradient-to-t from-white via-highlight to-tertiary bg-clip-text text-transparent">
                         Touch
                     </span>
-                </div>
+                </h2>
 
                 <span className="intro-text text-[1rem] md:text-[1.5rem] text-white/80">Have a project in mind or just want to chat? I would love to hear from you!</span>
             </div>
@@ -202,10 +216,10 @@ export default function Contacts() {
                     className="flex flex-col justify-start items-start w-full gap-5 bg-primary/60 border border-primary backdrop-blur-xs p-10 rounded-xl"
                     onSubmit={handleSubmit}
                 >
-                    <span className="form text-[1rem] md:text-[1.25rem]">Send A Message</span>
+                    <span className="form text-[1rem] md:text-[1.25rem] font-bold">Send A Message</span>
                     {/* Name */}
                     <div className="form flex flex-col w-full gap-1">
-                        <label htmlFor="name" className="text-[0.75rem] md:text-[1rem] text-white/80">Name</label>
+                        <label htmlFor="name" className="text-[0.75rem] md:text-[1rem] text-white/80 font-bold">Name</label>
                         <input 
                             id="name"
                             name="name" 
@@ -221,7 +235,7 @@ export default function Contacts() {
 
                     {/* Email */}
                     <div className="form flex flex-col w-full gap-1">
-                        <label htmlFor="email" className="text-[0.75rem] md:text-[1rem] text-white/80">Email</label>
+                        <label htmlFor="email" className="text-[0.75rem] md:text-[1rem] text-white/80 font-bold ">Email</label>
                         <input 
                             id="email"
                             name="email" 
@@ -237,7 +251,7 @@ export default function Contacts() {
                     
                     {/* Subject */}
                     <div className="form flex flex-col w-full gap-1">
-                        <label htmlFor="subject" className="text-[0.75rem] md:text-[1rem] text-white/80">Subject</label>
+                        <label htmlFor="subject" className="text-[0.75rem] md:text-[1rem] text-white/80 font-bold">Subject</label>
                         <input 
                             id="subject"
                             name="subject" 
@@ -252,7 +266,7 @@ export default function Contacts() {
                     
                     {/* Message */}
                     <div className="form flex flex-col w-full gap-1">
-                        <label htmlFor="message" className="text-[0.75rem] md:text-[1rem] text-white/80">Message</label>
+                        <label htmlFor="message" className="text-[0.75rem] md:text-[1rem] text-white/80 font-bold">Message</label>
                         <textarea 
                             id="message"
                             name="message" 
@@ -269,7 +283,7 @@ export default function Contacts() {
                     <button
                         type="submit"
                         disabled={status === "sending"}
-                        className="form group w-full px-5 py-3 text-[0.75rem] md:text-[1rem] rounded-md cursor-pointer text-white tracking-widest bg-highlight border-none shadow-[0_0_25px] shadow-highlight hover:shadow-[0_0_5px,_0_0_20px,_0_0_50px] hover:shadow-highlight hover:scale-105 transition-all ease-in-out duration-500"
+                        className="form-button group w-full px-5 py-3 text-[0.75rem] md:text-[1rem] rounded-md cursor-pointer text-white font-bold tracking-widest bg-highlight border-none shadow-[0_0_25px] shadow-highlight hover:shadow-[0_0_5px,_0_0_20px,_0_0_50px] hover:shadow-highlight hover:scale-105 transition-all ease-in-out duration-300"
                     >
                         {status === "sending" ? (
                             "Sending..."
@@ -302,7 +316,7 @@ export default function Contacts() {
 
                 {/* Social Connections */}
                 <div ref={socialContainer} className="self-start flex flex-col justify-start items-start gap-5 w-full bg-primary/60 border border-primary backdrop-blur-xs p-10 rounded-xl">
-                    <span className="social text-[1rem] md:text-[1.25rem]">Connect On Socials</span>
+                    <span className="social text-[1rem] md:text-[1.25rem] font-bold">Connect On Socials</span>
 
                     <div 
                         className="social group flex flex-row items-center gap-4 text-[0.75rem] md:text-[1rem] text-white/80"
@@ -311,7 +325,7 @@ export default function Contacts() {
                             <Mail className="absolute top-[50%] left-[50%] -translate-x-1/2 -translate-y-1/2 w-[clamp(18px,2vw,20px)] h-[clamp(18px,2vw,20px)]"/>
                         </div>
                         <div className="flex flex-col justify-center items-start">
-                            <span className="group-hover:text-white transition-colors ease-in-out duration-300">Email</span>
+                            <span className="group-hover:text-white font-bold transition-colors ease-in-out duration-300">Email</span>
                             <span className="text-white/60 group-hover:text-white transition-colors ease-in-out duration-300">Chan Hen</span>
                         </div>
                     </div>
@@ -324,7 +338,7 @@ export default function Contacts() {
                             <FiGithub className="absolute top-[50%] left-[50%] -translate-x-1/2 -translate-y-1/2 w-[clamp(18px,2vw,20px)] h-[clamp(18px,2vw,20px)]"/>
                         </div>
                         <div className="flex flex-col justify-center items-start">
-                            <span className="group-hover:text-white transition-colors ease-in-out duration-300">Github</span>
+                            <span className="group-hover:text-white font-bold transition-colors ease-in-out duration-300">Github</span>
                             <span className="text-white/60 group-hover:text-white transition-colors ease-in-out duration-300">OfficialChanHen</span>
                         </div>
                     </a>
@@ -337,7 +351,7 @@ export default function Contacts() {
                             <FiLinkedin className="absolute top-[50%] left-[50%] -translate-x-1/2 -translate-y-1/2 w-[clamp(18px,2vw,20px)] h-[clamp(18px,2vw,20px)]"/>
                         </div>
                         <div className="flex flex-col justify-center items-start">
-                            <span className="group-hover:text-white transition-colors ease-in-out duration-300">Linkedin</span>
+                            <span className="group-hover:text-white font-bold transition-colors ease-in-out duration-300">Linkedin</span>
                             <span className="text-white/60 group-hover:text-white transition-colors ease-in-out duration-300">Chan Hen</span>
                         </div>
                         

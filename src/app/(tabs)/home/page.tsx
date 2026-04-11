@@ -51,7 +51,7 @@ export default function Home() {
 
             {/* Call to action */}
             <div ref={jobContainer} className='opacity-0 -translate-y-5 w-full max-w-[1080px] px-5 py-3 bg-highlight/20 backdrop-blur-xs text-white/80 text-[0.75rem] md:text-[1rem] border border-highlight rounded-md '>
-                <div className='flex flex-row justify-start items-center gap-2 text-highlight mb-2'>
+                <div className='flex flex-row justify-start items-center gap-2 text-highlight mb-2 font-bold'>
                     <div className='job-icon w-[clamp(10px,2vw,14px)] h-[clamp(10px,2vw,14px)] bg-highlight rounded-full'/>
                     <span>Available For Work</span>
                 </div>
