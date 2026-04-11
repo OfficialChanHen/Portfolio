@@ -193,7 +193,7 @@ export default function Contacts() {
                     <Rocket size={20}/>
                 </div>
 
-                <div className="intro-text w-fit mx-auto md:mx-0 flex flex-row justify-center md:justify-start items-center gap-2 px-3 py-2 text-[0.75rem] md:text-[1rem] bg-highlight/20 backdrop-blur-xs text-highlight border border-highlight rounded-full">
+                <div className="intro-text w-fit mx-auto md:mx-0 flex flex-row justify-center md:justify-start items-center gap-2 px-3 py-2 text-[0.75rem] md:text-[1rem] font-bold bg-highlight/20 backdrop-blur-xs text-highlight border border-highlight rounded-full">
                     <MessagesSquare className='w-[clamp(16px,2vw,24px)] h-[clamp(16px,2vw,24px)]'/>
                     <span>Send A Signal</span>
                 </div>
@@ -325,7 +325,7 @@ export default function Contacts() {
                             <Mail className="absolute top-[50%] left-[50%] -translate-x-1/2 -translate-y-1/2 w-[clamp(18px,2vw,20px)] h-[clamp(18px,2vw,20px)]"/>
                         </div>
                         <div className="flex flex-col justify-center items-start">
-                            <span className="group-hover:text-white font-bold transition-colors ease-in-out duration-300">Email</span>
+                            <span className="group-hover:text-highlight font-bold transition-colors ease-in-out duration-300">Email</span>
                             <span className="text-white/60 group-hover:text-white transition-colors ease-in-out duration-300">Chan Hen</span>
                         </div>
                     </div>
@@ -338,7 +338,7 @@ export default function Contacts() {
                             <FiGithub className="absolute top-[50%] left-[50%] -translate-x-1/2 -translate-y-1/2 w-[clamp(18px,2vw,20px)] h-[clamp(18px,2vw,20px)]"/>
                         </div>
                         <div className="flex flex-col justify-center items-start">
-                            <span className="group-hover:text-white font-bold transition-colors ease-in-out duration-300">Github</span>
+                            <span className="group-hover:text-highlight font-bold transition-colors ease-in-out duration-300">Github</span>
                             <span className="text-white/60 group-hover:text-white transition-colors ease-in-out duration-300">OfficialChanHen</span>
                         </div>
                     </a>
@@ -351,7 +351,7 @@ export default function Contacts() {
                             <FiLinkedin className="absolute top-[50%] left-[50%] -translate-x-1/2 -translate-y-1/2 w-[clamp(18px,2vw,20px)] h-[clamp(18px,2vw,20px)]"/>
                         </div>
                         <div className="flex flex-col justify-center items-start">
-                            <span className="group-hover:text-white font-bold transition-colors ease-in-out duration-300">Linkedin</span>
+                            <span className="group-hover:text-highlight font-bold transition-colors ease-in-out duration-300">Linkedin</span>
                             <span className="text-white/60 group-hover:text-white transition-colors ease-in-out duration-300">Chan Hen</span>
                         </div>
                         
