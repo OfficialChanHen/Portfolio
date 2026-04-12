@@ -34,7 +34,7 @@ export async function GET() {
         title: track.name,
         artists: track.artists.map((artist) => artist.name).join(", "),
         albumImg: track.album.images?.[0]?.url ?? null,
-        url: track.external_urls.spotify,
+        songUrl: track.external_urls.spotify,
     }))
 
 

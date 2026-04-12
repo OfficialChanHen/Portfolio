@@ -6,7 +6,7 @@ type Track = {
     title: string,
     artists: string,
     albumImg: string,
-    url: string,
+    songUrl: string,
 }
 
 export default function SpotifyTopTracks() {
@@ -34,7 +34,7 @@ export default function SpotifyTopTracks() {
                 className="w-[300px] h-[300px] text-white bg-cover bg-center"
                 style={{ backgroundImage: `url(${track.albumImg})` }}
             >
-                <a href={track.url} target="_blank" rel="noopener noreferrer">
+                <a href={track.songUrl} target="_blank" rel="noopener noreferrer">
                 #{index + 1} Title: {track.title} — {track.artists}
                 </a>
             </div>

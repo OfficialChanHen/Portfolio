@@ -1,13 +1,14 @@
 'use client'
 
 import StarBackground from "@/app/(tabs)/_components/StarBackground";
-import SpotifyTopTracks from "@/app/_components/SpotifyTopTracks";
+import SpotifyNowPlaying from "@/app/(tabs)/_components/SpotifyNowPlaying";
+import SpotifyTopTracks from "@/app/(tabs)/_components/SpotifyTopTracks";
 import { AppWindow, Database, Wrench, BookOpenText, Rocket, Download, Zap, BugOff, Users } from "lucide-react";
 import { useRef } from 'react';
 
 export default function About() {
     const textContainer = useRef<HTMLDivElement>(null);
-    const techContainer = "w-full flex flex-col justify-start items-start bg-secondary rounded-xl backdrop-blur-xs p-10 gap-5 border border-tertiary";
+    const techContainer = "w-full flex flex-col justify-start items-start bg-secondary rounded-xl p-10 gap-5 border border-tertiary";
 
     return(
         <div className="w-full h-full flex flex-col justify-start md:justify-center items-center">
@@ -46,11 +47,11 @@ export default function About() {
 
                     {/* Frontend */}
                     <div className={techContainer}>
-                        <div className="flex flex-row justify-start items-center gap-3 text-[1rem] md:text-[1.25rem] font-bold">
+                        <div className="place-self-center md:place-self-start flex flex-col md:flex-row justify-center md:justify-start items-center gap-3 text-[1rem] md:text-[1.25rem] font-bold">
                             <div className="relative w-[clamp(24px,2vw,30px)] h-[clamp(24px,2vw,30px)] flex flex-row justify-center items-center p-5 bg-linear-to-br from-tertiary to-highlight text-white rounded-md">
                                 <AppWindow className="absolute top-[50%] left-[50%] -translate-x-1/2 -translate-y-1/2 w-[clamp(18px,2vw,20px)] h-[clamp(18px,2vw,20px)]"/>
                             </div>
-                            Frontend
+                            <span>Frontend</span>
                         </div>
                         <ul className="list-disc marker:text-highlight pl-5 space-y-2 text-[0.75rem] md:text-[1rem] text-white/80">
                             <li>Typescript</li>
@@ -63,7 +64,7 @@ export default function About() {
 
                     {/* Backend */}
                     <div className={techContainer}>
-                        <div className="flex flex-row justify-start items-center gap-3 text-[1rem] md:text-[1.25rem] font-bold">
+                        <div className="place-self-center md:place-self-start flex flex-col md:flex-row justify-center md:justify-start items-center gap-3 text-[1rem] md:text-[1.25rem] font-bold">
                             <div className="relative w-[clamp(24px,2vw,30px)] h-[clamp(24px,2vw,30px)] flex flex-row justify-center items-center p-5 bg-linear-to-br from-tertiary to-highlight text-white rounded-md">
                                 <Database className="absolute top-[50%] left-[50%] -translate-x-1/2 -translate-y-1/2 w-[clamp(18px,2vw,20px)] h-[clamp(18px,2vw,20px)]"/>
                             </div>
@@ -80,7 +81,7 @@ export default function About() {
 
                     {/* Tools */}
                     <div className={techContainer}>
-                        <div className="flex flex-row justify-start items-center gap-3 text-[1rem] md:text-[1.25rem] font-bold">
+                        <div className="place-self-center md:place-self-start flex flex-col md:flex-row justify-center md:justify-start items-center gap-3 text-[1rem] md:text-[1.25rem] font-bold">
                             <div className="relative w-[clamp(24px,2vw,30px)] h-[clamp(24px,2vw,30px)] flex flex-row justify-center items-center p-5 bg-linear-to-br from-tertiary to-highlight text-white rounded-md">
                                 <Wrench className="absolute top-[50%] left-[50%] -translate-x-1/2 -translate-y-1/2 w-[clamp(18px,2vw,20px)] h-[clamp(18px,2vw,20px)]"/>
                             </div>
@@ -144,7 +145,7 @@ export default function About() {
 
             {/* Music Page */}
             <div className="min-w-screen min-h-[calc(100vh-64px)] flex flex-col justify-center items-center p-10 gap-10 bg-primary">
-                <SpotifyTopTracks/>
+                <SpotifyNowPlaying/>
             </div>
 
             {/* Games Page */}

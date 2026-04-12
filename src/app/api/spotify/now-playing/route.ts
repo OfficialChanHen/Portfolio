@@ -13,7 +13,8 @@ export async function GET() {
     return NextResponse.json({
         isPlaying: song.is_playing,
         title: song.item.name,
-        artist: song.item.artists.map((a: { name: string }) => a.name).join(", "),
+        artists: song.item.artists.map((a: { name: string }) => a.name).join(", "),
+        albumImg: song.item.album.images?.[0]?.url ?? null,
         songUrl: song.item.external_urls.spotify,
     });
 }
