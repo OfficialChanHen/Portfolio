@@ -6,14 +6,12 @@ import { FaReact } from "react-icons/fa";
 import { AiOutlinePython } from "react-icons/ai";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
-import { TextPlugin } from "gsap/TextPlugin";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useRef, Dispatch, SetStateAction } from "react";
 import Link from 'next/link';
 import playOrTrigger from '@/app/utils/playOrTrigger';
 import { useNavigationMode } from '@/providers/NavigationModeProvider';
 
-gsap.registerPlugin(useGSAP, TextPlugin, ScrollTrigger);
+gsap.registerPlugin(useGSAP);
 
 type IntroductionProps = {
     setIntroDone: Dispatch<SetStateAction<boolean>>

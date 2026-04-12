@@ -1,21 +1,78 @@
 'use client'
 
 import StarBackground from "@/app/(tabs)/_components/StarBackground";
-import SpotifyNowPlaying from "@/app/(tabs)/_components/SpotifyNowPlaying";
 import SpotifyTopTracks from "@/app/(tabs)/_components/SpotifyTopTracks";
 import { AppWindow, Database, Wrench, BookOpenText, Rocket, Download, Zap, BugOff, Users } from "lucide-react";
 import { useRef } from 'react';
 import TopGames from "../_components/TopGame";
+import gsap from "gsap";
+import { useGSAP } from "@gsap/react";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useNavigationMode } from "@/providers/NavigationModeProvider";
+
+gsap.registerPlugin(useGSAP, ScrollTrigger);
 
 export default function About() {
     const textContainer = useRef<HTMLDivElement>(null);
     const techContainer = "w-full flex flex-col justify-start items-start bg-secondary rounded-xl p-10 gap-5 border border-tertiary";
 
+    const navigationMode = useNavigationMode();
+    const delayTime = navigationMode === "soft" ? 0.4 : 0.6;
+    useGSAP(() => {
+        if(!textContainer.current) return;
+
+        const introTl = gsap.timeline();
+        introTl
+            .fromTo(".rocket", {
+                    x: 0,
+                    y: -30,
+                    opacity: 0,
+                },
+                {
+                    x: 0,
+                    y: textContainer.current.offsetHeight,
+                    duration: 1.6,
+                    ease: "power2.inOut",
+                    delay: delayTime,
+                    keyframes: {
+                        opacity: [0, 1, 1, 0],
+                        easeEach: "none",
+                    },
+                },
+                0
+            )
+            .fromTo(".intro-text",
+                { y: -20, opacity: 0 },
+                {
+                    y: 0,
+                    opacity: 1,
+                    duration: 0.65,
+                    ease: "power2.inOut",
+                    delay: delayTime + 0.3,
+                    stagger: {
+                        from: "start",
+                        amount: 0.65,
+                    },
+                },
+                0
+            )
+        gsap.utils.toArray<HTMLDivElement>(".panel").forEach((panel, i) => {
+            ScrollTrigger.create({
+                trigger: panel,
+                start: "top top",
+                end: "+=500",
+                pin: true,
+                pinSpacing: false,
+            });
+        });
+        
+    })
+
     return(
         <div className="w-full h-full flex flex-col justify-start md:justify-center items-center">
             <StarBackground/>
             {/* Background page */}
-            <div className="min-w-screen min-h-[calc(100vh-64px)] flex flex-col justify-start items-center p-10 gap-10 bg-primary">
+            <div className="panel min-w-screen min-h-screen flex flex-col justify-start items-center p-10 gap-10 bg-primary">
                 {/* Header Info */}
                 <div ref={textContainer} className="relative flex flex-col justify-center items-center text-center gap-2">
 
@@ -37,12 +94,17 @@ export default function About() {
                     </h2>
 
                     <span className="intro-text text-[1rem] md:text-[1.5rem] text-white/80">Want to know more? Check out my resume and continue scrolling down!</span>
+                    
+                    {/* Resume */}
+                    <div className="intro-text">
+                        <div className="flex flex-row justify-center items-center gap-2 px-5 py-3 rounded-md cursor-pointer bg-tertiary border-none shadow-[0_0_25px] shadow-tertiary backdrop-blur-xs hover:shadow-[0_0_5px,_0_0_25px,_0_0_50px,_0_0_100px] hover:shadow-tertiary hover:scale-105 text-nowrap transition-all ease-in-out duration-300">
+                            <a href="/Official-Resume.pdf" download className="text-white/80 font-bold">Download Resume</a>
+                            <Download className="w-[clamp(18px,2vw,20px)] h-[clamp(18px,2vw,20px)]"/>
+                        </div>
+                    </div>
+                    
                 </div>
-                {/* Resume */}
-                <div className="flex flex-row justify-center items-center gap-2 px-5 py-3 rounded-md cursor-pointer bg-tertiary border-none shadow-[0_0_25px] shadow-tertiary backdrop-blur-xs hover:shadow-[0_0_5px,_0_0_25px,_0_0_50px,_0_0_100px] hover:shadow-tertiary hover:scale-105 text-nowrap transition-all ease-in-out duration-300">
-                    <a href="/Official-Resume.pdf" download className="text-white/80 font-bold">Download Resume</a>
-                    <Download className="w-[clamp(18px,2vw,20px)] h-[clamp(18px,2vw,20px)]"/>
-                </div>
+
                 {/* Tech Stack */}
                 <div className="md:w-full max-w-[1080px] flex flex-col md:flex-row justify-center md:items-stretch gap-5">
 
@@ -100,7 +162,7 @@ export default function About() {
             </div>
 
             {/* Value Page */}
-            <div className="min-w-screen min-h-[calc(100vh-64px)] flex flex-col justify-center items-center p-10 gap-10 bg-secondary">
+            <div className="panel min-w-screen min-h-screen flex flex-col justify-center items-center p-10 gap-10 bg-secondary">
                 {/* Header */}
                 <h2 className="intro-text text-[2.5rem] md:text-[3.5rem]">
                     {"What I "}
@@ -145,14 +207,12 @@ export default function About() {
             </div>
 
             {/* Music Page */}
-            <div className="min-w-screen min-h-[calc(100vh-64px)] flex flex-col justify-center items-center p-10 gap-10 bg-primary">
-                {//<SpotifyNowPlaying/>
-                }
+            <div className="panel min-w-screen min-h-screen flex flex-col justify-center items-center p-10 gap-10 bg-primary">
                 <SpotifyTopTracks/>
             </div>
 
             {/* Games Page */}
-            <div className="min-w-screen min-h-[calc(100vh-64px)] flex flex-col justify-center items-center p-10 gap-10 bg-secondary">
+            <div className="panel min-w-screen min-h-screen flex flex-col justify-center items-center p-10 gap-10 bg-secondary">
                 <TopGames/>
             </div>
         </div>

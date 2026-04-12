@@ -77,7 +77,7 @@ export default function SpotifyTopTracks() {
                 >
                     <div className="relative w-5/6 rounded-xl bg-primary/80 border border-white/70 backdrop-blur-xs">
                         <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 z-20 w-[60%] bg-tertiary/90 py-2 px-5 drop-shadow-md drop-shadow-primary rounded-xl text-center">
-                            <span className="text-[clamp(0.5rem,3vw,1.5rem)] font-bold text-nowrap">{track.label}</span>
+                            <span className="text-[clamp(0.5rem,3vw,1.5rem)] font-bold">{track.label}</span>
                         </div>
                         <div className="relative z-10 flex flex-col justify-center items-center gap-2 px-5 pb-3 pt-8 md:pt-10 text-center rounded-xl">
                             <span className="text-[1.5rem] md:text-[2rem] font-bold">{track.title}</span>

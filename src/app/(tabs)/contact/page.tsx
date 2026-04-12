@@ -57,21 +57,6 @@ export default function Contacts() {
                 },
                 "-=0.25"
             )
-            .fromTo(".form-button",
-                {
-                    x: -30,
-                    y: 30,
-                    opacity: 0,
-                },
-                {
-                    x: 0,
-                    y: 0,
-                    opacity: 1,
-                    duration: 0.75,
-                    ease: "power2.inOut",
-                },
-                "-=1"
-            );
 
         const socialTl = gsap.timeline({ paused: true });
         socialTl
@@ -120,9 +105,11 @@ export default function Contacts() {
                 },
                 0
             )
-            .from(".intro-text", {
-                    y: -20,
-                    opacity: 0,
+            .fromTo(".intro-text",
+                { y: -20, opacity: 0 },
+                {
+                    y: 0,
+                    opacity: 1,
                     duration: 0.65,
                     ease: "power2.inOut",
                     stagger: {
@@ -280,23 +267,26 @@ export default function Contacts() {
                     </div>
 
                     {/* Submit Button*/}
-                    <button
-                        type="submit"
-                        disabled={status === "sending"}
-                        className="form-button group w-full px-5 py-3 text-[0.75rem] md:text-[1rem] rounded-md cursor-pointer text-white font-bold tracking-widest bg-highlight border-none shadow-[0_0_25px] shadow-highlight hover:shadow-[0_0_5px,_0_0_20px,_0_0_50px] hover:shadow-highlight hover:scale-105 transition-all ease-in-out duration-300"
-                    >
-                        {status === "sending" ? (
-                            "Sending..."
-                        ) : (
-                            <div className="relative flex items-center justify-center gap-2">
-                                <Send className="w-[clamp(18px,2vw,20px)] h-[clamp(18px,2vw,20px)]"/>
-                                
-                                <span className="overflow-hidden whitespace-nowrap max-w-[12rem] opacity-100 transition-all duration-400 group-hover:max-w-0 group-hover:opacity-0">
-                                    Send Message
-                                </span>
-                            </div>
-                        )}
-                    </button>
+                    <div className="form group w-full">
+                        <button
+                            type="submit"
+                            disabled={status === "sending"}
+                            className="w-full px-5 py-3 text-[0.75rem] md:text-[1rem] rounded-md cursor-pointer text-white font-bold tracking-widest bg-highlight border-none shadow-[0_0_25px] shadow-highlight hover:shadow-[0_0_5px,_0_0_20px,_0_0_50px] hover:shadow-highlight hover:scale-105 transition-all ease-in-out duration-300"
+                        >
+                            {status === "sending" ? (
+                                "Sending..."
+                            ) : (
+                                <div className="relative flex items-center justify-center gap-2">
+                                    <Send className="w-[clamp(18px,2vw,20px)] h-[clamp(18px,2vw,20px)]"/>
+                                    
+                                    <span className="overflow-hidden whitespace-nowrap max-w-[12rem] opacity-100 transition-all duration-400 group-hover:max-w-0 group-hover:opacity-0">
+                                        Send Message
+                                    </span>
+                                </div>
+                            )}
+                        </button>
+                    </div>
+                    
 
                     {status === "success" && (
                         <div className="inline-flex flex-row justify-start items-center gap-2 text-green-400 text-[0.75rem] md:text-[1rem]"> 
