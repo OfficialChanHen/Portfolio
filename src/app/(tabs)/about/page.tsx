@@ -5,6 +5,7 @@ import SpotifyNowPlaying from "@/app/(tabs)/_components/SpotifyNowPlaying";
 import SpotifyTopTracks from "@/app/(tabs)/_components/SpotifyTopTracks";
 import { AppWindow, Database, Wrench, BookOpenText, Rocket, Download, Zap, BugOff, Users } from "lucide-react";
 import { useRef } from 'react';
+import TopGames from "../_components/TopGame";
 
 export default function About() {
     const textContainer = useRef<HTMLDivElement>(null);
@@ -145,11 +146,15 @@ export default function About() {
 
             {/* Music Page */}
             <div className="min-w-screen min-h-[calc(100vh-64px)] flex flex-col justify-center items-center p-10 gap-10 bg-primary">
-                <SpotifyNowPlaying/>
+                {//<SpotifyNowPlaying/>
+                }
+                <SpotifyTopTracks/>
             </div>
 
             {/* Games Page */}
-            <div className="min-w-screen min-h-[calc(100vh-64px)] flex flex-col justify-center items-center p-10 gap-10 bg-secondary"></div>
+            <div className="min-w-screen min-h-[calc(100vh-64px)] flex flex-col justify-center items-center p-10 gap-10 bg-secondary">
+                <TopGames/>
+            </div>
         </div>
     )
 }

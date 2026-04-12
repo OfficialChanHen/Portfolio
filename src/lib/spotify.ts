@@ -37,7 +37,7 @@ export async function getNowPlaying() {
 
 export async function getTopTracks() {
     const { access_token } = await getSpotifyAccessToken();
-    const numTracks = 4;
+    const numTracks = 5;
     
     return fetch(`${TOP_TRACKS_ENDPOINT}?limit=${numTracks}`, {
         headers: {
