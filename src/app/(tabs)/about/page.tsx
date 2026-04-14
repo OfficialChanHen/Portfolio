@@ -14,12 +14,13 @@ gsap.registerPlugin(useGSAP, ScrollTrigger);
 
 export default function About() {
     const textContainer = useRef<HTMLDivElement>(null);
-    const techContainer = "w-full flex flex-col justify-start items-start bg-secondary rounded-xl p-10 gap-5 border border-tertiary";
+    const techStackStyle = "tech-content opacity-0 w-full flex flex-col justify-start items-start bg-primary/60 border border-primary backdrop-blur-xs rounded-xl p-10 gap-5";
 
     const navigationMode = useNavigationMode();
     const delayTime = navigationMode === "soft" ? 0.4 : 0.6;
     useGSAP(() => {
-        if(!textContainer.current) return;
+        const textContainerEl = textContainer.current;
+        if (!textContainerEl) return;
 
         const introTl = gsap.timeline();
         introTl
@@ -30,7 +31,7 @@ export default function About() {
                 },
                 {
                     x: 0,
-                    y: textContainer.current.offsetHeight,
+                    y: textContainerEl.offsetHeight,
                     duration: 1.6,
                     ease: "power2.inOut",
                     delay: delayTime,
@@ -56,26 +57,54 @@ export default function About() {
                 },
                 0
             )
-        gsap.utils.toArray<HTMLDivElement>(".panel").forEach((panel, i) => {
+        
+        const panels = gsap.utils.toArray<HTMLDivElement>(".panel");
+        const panelSize = panels[0]?.offsetHeight ?? 0;
+        const endPoint = panelSize;
+        panels.forEach((panel, i) => {
             ScrollTrigger.create({
+                markers: true,
                 trigger: panel,
-                start: "top top",
-                end: "+=500",
+                start: "-66px top",
+                end: () => `+=${endPoint}`,
                 pin: true,
-                pinSpacing: false,
+                pinSpacing: true,
             });
         });
         
+        gsap.fromTo(".tech-content", 
+            {
+                y: 30,
+                opacity: 0,
+            },
+            {
+                opacity: 1, 
+                y: 0, 
+                ease: "power2.out",
+                stagger: {
+                    amount: 0.1,
+                    from: "start",
+                    ease: "power2.inOut",
+                },
+                scrollTrigger: {
+                    trigger: ".tech-header",
+                    start: "top top",
+                    end: () => `+=${endPoint}`,
+                    toggleActions: "play none none reverse",
+                    scrub: 1,
+                    markers: true
+                }
+            }
+        )
     })
 
     return(
         <div className="w-full h-full flex flex-col justify-start md:justify-center items-center">
             <StarBackground/>
-            {/* Background page */}
-            <div className="panel min-w-screen min-h-screen flex flex-col justify-start items-center p-10 gap-10 bg-primary">
+            {/* Header page */}
+            <div className="min-w-screen flex flex-col justify-start items-center p-10 gap-10">
                 {/* Header Info */}
-                <div ref={textContainer} className="relative flex flex-col justify-center items-center text-center gap-2">
-
+                <div ref={textContainer} className="text-container relative flex flex-col justify-center items-center text-center gap-2">
                     {/* Rocket */}
                     <div className='rocket absolute top-0 left-[48%] z-20 rotate-135 opacity-100'>
                         <Rocket size={20}/>
@@ -104,12 +133,20 @@ export default function About() {
                     </div>
                     
                 </div>
+            </div>
+            {/* Tech page */}
+            <div className="panel min-w-screen min-h-screen flex flex-col justify-center items-center p-10 gap-10">
+                {/* Header */}
+                <h2 className="tech-header tech-content opacity text-[2.5rem] md:text-[3.5rem]">
+                    <span className="bg-gradient-to-t from-white via-highlight to-tertiary bg-clip-text text-transparent">
+                        Tech Stack
+                    </span>
+                </h2>
 
                 {/* Tech Stack */}
                 <div className="md:w-full max-w-[1080px] flex flex-col md:flex-row justify-center md:items-stretch gap-5">
-
                     {/* Frontend */}
-                    <div className={techContainer}>
+                    <div className={techStackStyle}>
                         <div className="place-self-center md:place-self-start flex flex-col md:flex-row justify-center md:justify-start items-center gap-3 text-[1rem] md:text-[1.25rem] font-bold">
                             <div className="relative w-[clamp(24px,2vw,30px)] h-[clamp(24px,2vw,30px)] flex flex-row justify-center items-center p-5 bg-linear-to-br from-tertiary to-highlight text-white rounded-md">
                                 <AppWindow className="absolute top-[50%] left-[50%] -translate-x-1/2 -translate-y-1/2 w-[clamp(18px,2vw,20px)] h-[clamp(18px,2vw,20px)]"/>
@@ -126,7 +163,7 @@ export default function About() {
                     </div>
 
                     {/* Backend */}
-                    <div className={techContainer}>
+                    <div className={techStackStyle}>
                         <div className="place-self-center md:place-self-start flex flex-col md:flex-row justify-center md:justify-start items-center gap-3 text-[1rem] md:text-[1.25rem] font-bold">
                             <div className="relative w-[clamp(24px,2vw,30px)] h-[clamp(24px,2vw,30px)] flex flex-row justify-center items-center p-5 bg-linear-to-br from-tertiary to-highlight text-white rounded-md">
                                 <Database className="absolute top-[50%] left-[50%] -translate-x-1/2 -translate-y-1/2 w-[clamp(18px,2vw,20px)] h-[clamp(18px,2vw,20px)]"/>
@@ -143,7 +180,7 @@ export default function About() {
                     </div>
 
                     {/* Tools */}
-                    <div className={techContainer}>
+                    <div className={techStackStyle}>
                         <div className="place-self-center md:place-self-start flex flex-col md:flex-row justify-center md:justify-start items-center gap-3 text-[1rem] md:text-[1.25rem] font-bold">
                             <div className="relative w-[clamp(24px,2vw,30px)] h-[clamp(24px,2vw,30px)] flex flex-row justify-center items-center p-5 bg-linear-to-br from-tertiary to-highlight text-white rounded-md">
                                 <Wrench className="absolute top-[50%] left-[50%] -translate-x-1/2 -translate-y-1/2 w-[clamp(18px,2vw,20px)] h-[clamp(18px,2vw,20px)]"/>
@@ -161,8 +198,8 @@ export default function About() {
                 </div>
             </div>
 
-            {/* Value Page */}
-            <div className="panel min-w-screen min-h-screen flex flex-col justify-center items-center p-10 gap-10 bg-secondary">
+            {/* Values Page */}
+            <div className="panel panel__values min-w-screen min-h-screen flex flex-col justify-center items-center p-10 gap-10 border border-white">
                 {/* Header */}
                 <h2 className="intro-text text-[2.5rem] md:text-[3.5rem]">
                     {"What I "}
@@ -207,12 +244,12 @@ export default function About() {
             </div>
 
             {/* Music Page */}
-            <div className="panel min-w-screen min-h-screen flex flex-col justify-center items-center p-10 gap-10 bg-primary">
+            <div className="panel min-w-screen min-h-screen flex flex-col justify-center items-center p-10 gap-10 border border-white">
                 <SpotifyTopTracks/>
             </div>
 
             {/* Games Page */}
-            <div className="panel min-w-screen min-h-screen flex flex-col justify-center items-center p-10 gap-10 bg-secondary">
+            <div className="panel min-w-screen min-h-screen flex flex-col justify-center items-center p-10 gap-10 border border-white">
                 <TopGames/>
             </div>
         </div>
