@@ -12,7 +12,7 @@ export default function Footer({ className }: FooterProps) {
     return(
         <div className={`${className} footer border-t-2 px-10 py-5  flex flex-row justify-center items-center`}>
             <div className="w-full max-w-[1080px]">
-                <div className="inline-flex flex-col justify-center items-center gap-2 text-[0.70rem] md:text-[0.80rem]">
+                <div className="inline-flex flex-col justify-center items-center gap-2 text-[0.75rem] md:text-[1rem]">
                     <span className="w-full text-left">
                         {`"Looking at the stars always makes me dream,`}
                         {isMobile && <br/>}

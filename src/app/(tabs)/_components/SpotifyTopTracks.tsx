@@ -1,6 +1,11 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import gsap from "gsap";
+import { useGSAP } from "@gsap/react";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(useGSAP, ScrollTrigger);
 
 type NowPlaying = {
     isPlaying: boolean;
@@ -21,6 +26,7 @@ type Track = {
 export default function SpotifyTopTracks() {
     const [data, setData] = useState<Track[]>([]);
     const [nowPlaying, setNowPlaying] = useState<NowPlaying | null>(null);
+    const containerRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
         async function loadTopTracks() {
@@ -41,6 +47,46 @@ export default function SpotifyTopTracks() {
         return () => clearInterval(interval);
     }, []);
 
+    // re-run GSAP when cards change (data loads)
+    useGSAP(() => {
+        if (!containerRef.current) return;
+
+        const tl = gsap.timeline({
+            scrollTrigger: {
+                trigger: containerRef.current.closest(".panel.panel--music"),
+                start: "-66px top",
+                end: () => `+=${window.innerHeight - 66}`,
+                scrub: true,
+                snap: {
+                    snapTo: 'labels',
+                    duration: 0.5,
+                    ease: 'power1.inOut'
+                },
+                markers: true,
+            }
+        });
+
+        const cardEls = gsap.utils.toArray<Element>(".track-card")
+        cardEls.forEach((card, i) => {
+            if (i === cardEls.length - 1) return;
+            const step = 1 / cardEls.length;
+            const offset = i * step;
+
+            tl.addLabel(`card ${i}`)
+            tl.to(card,
+                {
+                    x: "-120%",
+                    opacity: 0,
+                    rotation: -15,
+                    ease: "power2.in",
+                    duration: step,
+                },
+                offset
+            );
+        });
+
+    }, { scope: containerRef, dependencies: [data, nowPlaying] });
+
     // Combine now-playing + top tracks into one list
     const cards: { id: string; title: string; artists: string; albumImg: string; songUrl: string; label: string }[] = [
         ...(nowPlaying?.isPlaying ? [{
@@ -56,21 +102,15 @@ export default function SpotifyTopTracks() {
             label: `My #${index + 1} Song`,
         })),
     ];
-
+    
     return (
-        <div className="relative flex justify-center items-center"
-            style={{
-                height: `calc(80vh + ${(cards.length - 1) * 10}px)`,
-                width: '100%',
-                maxWidth: '1080px',
-                margin: '0 auto'
-            }}>
+        <div ref={containerRef} className="relative flex justify-center items-center h-[50vh] w-full max-w-[1080px] h-[clamp(300px,50vw,800px]">
             {cards.map((track, index) => (
                 <a key={track.id} href={track.songUrl} target="_blank" rel="noopener noreferrer"
-                    className="absolute h-[80vh] flex flex-col justify-end items-center gap-4 p-5 text-white bg-cover bg-center rounded-2xl drop-shadow-xl drop-shadow-black/80 transition-transform duration-300 ease-in-out hover:translate-x-4"
+                    className="track-card absolute h-full flex flex-col justify-end items-center gap-4 p-5 text-white bg-cover bg-center rounded-2xl drop-shadow-xl drop-shadow-black/80 transition-transform duration-300 ease-in-out hover:translate-x-4"
                     style={{
                         backgroundImage: `url(${track.albumImg})`,
-                        left: `clamp(0px, ${index * 1.5}vw, ${index * 15}px)`,
+                        left: `clamp(0px, ${index * 3}vw, ${index * 20}px)`,
                         width: `calc(90% - clamp(0px, ${(cards.length - 1 - index) * 1.5}vw, ${(cards.length - 1 - index) * 15}px))`,
                         zIndex: cards.length - index,
                     }}

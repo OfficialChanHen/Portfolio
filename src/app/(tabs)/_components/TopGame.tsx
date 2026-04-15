@@ -1,3 +1,13 @@
+"use client"
+
+
+import { useEffect, useRef, useState } from "react";
+import gsap from "gsap";
+import { useGSAP } from "@gsap/react";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(useGSAP, ScrollTrigger);
+
 type Game = {
     id: number,
     title: string,
@@ -12,15 +22,55 @@ export default function TopGames() {
         { id: 3, title: "Terraria", coverUrl: "terraria_cover.jpeg", company: "Re-Logic" },
         { id: 4, title: "League of Legends", coverUrl: "League.png", company: "Riot Games" },
         { id: 5, title: "Ark: Survival Ascended", coverUrl: "Ark.jpg", company: "Studio Wildcard" },
-    ]
+    ];
+    const containerRef = useRef<HTMLDivElement>(null);
+
+    useGSAP(() => {
+        if (!containerRef.current) return;
+
+        const tl = gsap.timeline({
+            scrollTrigger: {
+                trigger: containerRef.current.closest(".panel.panel--games"),
+                start: `${(window.innerHeight - (66 * 2))}px top`,
+                end: () => `+=${window.innerHeight - 66}`,
+                scrub: true,
+                snap: {
+                    snapTo: 'labels',
+                    duration: 0.5,
+                    ease: 'power1.inOut'
+                },
+                markers: true,
+            }
+        });
+
+        const cardEls = gsap.utils.toArray<Element>(".game-card")
+        cardEls.forEach((card, i) => {
+            if (i === cardEls.length - 1) return;
+            const step = 1 / cardEls.length;
+            const offset = i * step;
+
+            tl.addLabel(`card ${i}`)
+            tl.to(card,
+                {
+                    x: "-120%",
+                    opacity: 0,
+                    rotation: -15,
+                    ease: "power2.in",
+                    duration: step,
+                },
+                offset
+            );
+        });
+
+    }, { scope: containerRef });
 
     return(
-        <div className="relative flex justify-center items-center" style={{ height: `calc(80vh + ${(games.length - 1) * 40}px)`, width: '100%', maxWidth: '1080px', margin: '0 auto' }}>
+        <div ref={containerRef} className="relative flex justify-center items-center h-[50vh] w-full max-w-[1080px] h-[clamp(300px,50vw,800px]">
             {games.map((game, index) => (
                 <div key={game.id} 
-                    className="absolute h-[80vh] flex flex-col justify-end items-center gap-4 p-5 text-white bg-cover bg-center rounded-2xl drop-shadow-xl drop-shadow-black/80 transition-transform duration-300 ease-in-out hover:translate-x-3"
+                    className="game-card absolute h-full flex flex-col justify-end items-center gap-4 p-5 text-white bg-cover bg-center rounded-2xl drop-shadow-xl drop-shadow-black/80"
                     style={{
-                        backgroundImage: `url(${game.coverUrl})`,
+                        backgroundImage: `url(/${game.coverUrl})`,
                         left: `clamp(0px, ${index * 3}vw, ${index * 20}px)`,
                         width: `calc(90% - clamp(0px, ${(games.length - 1 - index) * 3}vw, ${(games.length - 1 - index) * 20}px))`,
                         zIndex: games.length - index,

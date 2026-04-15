@@ -14,7 +14,7 @@ gsap.registerPlugin(useGSAP, ScrollTrigger);
 
 export default function About() {
     const textContainer = useRef<HTMLDivElement>(null);
-    const techStackStyle = "group opacity-0 w-full flex flex-col justify-start items-start p-10 gap-5 bg-gradient-to-br from-white/5 to-white/[0.02] border border-white/10 text-white rounded-xl";
+    const techStackStyle = "group w-full flex flex-col justify-start items-start p-10 gap-5 bg-gradient-to-br from-white/5 to-white/[0.02] border border-white/10 text-white rounded-xl";
     const techImg = "place-self-center md:place-self-start flex flex-col md:flex-row justify-center md:justify-start items-center gap-3 text-[1rem] md:text-[1.25rem] font-bold group-hover:scale-105 transition-transform ease-in-out duration-300";
     const techTitleStyle = "group-hover:text-highlight transition-color ease-in-out duration-300";
     const techSubListStyle = "list-disc marker:text-highlight pl-5 space-y-2 text-[0.75rem] md:text-[1rem] text-white/80 group-hover:text-white transition-color group-hover:scale-105 transition-transform ease-in-out duration-300";
@@ -66,7 +66,6 @@ export default function About() {
         const endPoint = panelSize;
         panels.forEach((panel, i) => {
             ScrollTrigger.create({
-                markers: true,
                 trigger: panel,
                 start: "-66px top",
                 end: () => `+=${endPoint}`,
@@ -77,6 +76,7 @@ export default function About() {
 
         const fadeInElements = gsap.utils.toArray<Element>(".fade-in")
         fadeInElements.forEach((fadeInElement) => {
+            gsap.set(fadeInElement, { opacity: 0, y: 30 });
             gsap.fromTo(fadeInElement, 
                 {
                     y: 30,
@@ -91,7 +91,6 @@ export default function About() {
                         trigger: fadeInElement,
                         start: "top 60%",
                         end: () => `bottom 50%`,
-                        markers: true
                     }
                 }
             );
@@ -99,6 +98,7 @@ export default function About() {
 
         const fadeInList = gsap.utils.toArray<Element>(".fade-in-list")
         fadeInList.forEach((fadeInList) => {
+            gsap.set(fadeInList.children, { opacity: 0, y: 30 });
             gsap.fromTo(fadeInList.children, 
                 {
                     y: 30,
@@ -117,7 +117,6 @@ export default function About() {
                         trigger: fadeInList,
                         start: "top 60%",
                         end: () => `bottom 50%`,
-                        markers: true
                     }
                 }
             );
@@ -128,7 +127,7 @@ export default function About() {
         <div className="w-full h-full flex flex-col justify-start md:justify-center items-center">
             <StarBackground/>
             {/* Header page */}
-            <div className="min-w-screen min-h-screen flex flex-col justify-center items-center p-10 gap-10 bg-primary">
+            <div className="min-w-screen min-h-[calc(100vh-66px)] flex flex-col justify-center items-center p-10 gap-10 bg-primary">
                 {/* Header Info */}
                 <div ref={textContainer} className="text-container relative flex flex-col justify-center items-center text-center gap-2">
                     {/* Rocket */}
@@ -161,9 +160,9 @@ export default function About() {
                 </div>
             </div>
             {/* Tech page */}
-            <div className="min-w-screen min-h-screen flex flex-col justify-center items-center p-10 gap-10 bg-secondary">
+            <div className="min-w-screen min-h-[calc(100vh-66px)] flex flex-col justify-center items-center p-10 gap-10 bg-secondary">
                 {/* Header */}
-                <h2 className="fade-in opacity-0 text-[2.5rem] md:text-[3.5rem]">
+                <h2 className="fade-in text-[2.5rem] md:text-[3.5rem] text-center">
                     <span className="bg-gradient-to-t from-white via-highlight to-tertiary bg-clip-text text-transparent">
                         Tech Stack
                     </span>
@@ -225,9 +224,9 @@ export default function About() {
             </div>
 
             {/* Values Page */}
-            <div className="min-w-screen min-h-screen flex flex-col justify-center items-center p-10 gap-10 bg-primary">
+            <div className="min-w-screen min-h-[calc(100vh-66px)] flex flex-col justify-center items-center p-10 gap-10 bg-primary">
                 {/* Header */}
-                <h2 className="fade-in intro-text text-[2.5rem] md:text-[3.5rem]">
+                <h2 className="fade-in text-[2.5rem] md:text-[3.5rem] text-center">
                     {"What I "}
                     <span className="bg-gradient-to-t from-white via-highlight to-tertiary bg-clip-text text-transparent">
                         Value
@@ -270,12 +269,33 @@ export default function About() {
             </div>
 
             {/* Music Page */}
-            <div className="min-w-screen min-h-screen flex flex-col justify-center items-center p-10 gap-10 bg-secondary">
+            <div className="panel panel--music min-w-screen h-[calc(100vh-66px)] flex flex-col justify-center items-center p-10 gap-5 bg-secondary">
+                <div className="fade-in-list text-center">
+                    <h2 className="fade-in text-[2.5rem] md:text-[3.5rem]">
+                        {"Personal Interests: "}
+                        <span className="bg-gradient-to-t from-white via-highlight to-tertiary bg-clip-text text-transparent">
+                            Music
+                        </span>
+                    </h2>
+
+                    <span className="text-[1rem] md:text-[1.5rem] text-white/80">Top Spotify Tracks</span>
+                </div>
+                    
                 <SpotifyTopTracks/>
             </div>
 
             {/* Games Page */}
-            <div className="min-w-screen min-h-screen flex flex-col justify-center items-center p-10 gap-10 bg-primary">
+            <div className="panel panel--games min-w-screen min-h-[calc(100vh-66px)] flex flex-col justify-center items-center p-10 gap-5 bg-primary">
+                <div className="fade-in-list text-center">
+                    <h2 className="text-[2.5rem] md:text-[3.5rem]">
+                        {"Personal Interests: "}
+                        <span className="bg-gradient-to-t from-white via-highlight to-tertiary bg-clip-text text-transparent">
+                            Games
+                        </span>
+                    </h2>
+                </div>
+
+                <span className="text-[1rem] md:text-[1.5rem] text-white/80">Top Video Games</span>
                 <TopGames/>
             </div>
         </div>
