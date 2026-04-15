@@ -14,17 +14,19 @@ type WelcomeProps = {
 
 export default function Welcome({ setToWarp }: WelcomeProps) {
     const containerRef = useRef<HTMLDivElement>(null);
-    const [phase, setPhase] = useState<"welcome" | "enter">("welcome");
+    const [phase, setPhase] = useState<"welcome" | "enter">("enter");
     const [isClickLocked, setIsClickLocked] = useState(false); // prevents spam click
     const tl = gsap.timeline();
 
     // Welcome text faded in and out
     const speed = 1.5;
     useGSAP(() => {
+        {/*
         const welcomeSplit = SplitText.create(".welcome", {
             type: "chars, words, lines",
             mask: "lines",
         });
+        */}
 
         tl.from(".circle", {
             opacity: 0,
@@ -35,6 +37,33 @@ export default function Welcome({ setToWarp }: WelcomeProps) {
                 from: "start"
             }
         })
+        const enterSplit = SplitText.create(".enter",{
+            type: "chars, words, lines",
+            mask: "lines"
+        });
+
+        tl.from(enterSplit.chars, {
+            opacity: 0,
+            duration: speed,
+            ease: "power2.out",
+            stagger: {
+                amount: speed,
+                from: "start"
+            },
+        });
+
+        enterSplit.chars.forEach((char) => {
+            gsap.to(char, {
+                y: gsap.utils.random(-12, 12),
+                x: gsap.utils.random(-6, 6),
+                rotation: gsap.utils.random(-8, 8),
+                duration: gsap.utils.random(2, 4),
+                ease: "sine.inOut",
+                repeat: -1,
+                yoyo: true
+            });
+        });
+        {/*
 
         tl.from(welcomeSplit.chars, {
             opacity: 0,
@@ -58,9 +87,11 @@ export default function Welcome({ setToWarp }: WelcomeProps) {
                 setPhase("enter");
             },
         });
+        */}
     }, { scope: containerRef })
     
     // Enter text appears and floats
+    {/*
     useGSAP(() => {
         if(phase === "enter") {
             const enterSplit = SplitText.create(".enter",{
@@ -91,6 +122,7 @@ export default function Welcome({ setToWarp }: WelcomeProps) {
             });
         };
     }, { dependencies: [phase], scope: containerRef})
+    */}
 
     // Enter texts fades and transition into main screen
     const { contextSafe } = useGSAP({ scope: containerRef });

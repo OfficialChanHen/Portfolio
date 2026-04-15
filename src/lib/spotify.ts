@@ -43,6 +43,6 @@ export async function getTopTracks() {
         headers: {
             Authorization: `Bearer ${access_token}`,
         },
-        cache: "no-store",
+        next: { revalidate: 60 },
     });
 }

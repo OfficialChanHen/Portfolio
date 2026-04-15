@@ -30,7 +30,7 @@ export default function TopGames() {
 
         const tl = gsap.timeline({
             scrollTrigger: {
-                trigger: containerRef.current.closest(".panel.panel--games"),
+                trigger: containerRef.current.closest(".panel-games"),
                 start: `${(window.innerHeight - (66 * 2))}px top`,
                 end: () => `+=${window.innerHeight - 66}`,
                 scrub: true,
@@ -38,7 +38,9 @@ export default function TopGames() {
                     snapTo: 'labels',
                     duration: 0.5,
                     ease: 'power1.inOut'
+                
                 },
+                markers: true
             }
         });
 
@@ -64,29 +66,32 @@ export default function TopGames() {
     }, { scope: containerRef });
 
     return(
-        <div ref={containerRef} className="relative flex justify-center items-center h-[50vh] w-full max-w-[1080px] h-[clamp(300px,50vw,800px]">
+        <div ref={containerRef} className="w-full max-w-[1080px] flex flex-col justify-center items-center gap-4 ">
             {games.map((game, index) => (
-                <div key={game.id} 
-                    className="game-card absolute h-full flex flex-col justify-end items-center gap-4 p-5 text-white bg-cover bg-center rounded-2xl drop-shadow-xl drop-shadow-black/80"
+                <div
+                    key={game.id}
+                    className="game-card relative h-64 w-full flex flex-col justify-center items-center gap-4 p-5 text-white bg-cover bg-center rounded-2xl drop-shadow-xl drop-shadow-black/80"
                     style={{
                         backgroundImage: `url(/${game.coverUrl})`,
-                        left: `clamp(0px, ${index * 3}vw, ${index * 20}px)`,
-                        width: `calc(90% - clamp(0px, ${(games.length - 1 - index) * 3}vw, ${(games.length - 1 - index) * 20}px))`,
-                        zIndex: games.length - index,
                     }}
                 >
-                    <div className="relative w-5/6 rounded-xl bg-primary/80 border border-white/70 backdrop-blur-xs">
-                        <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 z-20 w-[60%] bg-tertiary/90 py-2 px-5 drop-shadow-md drop-shadow-primary rounded-xl text-center">
-                            <span className="text-[clamp(0.5rem,3vw,1.5rem)] font-bold">Favorite Games</span>
-                        </div>
-
-                        <div className="relative z-10 flex flex-col justify-center items-center gap-2 px-5 pb-3 pt-8 md:pt-10 text-center rounded-xl">
-                            <span className="text-[1.5rem] md:text-[2rem] font-bold">{game.title}</span>
-                            <span className="text-[1rem] md:text-[1.5rem] text-white/80">Made by {game.company}</span>
-                        </div>
+                    <div className="w-2/3 flex flex-col justify-center items-center p-5 bg-gradient-to-br from-white/30 to-white/5 border border-white/10 text-white rounded-xl drop-shadow-lg">
+                        <span className="text-[2rem] md:text-[2.5rem] text-center font-bold text-shadow-lg">{game.title}</span>
                     </div>
                 </div>
             ))}
-        </div>
+            {/*
+            <div className="relative w-5/6 rounded-xl bg-primary/80 border border-white/70 backdrop-blur-xs">
+                <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 z-20 w-[60%] bg-tertiary/90 py-2 px-5 drop-shadow-md drop-shadow-primary rounded-xl text-center">
+                    <span className="text-[clamp(0.5rem,3vw,1.5rem)] font-bold">Favorite Games</span>
+                </div>
+
+                <div className="relative z-10 flex flex-col justify-center items-center gap-2 px-5 pb-3 pt-8 md:pt-10 text-center rounded-xl">
+                    <span className="text-[1.5rem] md:text-[2rem] font-bold">{game.title}</span>
+                    <span className="text-[1rem] md:text-[1.5rem] text-white/80">Made by {game.company}</span>
+                </div>
+            </div>
+            */}
+        </div>    
     );
 }

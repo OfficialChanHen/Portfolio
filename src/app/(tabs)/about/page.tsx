@@ -268,7 +268,7 @@ export default function About() {
                 </div>
             </div>
 
-            {/* Music Page */}
+            {/* Music Page  <SpotifyTopTracks/> */}
             <div className="panel panel--music min-w-screen h-[calc(100vh-66px)] flex flex-col justify-center items-center p-10 gap-5 bg-secondary">
                 <div className="fade-in-list text-center">
                     <h2 className="fade-in text-[2.5rem] md:text-[3.5rem]">
@@ -281,11 +281,11 @@ export default function About() {
                     <span className="text-[1rem] md:text-[1.5rem] text-white/80">Top Spotify Tracks</span>
                 </div>
                     
-                <SpotifyTopTracks/>
+                
             </div>
 
             {/* Games Page */}
-            <div className="panel panel--games min-w-screen min-h-[calc(100vh-66px)] flex flex-col justify-center items-center p-10 gap-5 bg-primary">
+            <div className="panel-games min-w-screen min-h-[calc(100vh-66px)] flex flex-col justify-center items-center p-10 pb-20 gap-5 bg-primary">
                 <div className="fade-in-list text-center">
                     <h2 className="text-[2.5rem] md:text-[3.5rem]">
                         {"Personal Interests: "}

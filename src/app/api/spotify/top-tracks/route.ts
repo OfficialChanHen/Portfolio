@@ -12,10 +12,46 @@ type SpotifyTrack = {
     external_urls: { spotify: string };
 };
 
+let cachedTracks: any[] | null = null;
+let cachedAt = 0;
+
+const CACHE_TTL = 60 * 1000; // 60 seconds
+
+
 export async function GET() {
+    const now = Date.now();
+
+    if (cachedTracks && now - cachedAt < CACHE_TTL) {
+        return NextResponse.json(
+            { tracks: cachedTracks, cached: true },
+            {
+                headers: {
+                    "Cache-Control": "public, s-maxage=60, stale-while-revalidate=30",
+                },
+            }
+        );
+    }
+
     const response = await getTopTracks();
 
-    if (response.status !== 200) {
+    if (response.status === 429) {
+        const retryAfter = response.headers.get("Retry-After") ?? "30";
+
+        return NextResponse.json(
+            {
+                error: "Spotify rate limit hit",
+                retryAfter: Number(retryAfter),
+            },
+            {
+                status: 429,
+                headers: {
+                    "Retry-After": retryAfter,
+                },
+            }
+        );
+    }
+
+    if (!response.ok) {
         const errorText = await response.text();
         return NextResponse.json(
             {   
@@ -37,8 +73,16 @@ export async function GET() {
         songUrl: track.external_urls.spotify,
     }))
 
+    cachedTracks = tracks;
+    cachedAt = now;
 
-    return NextResponse.json({
-        tracks
-    });
+
+    return NextResponse.json(
+        { tracks },
+        {
+            headers: {
+                "Cache-Control": "public, s-maxage=60, stale-while-revalidate=30",
+            },
+        }
+    );
 }
