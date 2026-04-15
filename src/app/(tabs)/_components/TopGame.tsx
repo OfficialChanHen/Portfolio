@@ -15,7 +15,11 @@ type Game = {
     company: string,
 }
 
-export default function TopGames() {
+type TopGamesProps = {
+    onHeightReady: (height: number) => void;
+}
+
+export default function TopGames({ onHeightReady }: TopGamesProps) {
     const games: Game[] = [
         { id: 1, title: "Horizon Forbidden West", coverUrl: "horizon.png", company: "Guerrilla Games" },
         { id: 2, title: "Teamfight Tactics", coverUrl: "TFT.png", company: "Riot Games" }, 
@@ -24,53 +28,58 @@ export default function TopGames() {
         { id: 5, title: "Ark: Survival Ascended", coverUrl: "Ark.jpg", company: "Studio Wildcard" },
     ];
     const containerRef = useRef<HTMLDivElement>(null);
-
+    
     useGSAP(() => {
         if (!containerRef.current) return;
 
+        const cardEls = gsap.utils.toArray<HTMLDivElement>(".game-card");
+        const scrollDistance = (cardEls[0].offsetHeight + 16) * cardEls.length;
+
+        // Tell parent the total scroll height needed
+        onHeightReady(scrollDistance);
+
         const tl = gsap.timeline({
             scrollTrigger: {
-                trigger: containerRef.current.closest(".panel-games"),
-                start: `${(window.innerHeight - (66 * 2))}px top`,
-                end: () => `+=${window.innerHeight - 66}`,
-                scrub: true,
+                trigger: containerRef.current,
+                start: "top 25%",
+                // each card gets ~500px of scroll distance to exit
+                end: (`+=${(cardEls[0].offsetHeight + 16) * 5}`),
+                scrub: 1,
                 snap: {
-                    snapTo: 'labels',
-                    duration: 0.5,
-                    ease: 'power1.inOut'
-                
+                    snapTo: "labelsDirectional",
+                    duration: { min: 0.2, max: 0.6 },
+                    delay: 0.1,
+                    ease: "power1.inOut",
                 },
-                markers: true
-            }
+                markers: true,
+            },
         });
 
-        const cardEls = gsap.utils.toArray<Element>(".game-card")
         cardEls.forEach((card, i) => {
-            if (i === cardEls.length - 1) return;
-            const step = 1 / cardEls.length;
-            const offset = i * step;
+            // Label here = "card i is centered" — this is the snap point
+            tl.addLabel(`card-${i}`);
 
-            tl.addLabel(`card ${i}`)
-            tl.to(card,
-                {
-                    x: "-120%",
-                    opacity: 0,
-                    rotation: -15,
-                    ease: "power2.in",
-                    duration: step,
-                },
-                offset
-            );
+            // Exit animation: card flies out, revealing the next one centered
+            tl.to(card, {
+                x: "-120%",
+                opacity: 0,
+                rotation: -15,
+                ease: "power2.in",
+                duration: 0.5,
+            });
         });
+
+        // Final label so the last card can also snap into place
+        tl.addLabel(`card-${cardEls.length}`);
 
     }, { scope: containerRef });
 
     return(
-        <div ref={containerRef} className="w-full max-w-[1080px] flex flex-col justify-center items-center gap-4 ">
-            {games.map((game, index) => (
+        <div ref={containerRef} className="w-full max-w-[1080px] flex flex-col justify-center items-center gap-4">
+            {games.map((game) => (
                 <div
                     key={game.id}
-                    className="game-card relative h-64 w-full flex flex-col justify-center items-center gap-4 p-5 text-white bg-cover bg-center rounded-2xl drop-shadow-xl drop-shadow-black/80"
+                    className="game-card relative w-full aspect-2/1 flex flex-col justify-center items-center gap-4 p-5 text-white bg-cover bg-center rounded-2xl drop-shadow-xl drop-shadow-black/80"
                     style={{
                         backgroundImage: `url(/${game.coverUrl})`,
                     }}
