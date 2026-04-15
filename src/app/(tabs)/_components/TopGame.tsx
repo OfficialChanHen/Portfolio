@@ -25,10 +25,12 @@ export default function TopGames() {
         { id: 5, title: "Ark: Survival Ascended", coverUrl: "Ark.jpg", company: "Studio Wildcard" },
     ];
     
+    const containerRef = useRef<HTMLDivElement>(null);
     const gamesRef = useRef<HTMLDivElement>(null);
-    const gameContainerRef = useRef<HTMLDivElement>(null);
 
     useGSAP(() => {
+        if(!containerRef.current || games.length === 0) return;
+
         // --- Fade in lists ---
         gsap.utils.toArray<Element>(".fade-in-list").forEach((list) => {
             gsap.set(list.children, { opacity: 0, y: 30 });
@@ -49,16 +51,16 @@ export default function TopGames() {
             );
         });
 
-        const cardEls = gsap.utils.toArray<HTMLDivElement>(".game-card").reverse();
+        const cardEls = gsap.utils.toArray<HTMLDivElement>(".card").reverse();
         const total = cardEls.length;
 
         // --- Panel pinning ---
          const tl = gsap.timeline({
             scrollTrigger: {
                 markers: true,
-                trigger: ".panel-games",
+                trigger: containerRef.current,
                 start: "-66px top",
-                end: `+=${total * 600}`,
+                end: `+=${containerRef.current.offsetHeight * 3}`,
                 scrub: 1.5,
                 pin: true,
                 pinSpacing: true,
@@ -84,6 +86,8 @@ export default function TopGames() {
             const start = i / total;
             const duration = 1 / total;
 
+            
+
             // Slide up into stacked position
             tl.addLabel(`card-${i}`)
             tl.fromTo(card, 
@@ -100,12 +104,12 @@ export default function TopGames() {
                 }, 
             start);
         });
-    }, { dependencies: [] });
+    }, { scope: containerRef, dependencies: [] });
 
     return(
         <div
-            ref={gameContainerRef}
-            className="panel-games z-20 min-w-screen min-h-[calc(100vh-66px)] flex flex-col justify-center items-center p-10 gap-10 bg-primary"
+            ref={containerRef}
+            className="z-20 min-w-screen min-h-[calc(100vh-66px)] flex flex-col justify-center items-center p-10 gap-10 bg-primary"
         >
             <div className="fade-in-list relative text-center">
                 <h2 className="text-[2.5rem] md:text-[3.5rem]">
@@ -117,18 +121,18 @@ export default function TopGames() {
             
 
             {/* Carousel (was TopGames) */}
-            <div ref={gamesRef} className="relative w-full max-w-[1080px] aspect-3/2">
+            <div ref={gamesRef} className="relative w-1/2 min-w-[300px] max-w-[1080px] aspect-3/2">
                 {games.map((game, index) => (
                     <div
                         key={game.id}
-                        className="game-card absolute inset-0 w-full h-full flex flex-col justify-center items-center gap-4 p-5 text-white bg-cover bg-center rounded-2xl drop-shadow-xl drop-shadow-black/80"
+                        className="card absolute inset-0 w-full h-full flex flex-col justify-center items-center gap-4 p-5 text-white bg-cover bg-center rounded-2xl drop-shadow-xl drop-shadow-black/80"
                         style={{
                             backgroundImage: `url(/${game.coverUrl})`,
-                            zIndex: -index, // first card on top
+                            zIndex: games.length - index, // first card on top
                         }}
                     >
                         <div className="flex flex-col justify-center items-center p-3 bg-gradient-to-br from-white/30 to-white/5 border border-white/10 text-white rounded-xl drop-shadow-lg">
-                            <span className="text-[1.5rem] md:text-[2rem] text-center font-bold text-shadow-lg/50">
+                            <span className="text-[1rem] md:text-[2rem] text-center font-bold text-shadow-lg/50">
                                 {game.title}
                             </span>
                         </div>

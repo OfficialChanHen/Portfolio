@@ -204,15 +204,7 @@ export default function About() {
             </div>
 
             {/* Music Page */}
-            <div className="panel--music min-w-screen min- h-[calc(100vh-66px)] flex flex-col justify-center items-center p-10 gap-5 bg-secondary">
-                <div className="fade-in-list text-center">
-                    <h2 className="fade-in text-[2.5rem] md:text-[3.5rem]">
-                        {"Personal Interests: "}
-                        <span className="bg-gradient-to-t from-white via-highlight to-tertiary bg-clip-text text-transparent">Music</span>
-                    </h2>
-                    <span className="text-[1rem] md:text-[1.5rem] text-white/80">Top Spotify Tracks</span>
-                </div>
-            </div>
+            <SpotifyTopTracks/>
 
             {/* Games Page */}
             <TopGames/>
