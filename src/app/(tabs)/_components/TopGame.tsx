@@ -39,7 +39,6 @@ export default function TopGames() {
                     duration: 0.5,
                     ease: 'power1.inOut'
                 },
-                markers: true,
             }
         });
 
