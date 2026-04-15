@@ -1,7 +1,7 @@
 "use client"
 
 
-import { useEffect, useRef, useState } from "react";
+import { useRef } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -15,11 +15,8 @@ type Game = {
     company: string,
 }
 
-type TopGamesProps = {
-    onHeightReady: (height: number) => void;
-}
 
-export default function TopGames({ onHeightReady }: TopGamesProps) {
+export default function TopGames() {
     const games: Game[] = [
         { id: 1, title: "Horizon Forbidden West", coverUrl: "horizon.png", company: "Guerrilla Games" },
         { id: 2, title: "Teamfight Tactics", coverUrl: "TFT.png", company: "Riot Games" }, 
@@ -27,80 +24,117 @@ export default function TopGames({ onHeightReady }: TopGamesProps) {
         { id: 4, title: "League of Legends", coverUrl: "League.png", company: "Riot Games" },
         { id: 5, title: "Ark: Survival Ascended", coverUrl: "Ark.jpg", company: "Studio Wildcard" },
     ];
-    const containerRef = useRef<HTMLDivElement>(null);
     
+    const gamesRef = useRef<HTMLDivElement>(null);
+    const gameContainerRef = useRef<HTMLDivElement>(null);
+
     useGSAP(() => {
-        if (!containerRef.current) return;
-
-        const cardEls = gsap.utils.toArray<HTMLDivElement>(".game-card");
-        const scrollDistance = (cardEls[0].offsetHeight + 16) * cardEls.length;
-
-        // Tell parent the total scroll height needed
-        onHeightReady(scrollDistance);
-
-        const tl = gsap.timeline({
-            scrollTrigger: {
-                trigger: containerRef.current,
-                start: "top 25%",
-                // each card gets ~500px of scroll distance to exit
-                end: (`+=${(cardEls[0].offsetHeight + 16) * 5}`),
-                scrub: 1,
-                snap: {
-                    snapTo: "labelsDirectional",
-                    duration: { min: 0.2, max: 0.6 },
-                    delay: 0.1,
-                    ease: "power1.inOut",
-                },
-                markers: true,
-            },
+        // --- Fade in lists ---
+        gsap.utils.toArray<Element>(".fade-in-list").forEach((list) => {
+            gsap.set(list.children, { opacity: 0, y: 30 });
+            gsap.fromTo(list.children,
+                { y: 30, opacity: 0 },
+                {
+                    opacity: 1,
+                    y: 0,
+                    duration: 1,
+                    ease: "power2.out",
+                    stagger: { each: 0.3, from: "start" },
+                    scrollTrigger: {
+                        trigger: list,
+                        start: "top 60%",
+                        end: () => "bottom 50%",
+                    },
+                }
+            );
         });
+
+        const cardEls = gsap.utils.toArray<HTMLDivElement>(".game-card").reverse();
+        const total = cardEls.length;
+
+        // --- Panel pinning ---
+         const tl = gsap.timeline({
+            scrollTrigger: {
+                markers: true,
+                trigger: ".panel-games",
+                start: "-66px top",
+                end: `+=${total * 600}`,
+                scrub: 1.5,
+                pin: true,
+                pinSpacing: true,
+                snap: {
+                    snapTo: 'labels', // snap to the closest label in the timeline
+                    duration: { min: 0.2, max: 0.4 }, // the snap animation should be at least 0.2 seconds, but no more than 3 seconds (determined by velocity)
+                    delay: 0.2, // wait 0.2 seconds from the last scroll event before doing the snapping
+                    ease: 'power1.inOut' // the ease of the snap animation ("power3" by default)
+                }
+            }
+        });
+
+        let rotations = cardEls.map(() => gsap.utils.random(-8, 8, 2));
+        rotations = rotations.map((_, i) => {
+            const prev = i > 0 ? rotations[i - 1] : 0;
+            // flip sign if same direction as previous
+            return Math.sign(rotations[i]) === Math.sign(prev) ? (rotations[i] * -1) : rotations[i];
+        });
+
+        gsap.set(cardEls, { opacity: 0, y: "100%" });
 
         cardEls.forEach((card, i) => {
-            // Label here = "card i is centered" — this is the snap point
-            tl.addLabel(`card-${i}`);
+            const start = i / total;
+            const duration = 1 / total;
 
-            // Exit animation: card flies out, revealing the next one centered
-            tl.to(card, {
-                x: "-120%",
-                opacity: 0,
-                rotation: -15,
-                ease: "power2.in",
-                duration: 0.5,
-            });
+            // Slide up into stacked position
+            tl.addLabel(`card-${i}`)
+            tl.fromTo(card, 
+                {
+                    opacity: 0,
+                    y: "100%",
+                },
+                {
+                    rotation: rotations[i],
+                    y: i % 2 === 0 ? 10 : -10,
+                    opacity: 1,
+                    duration: duration,
+                    ease: "power2.out",
+                }, 
+            start);
         });
-
-        // Final label so the last card can also snap into place
-        tl.addLabel(`card-${cardEls.length}`);
-
-    }, { scope: containerRef });
+    }, { dependencies: [] });
 
     return(
-        <div ref={containerRef} className="w-full max-w-[1080px] flex flex-col justify-center items-center gap-4">
-            {games.map((game) => (
-                <div
-                    key={game.id}
-                    className="game-card relative w-full aspect-2/1 flex flex-col justify-center items-center gap-4 p-5 text-white bg-cover bg-center rounded-2xl drop-shadow-xl drop-shadow-black/80"
-                    style={{
-                        backgroundImage: `url(/${game.coverUrl})`,
-                    }}
-                >
-                    <div className="w-2/3 flex flex-col justify-center items-center p-5 bg-gradient-to-br from-white/30 to-white/5 border border-white/10 text-white rounded-xl drop-shadow-lg">
-                        <span className="text-[2rem] md:text-[2.5rem] text-center font-bold text-shadow-lg">{game.title}</span>
-                    </div>
-                </div>
-            ))}
-            {/*
-            <div className="relative w-5/6 rounded-xl bg-primary/80 border border-white/70 backdrop-blur-xs">
-                <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 z-20 w-[60%] bg-tertiary/90 py-2 px-5 drop-shadow-md drop-shadow-primary rounded-xl text-center">
-                    <span className="text-[clamp(0.5rem,3vw,1.5rem)] font-bold">Favorite Games</span>
-                </div>
-
-                <div className="relative z-10 flex flex-col justify-center items-center gap-2 px-5 pb-3 pt-8 md:pt-10 text-center rounded-xl">
-                    <span className="text-[1.5rem] md:text-[2rem] font-bold">{game.title}</span>
-                    <span className="text-[1rem] md:text-[1.5rem] text-white/80">Made by {game.company}</span>
-                </div>
+        <div
+            ref={gameContainerRef}
+            className="panel-games z-20 min-w-screen min-h-[calc(100vh-66px)] flex flex-col justify-center items-center p-10 gap-10 bg-primary"
+        >
+            <div className="fade-in-list relative text-center">
+                <h2 className="text-[2.5rem] md:text-[3.5rem]">
+                    {"Personal Interests: "}
+                    <span className="bg-gradient-to-t from-white via-highlight to-tertiary bg-clip-text text-transparent">Games</span>
+                </h2>
+                <span className="text-[1rem] md:text-[1.5rem] text-white/80">Top Video Games</span>
             </div>
-            */}
-        </div>    
+            
+
+            {/* Carousel (was TopGames) */}
+            <div ref={gamesRef} className="relative w-full max-w-[1080px] aspect-3/2">
+                {games.map((game, index) => (
+                    <div
+                        key={game.id}
+                        className="game-card absolute inset-0 w-full h-full flex flex-col justify-center items-center gap-4 p-5 text-white bg-cover bg-center rounded-2xl drop-shadow-xl drop-shadow-black/80"
+                        style={{
+                            backgroundImage: `url(/${game.coverUrl})`,
+                            zIndex: -index, // first card on top
+                        }}
+                    >
+                        <div className="flex flex-col justify-center items-center p-3 bg-gradient-to-br from-white/30 to-white/5 border border-white/10 text-white rounded-xl drop-shadow-lg">
+                            <span className="text-[1.5rem] md:text-[2rem] text-center font-bold text-shadow-lg/50">
+                                {game.title}
+                            </span>
+                        </div>
+                    </div>
+                ))}
+            </div>
+        </div>
     );
 }
