@@ -26,30 +26,38 @@ type Track = {
 export default function SpotifyTopTracks() {
     const [data, setData] = useState<Track[]>([]);
     const [nowPlaying, setNowPlaying] = useState<NowPlaying | null>(null);
+    const [loading, setLoading] = useState(true);
     const containerRef = useRef<HTMLDivElement>(null);
     const tracksRef = useRef<HTMLDivElement>(null);
     const tlRef = useRef<gsap.core.Timeline | null>(null);
 
     useEffect(() => {
-        async function loadTopTracks() {
-            const res = await fetch("/api/spotify/top-tracks");
-            const json = await res.json();
-            setData(Array.isArray(json) ? json : json.tracks ?? []);
+        async function loadAll() {
+            await Promise.all([
+                fetch("/api/spotify/top-tracks")
+                    .then(r => r.json())
+                    .then(json => setData(Array.isArray(json) ? json : json.tracks ?? [])),
+                fetch("/api/spotify/now-playing")
+                    .then(r => r.json())
+                    .then(json => setNowPlaying(json)),
+            ]);
+            setLoading(false); // ← only marks done when BOTH requests finish
         }
 
-        async function loadNowPlaying() {
-            const res = await fetch("/api/spotify/now-playing");
-            const json = await res.json();
-            setNowPlaying(json);
-        }
-
-        loadTopTracks();
-        loadNowPlaying();
+        loadAll();
     }, []);
+
+    // Resize observer — recalculate ScrollTrigger on viewport change
+    useEffect(() => {
+        if (loading || !containerRef.current) return;
+        const observer = new ResizeObserver(() => ScrollTrigger.refresh());
+        observer.observe(containerRef.current);
+        return () => observer.disconnect();
+    }, [loading]);
 
     // re-run GSAP when cards change (data loads)
     useGSAP(() => {
-        if(!containerRef.current || data.length === 0) return;
+        if(loading|| !containerRef.current || data.length === 0) return;
 
          // Kill only the previous timeline from this component
         tlRef.current?.kill();
@@ -149,48 +157,54 @@ export default function SpotifyTopTracks() {
         })),
     ];
 
-    if (!data) {
-        return (
-            <div
-                className="min-w-screen min-h-[calc(100vh-66px)] flex flex-col justify-center items-center p-10 gap-10 bg-secondary"
-            >
-                <span className="text-[1.5rem] md:text-[2rem] text-center font-bold">Loading Tracks...</span>
-            </div>
-        );
-    }
-    
     return (
         <div
             ref={containerRef}
-            className="min-w-screen min-h-[calc(100vh-66px)] flex flex-col justify-center items-center p-10 gap-10 bg-secondary"
+            className="min-w-screen min-h-[calc(100dvh-66px)] flex flex-col justify-center items-center p-10 pb-[66px] gap-10 bg-secondary"
         >
-            <div className="fade-in-list relative text-center">
-                <h2 className="text-[2.5rem] md:text-[3.5rem]">
-                    {"Personal Interests: "}
-                    <span className="bg-gradient-to-t from-white via-highlight to-tertiary bg-clip-text text-transparent">Music</span>
-                </h2>
-                <span className="text-[1rem] md:text-[1.5rem] text-white/80">Top Spotify Tracks</span>
-            </div>
-            
-
-            {/* Top Tracks */}
-            <div ref={tracksRef} className="relative w-1/2 min-w-[300px] max-w-[1080px] aspect-3/2">
-                {tracks.map((track, i) => (
-                    <a key={track.id} href={track.songUrl} target="_blank" rel="noopener noreferrer"
-                        className="card absolute inset-0 w-full h-full flex flex-col justify-center items-center gap-4 p-5 text-white bg-cover bg-center rounded-2xl drop-shadow-xl drop-shadow-black/80"
-                        style={{
-                            backgroundImage: `url(${track.albumImg})`,
-                            zIndex: tracks.length - i,
-                        }}
-                    >
-                        <div className="flex flex-col justify-center items-center p-3 bg-gradient-to-br from-white/30 to-white/5 border border-white/10 text-white rounded-xl drop-shadow-lg">
-                            <span className="text-[1.5rem] md:text-[2rem] text-center font-bold text-shadow-lg/50">
-                                {track.title}
+            {loading ? (
+                // Loading state INSIDE the same container
+                <div className="flex flex-col items-center gap-3 text-white/40">
+                    <div className="w-10 h-10 border-2 border-white/20 border-t-white/60 rounded-full animate-spin" />
+                    <span className="text-sm text-white/60">Loading tracks...</span>
+                </div>
+            ) : (
+                <>
+                    <div className="fade-in-list relative text-center">
+                        <h2 className="text-[2.5rem] md:text-[3.5rem]">
+                            {"Personal Interests: "}
+                            <span className="bg-gradient-to-t from-white via-highlight to-tertiary bg-clip-text text-transparent">
+                                Music
                             </span>
-                        </div>
-                    </a>
-                ))}
-            </div>
+                        </h2>
+                        <span className="text-[1rem] md:text-[1.5rem] text-white/80">
+                            Top Spotify Tracks
+                        </span>
+                    </div>
+
+                    <div ref={tracksRef} className="relative w-1/2 min-w-[300px] max-w-[1080px] aspect-3/2">
+                        {tracks.map((track, i) => (
+                            <a
+                                key={track.id}
+                                href={track.songUrl}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="card absolute inset-0 w-full h-full flex flex-col justify-center items-center gap-4 p-5 text-white bg-cover bg-center rounded-2xl drop-shadow-xl drop-shadow-black/80"
+                                style={{
+                                    backgroundImage: `url(${track.albumImg})`,
+                                    zIndex: tracks.length - i,
+                                }}
+                            >
+                                <div className="flex flex-col justify-center items-center p-3 bg-gradient-to-br from-white/30 to-white/5 border border-white/10 text-white rounded-xl drop-shadow-lg">
+                                    <span className="text-[1.5rem] md:text-[2rem] text-center font-bold text-shadow-lg/50">
+                                        {track.title}
+                                    </span>
+                                </div>
+                            </a>
+                        ))}
+                    </div>
+                </>
+            )}
         </div>
     );
 }

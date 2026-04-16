@@ -99,11 +99,11 @@ export default function About() {
     }, { dependencies: [] });
 
     return (
-        <div className="w-full h-full flex flex-col justify-start md:justify-center items-center">
+        <div className="w-full h-full flex flex-col justify-start items-center">
             <StarBackground />
 
             {/* Header Page */}
-            <div className="min-w-screen min-h-[calc(100vh-66px)] flex flex-col justify-center items-center p-10 gap-10 bg-primary">
+            <div className="min-w-screen min-h-[calc(100dvh-66px)] flex flex-col justify-center items-center p-10 gap-10 bg-primary">
                 <div ref={textContainer} className="text-container relative flex flex-col justify-center items-center text-center gap-2">
                     <div className='rocket absolute top-0 left-[48%] z-20 rotate-135 opacity-100'>
                         <Rocket size={20} />
@@ -128,7 +128,7 @@ export default function About() {
             </div>
 
             {/* Tech Page */}
-            <div className="min-w-screen min-h-[calc(100vh-66px)] flex flex-col justify-center items-center p-10 gap-10 bg-secondary">
+            <div className="min-w-screen min-h-[calc(100dvh-66px)] flex flex-col justify-center items-center p-10 gap-10 bg-secondary">
                 <h2 className="fade-in text-[2.5rem] md:text-[3.5rem] text-center">
                     <span className="bg-gradient-to-t from-white via-highlight to-tertiary bg-clip-text text-transparent">Tech Stack</span>
                 </h2>
@@ -170,7 +170,7 @@ export default function About() {
             </div>
 
             {/* Values Page */}
-            <div className="min-w-screen min-h-[calc(100vh-66px)] flex flex-col justify-center items-center p-10 gap-10 bg-primary">
+            <div className="min-w-screen min-h-[calc(100dvh-66px)] flex flex-col justify-center items-center p-10 gap-10 bg-primary">
                 <h2 className="fade-in text-[2.5rem] md:text-[3.5rem] text-center">
                     {"What I "}
                     <span className="bg-gradient-to-t from-white via-highlight to-tertiary bg-clip-text text-transparent">Value</span>

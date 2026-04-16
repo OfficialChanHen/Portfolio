@@ -19,6 +19,11 @@ export default function ClientTabsLayout({
     const barStyle = 'w-full z-100 bg-background/30 border-white/10 backdrop-blur-xs text-[0.75rem] md:text-[1rem]';
     const pathname = usePathname();
 
+    useEffect(() => {
+        window.history.scrollRestoration = "manual";
+        window.scrollTo({ top: 0, behavior: "instant" });
+    }, []);
+
     useGSAP(() => {
         gsap.fromTo("main", 
             { opacity: 0 }, 
