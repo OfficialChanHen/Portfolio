@@ -57,7 +57,6 @@ export default function TopGames() {
         // --- Panel pinning ---
          const tl = gsap.timeline({
             scrollTrigger: {
-                markers: true,
                 trigger: containerRef.current,
                 start: "-66px top",
                 end: `+=${containerRef.current.offsetHeight * 3}`,
