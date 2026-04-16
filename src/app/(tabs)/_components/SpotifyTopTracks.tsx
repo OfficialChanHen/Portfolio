@@ -37,6 +37,7 @@ export default function SpotifyTopTracks({ initialTracks, initialNowPlaying }: C
                         trigger: list,
                         start: "top 60%",
                         end: () => "bottom 50%",
+                        toggleActions: "play none play reverse"
                     },
                 }
             );

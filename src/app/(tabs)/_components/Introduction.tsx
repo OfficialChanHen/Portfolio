@@ -1,6 +1,6 @@
 'use client';
 
-import { Sparkles, Rocket, Mail, ArrowBigRight } from 'lucide-react';
+import { Sparkles, Rocket, Mail, ArrowBigRight, ChevronsDown } from 'lucide-react';
 import { FiGithub, FiLinkedin } from "react-icons/fi";
 import { FaReact } from "react-icons/fa";
 import { AiOutlinePython } from "react-icons/ai";
@@ -10,6 +10,7 @@ import { useRef, Dispatch, SetStateAction } from "react";
 import Link from 'next/link';
 import playOrTrigger from '@/app/utils/playOrTrigger';
 import { useNavigationMode } from '@/providers/NavigationModeProvider';
+import { useMobile } from '@/providers/MobileProvider';
 
 gsap.registerPlugin(useGSAP);
 
@@ -26,6 +27,8 @@ export default function Introduction({
     const titleRef = useRef<HTMLSpanElement>(null);
     const textContainer = useRef<HTMLDivElement>(null);
     const headshotContainer = useRef<HTMLDivElement>(null);
+
+    const isMobile  = useMobile();
 
     function cycle() {
         if (!titleRef.current) return;
@@ -74,6 +77,7 @@ export default function Introduction({
     useGSAP(() => {
         if (!textContainer.current || !titleRef.current || !headshotContainer.current ) return;
 
+        gsap.set(".scroll-down", { opacity: 0 });
         const introTl = gsap.timeline({
             onComplete: () => {
                 playOrTrigger(headshotContainer.current as HTMLElement, headshotTl);
@@ -124,6 +128,37 @@ export default function Introduction({
                     delay: delayTime + 0.1,
                 },
                 0
+            )
+            .fromTo(".scroll-down",
+                { y: -20, opacity: 0 },
+                {
+                    y: 0,
+                    opacity: 1,
+                    duration: 0.65,
+                    ease: "power2.out",
+                    onComplete: () => {
+                        gsap.to(".scroll-down", {
+                            y: 10,          // shorter range feels smoother
+                            duration: 0.75,  // slightly slower = more floaty
+                            repeat: -1,
+                            yoyo: true,
+                            ease: "sine.inOut", // ← sine is much smoother than power2 for loops
+                        });
+
+                        gsap.fromTo(".scroll-down",
+                            { opacity: 1 },
+                            {
+                                opacity: 0,
+                                scrollTrigger: {
+                                    trigger: ".scroll-down",
+                                    start: "top center",
+                                    end: "bottom center",
+                                    toggleActions: "play none none reverse",
+                                },
+                            }
+                        );
+                    },
+                }
             );
 
         const interval = setInterval(cycle, 3000);
@@ -131,7 +166,7 @@ export default function Introduction({
     }, { scope: introContainer });
 
     return(
-        <div ref={introContainer} className="max-w-[1080px] w-full flex flex-col md:flex-row justify-center md:justify-between items-center gap-10 text-center md:text-left">
+        <div ref={introContainer} className="max-w-[1080px] w-full flex flex-col md:flex-row justify-center md:justify-between items-center gap-0 text-center md:text-left">
             
             {/* Introduction Container */}
             <div ref={textContainer} className="relative flex flex-col justify-center gap-2 ">
@@ -147,7 +182,7 @@ export default function Introduction({
                 </div>
                 
                 <div className="flex flex-col justify-center items-center md:justify-center md:items-start tracking-tight">
-                    <span className="intro-text text-[2rem] md:text-[2.5rem]">HI, I'M</span>
+                    <span className="intro-text text-[2rem] md:text-[2.5rem]">Hi, I'm</span>
                     <span className="intro-text text-[2.5rem] md:text-[3.5rem] bg-gradient-to-t from-white via-highlight to-tertiary bg-clip-text text-transparent">
                         Chan Hen
                     </span>
@@ -159,11 +194,11 @@ export default function Introduction({
                     </span>
                 </div>
                 <span className="intro-text text-[0.75rem] md:text-[1rem] text-white/50">
-                    Crafting digital experiences across the universe
+                    Crafting <span className="bg-gradient-to-t from-white via-highlight to-tertiary bg-clip-text text-transparent">digital experiences</span> across the universe
                 </span>
 
                 {/* Intro Buttons */}
-                <div className='intro-text flex flex-col md:flex-row justify-center md:justify-start items-center py-3 gap-5 text-[0.7rem] md:text-[1rem] font-bold'>
+                <div className='intro-text flex flex-row justify-center md:justify-start items-center py-3 gap-5 text-[0.7rem] md:text-[1rem] font-bold'>
                     <Link href="/projects">
                         <button className="group inline-flex items-center justify-center gap-2 px-5 py-3 rounded-md cursor-pointer text-white tracking-widest backdrop-blur-xs bg-primary/40 border-none shadow-[0_0_25px] shadow-tertiary hover:shadow-[0_0_5px,_0_0_25px,_0_0_50px,_0_0_100px] hover:scale-105 hover:shadow-tertiary text-nowrap transition-all ease-in-out duration-300">
                             <span>View Projects</span>
@@ -188,6 +223,12 @@ export default function Introduction({
                     </a>
                 </div>
             </div>
+            {isMobile &&
+                <div className="z-10 mt-2 scroll-down flex flex-col justify-center items-center gap-2 text-[0.75rem] md:text-[1.25rem] text-center">
+                    Scroll Down
+                    <ChevronsDown className="w-[clamp(24px,2vw,30px)] h-[clamp(24px,2vw,30px)]"/>
+                </div>
+            }
             
             {/* Image */}
             <div ref={headshotContainer} className='m-10'>

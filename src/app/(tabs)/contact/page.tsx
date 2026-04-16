@@ -192,7 +192,7 @@ export default function Contacts() {
                     </span>
                 </h2>
 
-                <span className="intro-text text-[1rem] md:text-[1.5rem] text-white/80">Have a project in mind or just want to chat? I would love to hear from you!</span>
+                <span className="intro-text text-[1rem] md:text-[1.5rem] text-white/80">Have a project in mind or just <span className="bg-gradient-to-t from-white via-highlight to-tertiary bg-clip-text text-transparent">want to chat?</span> I would love to <span className="bg-gradient-to-t from-white via-highlight to-tertiary bg-clip-text text-transparent">hear from you!</span></span>
             </div>
 
             

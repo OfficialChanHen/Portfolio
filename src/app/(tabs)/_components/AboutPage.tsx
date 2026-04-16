@@ -2,7 +2,7 @@
 
 import StarBackground from "@/app/(tabs)/_components/StarBackground";
 import SpotifyTopTracks from "@/app/(tabs)/_components/SpotifyTopTracks";
-import { AppWindow, Database, Wrench, BookOpenText, Rocket, Download, Zap, BugOff, Users } from "lucide-react";
+import { AppWindow, Database, Wrench, BookOpenText, Rocket, Download, Zap, BugOff, Users, ChevronsDown } from "lucide-react";
 import { useRef } from 'react';
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
@@ -16,10 +16,10 @@ gsap.registerPlugin(useGSAP, ScrollTrigger);
 export default function AboutPage({ initialTracks, initialNowPlaying }: CombinedTracksProps) {
     const textContainer = useRef<HTMLDivElement>(null);
 
-    const techStackStyle = "group w-full flex flex-col justify-start items-start p-10 gap-5 bg-gradient-to-br from-white/5 to-white/[0.02] border border-white/10 text-white rounded-xl";
-    const techImg = "place-self-center md:place-self-start flex flex-col md:flex-row justify-center md:justify-start items-center gap-3 text-[1rem] md:text-[1.25rem] font-bold group-hover:scale-105 transition-transform ease-in-out duration-300";
+    const techStackStyle = "w-full flex flex-col justify-start items-start p-10 gap-5 bg-gradient-to-br from-white/5 to-white/[0.02] border border-white/10 text-white rounded-xl group-hover:scale-105 transition-transform ease-in-out duration-300";
+    const techImg = "place-self-center md:place-self-start md:w-full flex flex-col md:flex-row justify-center md:justify-start items-center gap-3 text-[1rem] md:text-[1.25rem] font-bold";
     const techTitleStyle = "group-hover:text-highlight transition-color ease-in-out duration-300";
-    const techSubListStyle = "list-disc marker:text-highlight pl-5 space-y-2 text-[0.75rem] md:text-[1rem] text-white/80 group-hover:text-white transition-color group-hover:scale-105 transition-transform ease-in-out duration-300";
+    const techSubListStyle = "list-disc marker:text-highlight pl-5 space-y-2 text-[0.75rem] md:text-[1rem] text-white/80 group-hover:text-white transition-color";
 
     const navigationMode = useNavigationMode();
     const delayTime = navigationMode === "soft" ? 0.4 : 0.6;
@@ -27,6 +27,8 @@ export default function AboutPage({ initialTracks, initialNowPlaying }: Combined
     useGSAP(() => {
         const textContainerEl = textContainer.current;
         if (!textContainerEl) return;
+
+        gsap.set(".scroll-down", { opacity: 0 });
 
         // --- Intro animation ---
         const introTl = gsap.timeline();
@@ -57,7 +59,40 @@ export default function AboutPage({ initialTracks, initialNowPlaying }: Combined
                     stagger: { from: "start", amount: 0.65 },
                 },
                 0
+            )
+            .fromTo(".scroll-down",
+                { y: -20, opacity: 0 },
+                {
+                    y: 0,
+                    opacity: 1,
+                    duration: 0.65,
+                    ease: "power2.out",
+                    onComplete: () => {
+                        gsap.to(".scroll-down", {
+                            y: 10,          // shorter range feels smoother
+                            duration: 0.75,  // slightly slower = more floaty
+                            repeat: -1,
+                            yoyo: true,
+                            ease: "sine.inOut", // ← sine is much smoother than power2 for loops
+                        });
+
+                        gsap.fromTo(".scroll-down",
+                            { opacity: 1 },
+                            {
+                                opacity: 0,
+                                scrollTrigger: {
+                                    trigger: ".scroll-down",
+                                    start: "top center",
+                                    end: "bottom center",
+                                    toggleActions: "play none none reverse",
+                                },
+                            }
+                        );
+                    },
+                }
             );
+            
+
 
         // --- Fade in elements ---
         gsap.utils.toArray<Element>(".fade-in").forEach((el) => {
@@ -73,6 +108,7 @@ export default function AboutPage({ initialTracks, initialNowPlaying }: Combined
                         trigger: el,
                         start: "top 60%",
                         end: () => "bottom 50%",
+                        toggleActions: "play none play reverse"
                     },
                 }
             );
@@ -93,6 +129,7 @@ export default function AboutPage({ initialTracks, initialNowPlaying }: Combined
                         trigger: list,
                         start: "top 60%",
                         end: () => "bottom 50%",
+                        toggleActions: "play none play reverse"
                     },
                 }
             );
@@ -104,7 +141,8 @@ export default function AboutPage({ initialTracks, initialNowPlaying }: Combined
             <StarBackground />
 
             {/* Header Page */}
-            <div className="min-w-screen min-h-[calc(100dvh-66px)] flex flex-col justify-center items-center p-10 gap-10 bg-primary">
+            <div className="min-w-screen min-h-[calc(100dvh-66px)] flex flex-col justify-between items-center p-10 gap-10 bg-primary">
+                <div>{/* Empty */}</div>
                 <div ref={textContainer} className="text-container relative flex flex-col justify-center items-center text-center gap-2">
                     <div className='rocket absolute top-0 left-[48%] z-20 rotate-135 opacity-100'>
                         <Rocket size={20} />
@@ -117,62 +155,76 @@ export default function AboutPage({ initialTracks, initialNowPlaying }: Combined
                         <span className="bg-gradient-to-t from-white via-highlight to-tertiary bg-clip-text text-transparent">Discover</span>{" "}Who I Am
                     </h2>
                     <span className="intro-text text-[1rem] md:text-[1.5rem] text-white/80">
-                        Want to know more? Check out my resume and continue scrolling down!
+                        Want to know more? Check out <span className="bg-gradient-to-t from-white via-highlight to-tertiary bg-clip-text text-transparent">my resume</span> and <span className="bg-gradient-to-t from-white via-highlight to-tertiary bg-clip-text text-transparent">continue scrolling</span> down!
                     </span>
-                    <div className="intro-text">
+                    <div className="intro-text text-[0.75rem] md:text-[1.25rem]">
                         <div className="flex flex-row justify-center items-center gap-2 px-5 py-3 mt-5 rounded-md cursor-pointer bg-tertiary border-none shadow-[0_0_25px] shadow-tertiary backdrop-blur-xs hover:shadow-[0_0_5px,_0_0_25px,_0_0_50px,_0_0_100px] hover:shadow-tertiary hover:scale-105 text-nowrap transition-all ease-in-out duration-300">
                             <a href="/Official-Resume.pdf" download className="text-white/80 font-bold">Download Resume</a>
                             <Download className="w-[clamp(18px,2vw,20px)] h-[clamp(18px,2vw,20px)]" />
                         </div>
                     </div>
                 </div>
+
+                <div className="scroll-down flex flex-col justify-center items-center gap-2 text-[0.75rem] md:text-[1.25rem] text-center">
+                    Scroll Down
+                    <ChevronsDown className="w-[clamp(24px,2vw,30px)] h-[clamp(24px,2vw,30px)]"/>
+                </div>
             </div>
 
             {/* Tech Page */}
-            <div className="min-w-screen min-h-[calc(100dvh-66px)] flex flex-col justify-center items-center p-10 gap-10 bg-secondary">
-                <h2 className="fade-in text-[2.5rem] md:text-[3.5rem] text-center">
+            <div className="fade-in-list min-w-screen min-h-[calc(100dvh-66px)] flex flex-col justify-center items-center p-10 gap-10 bg-secondary">
+                <h2 className="text-[2.5rem] md:text-[3.5rem] text-center">
                     <span className="bg-gradient-to-t from-white via-highlight to-tertiary bg-clip-text text-transparent">Tech Stack</span>
                 </h2>
                 <div className="fade-in-list md:w-full max-w-[1080px] flex flex-col md:flex-row justify-center md:items-stretch gap-5">
-                    <div className={techStackStyle}>
-                        <div className={techImg}>
-                            <div className="relative w-[clamp(24px,2vw,30px)] h-[clamp(24px,2vw,30px)] flex flex-row justify-center items-center p-5 bg-linear-to-br from-tertiary to-highlight text-white rounded-md">
-                                <AppWindow className="absolute top-[50%] left-[50%] -translate-x-1/2 -translate-y-1/2 w-[clamp(18px,2vw,20px)] h-[clamp(18px,2vw,20px)]" />
+                    
+                    <div className="group md:w-full flex flex-col justify-center items-center">
+                        <div className={techStackStyle}>
+                            <div className={techImg}>
+                                <div className="relative w-[clamp(24px,2vw,30px)] h-[clamp(24px,2vw,30px)] flex flex-row justify-center items-center p-5 bg-linear-to-br from-tertiary to-highlight text-white rounded-md">
+                                    <AppWindow className="absolute top-[50%] left-[50%] -translate-x-1/2 -translate-y-1/2 w-[clamp(18px,2vw,20px)] h-[clamp(18px,2vw,20px)]" />
+                                </div>
+                                <span className={techTitleStyle}>Frontend</span>
                             </div>
-                            <span className={techTitleStyle}>Frontend</span>
+                            <ul className={techSubListStyle}>
+                                <li>Typescript</li><li>React</li><li>Tailwind CSS</li><li>Next.js</li><li>React Native</li>
+                            </ul>
                         </div>
-                        <ul className={techSubListStyle}>
-                            <li>Typescript</li><li>React</li><li>Tailwind CSS</li><li>Next.js</li><li>React Native</li>
-                        </ul>
                     </div>
-                    <div className={techStackStyle}>
-                        <div className={techImg}>
-                            <div className="relative w-[clamp(24px,2vw,30px)] h-[clamp(24px,2vw,30px)] flex flex-row justify-center items-center p-5 bg-linear-to-br from-tertiary to-highlight text-white rounded-md">
-                                <Database className="absolute top-[50%] left-[50%] -translate-x-1/2 -translate-y-1/2 w-[clamp(18px,2vw,20px)] h-[clamp(18px,2vw,20px)]" />
+
+                    <div className="group md:w-full flex flex-col justify-center items-center">
+                        <div className={techStackStyle}>
+                            <div className={techImg}>
+                                <div className="relative w-[clamp(24px,2vw,30px)] h-[clamp(24px,2vw,30px)] flex flex-row justify-center items-center p-5 bg-linear-to-br from-tertiary to-highlight text-white rounded-md">
+                                    <Database className="absolute top-[50%] left-[50%] -translate-x-1/2 -translate-y-1/2 w-[clamp(18px,2vw,20px)] h-[clamp(18px,2vw,20px)]" />
+                                </div>
+                                <span className={techTitleStyle}>Backend</span>
                             </div>
-                            <span className={techTitleStyle}>Backend</span>
+                            <ul className={techSubListStyle}>
+                                <li>Python</li><li>Java</li><li>C</li><li>SQL</li><li>RESTful APIs</li>
+                            </ul>
                         </div>
-                        <ul className={techSubListStyle}>
-                            <li>Python</li><li>Java</li><li>C</li><li>SQL</li><li>RESTful APIs</li>
-                        </ul>
                     </div>
-                    <div className={techStackStyle}>
-                        <div className={techImg}>
-                            <div className="relative w-[clamp(24px,2vw,30px)] h-[clamp(24px,2vw,30px)] flex flex-row justify-center items-center p-5 bg-linear-to-br from-tertiary to-highlight text-white rounded-md">
-                                <Wrench className="absolute top-[50%] left-[50%] -translate-x-1/2 -translate-y-1/2 w-[clamp(18px,2vw,20px)] h-[clamp(18px,2vw,20px)]" />
+
+                    <div className="group md:w-full flex flex-col justify-center items-center">
+                        <div className={techStackStyle}>
+                            <div className={techImg}>
+                                <div className="relative w-[clamp(24px,2vw,30px)] h-[clamp(24px,2vw,30px)] flex flex-row justify-center items-center p-5 bg-linear-to-br from-tertiary to-highlight text-white rounded-md">
+                                    <Wrench className="absolute top-[50%] left-[50%] -translate-x-1/2 -translate-y-1/2 w-[clamp(18px,2vw,20px)] h-[clamp(18px,2vw,20px)]" />
+                                </div>
+                                <span className={techTitleStyle}>Tools</span>
                             </div>
-                            <span className={techTitleStyle}>Tools</span>
+                            <ul className={techSubListStyle}>
+                                <li>Figma</li><li>Git</li><li>Github</li><li>Docker</li><li>Expo Go</li>
+                            </ul>
                         </div>
-                        <ul className={techSubListStyle}>
-                            <li>Figma</li><li>Git</li><li>Github</li><li>Docker</li><li>Expo Go</li>
-                        </ul>
                     </div>
                 </div>
             </div>
 
             {/* Values Page */}
-            <div className="min-w-screen min-h-[calc(100dvh-66px)] flex flex-col justify-center items-center p-10 gap-10 bg-primary">
-                <h2 className="fade-in text-[2.5rem] md:text-[3.5rem] text-center">
+            <div className="fade-in-list min-w-screen min-h-[calc(100dvh-66px)] flex flex-col justify-center items-center p-10 gap-10 bg-primary">
+                <h2 className="text-[2.5rem] md:text-[3.5rem] text-center">
                     {"What I "}
                     <span className="bg-gradient-to-t from-white via-highlight to-tertiary bg-clip-text text-transparent">Value</span>
                 </h2>

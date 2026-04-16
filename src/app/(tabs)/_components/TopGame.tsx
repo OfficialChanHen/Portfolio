@@ -46,6 +46,7 @@ export default function TopGames() {
                         trigger: list,
                         start: "top 60%",
                         end: () => "bottom 50%",
+                        toggleActions: "play none play reverse"
                     },
                 }
             );
