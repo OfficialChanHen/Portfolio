@@ -287,7 +287,7 @@ export default function AboutPage({ initialTracks, initialNowPlaying }: Combined
             {/* Games Page */}
             <section id="games" className="relative scroll-mt-[var(--nav-height)]">
                 <TopGames/>
-                <div className="z-30 absolute bottom-8 right-8 md:bottom-10 md:right-10 text-[1.1rem]">
+                <div className="z-30 absolute bottom-8 right-8 md:bottom-10 md:right-10 text-[1rem] px-3 rounded-md cursor-pointer text-white tracking-widest backdrop-blur-xs bg-secondary text-nowrap border border-white/10 hover:scale-105 text-nowrap transition-all ease-in-out duration-300">
                     <BackToTopButton/>
                 </div>
             </section>
