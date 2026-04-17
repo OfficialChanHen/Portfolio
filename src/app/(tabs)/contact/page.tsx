@@ -311,7 +311,7 @@ export default function Contacts() {
                     <div 
                         className="social group flex flex-row items-center gap-4 text-[0.75rem] md:text-[1rem] text-white/80"
                     >
-                        <div className="relative w-[clamp(24px,2vw,30px)] h-[clamp(24px,2vw,30px)] flex flex-row justify-center items-center p-5 bg-linear-to-br from-tertiary to-highlight text-white rounded-md group-hover:shadow-[0_0_5px,_0_0_20px,_0_0_50px] group-hover:shadow-highlight group-hover:scale-105 transition-all ease-in-out duration-300">
+                        <div className="relative w-[clamp(24px,2vw,30px)] h-[clamp(24px,2vw,30px)] flex flex-row justify-center items-center p-5 bg-linear-to-br from-tertiary to-highlight text-white rounded-md group-hover:scale-105 transition-all ease-in-out duration-300">
                             <Mail className="absolute top-[50%] left-[50%] -translate-x-1/2 -translate-y-1/2 w-[clamp(18px,2vw,20px)] h-[clamp(18px,2vw,20px)]"/>
                         </div>
                         <div className="flex flex-col justify-center items-start">
@@ -324,7 +324,7 @@ export default function Contacts() {
                         className="social group flex flex-row items-center gap-4 text-[0.75rem] md:text-[1rem] text-white/80"
                         href="https://github.com/OfficialChanHen" target="_blank" rel="noopener noreferrer"
                     >
-                        <div className="relative w-[clamp(24px,2vw,30px)] h-[clamp(24px,2vw,30px)] flex flex-row justify-center items-center p-5 bg-tertiary/60 bg-linear-to-br from-tertiary to-highlight text-white rounded-md group-hover:shadow-[0_0_5px,_0_0_20px,_0_0_50px] group-hover:shadow-highlight group-hover:scale-105 transition-all ease-in-out duration-300">
+                        <div className="relative w-[clamp(24px,2vw,30px)] h-[clamp(24px,2vw,30px)] flex flex-row justify-center items-center p-5 bg-tertiary/60 bg-linear-to-br from-tertiary to-highlight text-white rounded-md group-hover:scale-105 transition-all ease-in-out duration-300">
                             <FiGithub className="absolute top-[50%] left-[50%] -translate-x-1/2 -translate-y-1/2 w-[clamp(18px,2vw,20px)] h-[clamp(18px,2vw,20px)]"/>
                         </div>
                         <div className="flex flex-col justify-center items-start">
@@ -337,7 +337,7 @@ export default function Contacts() {
                         className="social group flex flex-row items-center gap-4 text-[0.75rem] md:text-[1rem] text-white/80"
                         href="https://www.linkedin.com/in/chan-hen-13727b233/" target="_blank" rel="noopener noreferrer"
                     >
-                        <div className="relative w-[clamp(24px,2vw,30px)] h-[clamp(24px,2vw,30px)] flex flex-row justify-center items-center p-5 bg-linear-to-br from-tertiary to-highlight text-white rounded-md group-hover:shadow-[0_0_5px,_0_0_20px,_0_0_50px] group-hover:shadow-highlight group-hover:scale-105 transition-all ease-in-out duration-300">
+                        <div className="relative w-[clamp(24px,2vw,30px)] h-[clamp(24px,2vw,30px)] flex flex-row justify-center items-center p-5 bg-linear-to-br from-tertiary to-highlight text-white rounded-md group-hover:scale-105 transition-all ease-in-out duration-300">
                             <FiLinkedin className="absolute top-[50%] left-[50%] -translate-x-1/2 -translate-y-1/2 w-[clamp(18px,2vw,20px)] h-[clamp(18px,2vw,20px)]"/>
                         </div>
                         <div className="flex flex-col justify-center items-start">

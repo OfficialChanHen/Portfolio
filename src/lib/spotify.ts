@@ -54,6 +54,9 @@ export async function getNowPlaying() {
         },
         cache: "no-store",
     });
+
+    if (res.status === 204 || !res.ok) return null;
+    
     return res.json();
 }
 

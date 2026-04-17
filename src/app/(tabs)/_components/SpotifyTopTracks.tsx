@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { Track, NowPlaying, CombinedTracksProps } from "@/lib/spotify";
+import { Track, NowPlaying, CombinedTracksProps, getNowPlaying } from "@/lib/spotify";
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
 
@@ -130,7 +130,7 @@ export default function SpotifyTopTracks({ initialTracks, initialNowPlaying }: C
                     </span>
                 </h2>
                 <span className="text-[1rem] md:text-[1.5rem] text-white/80">
-                    Top Spotify Tracks
+                    Tap the card To listen
                 </span>
             </div>
 
@@ -148,7 +148,10 @@ export default function SpotifyTopTracks({ initialTracks, initialNowPlaying }: C
                         }}
                     >
                         <div className="flex flex-col justify-center items-center p-3 bg-gradient-to-br from-white/30 to-white/5 border border-white/10 text-white rounded-xl drop-shadow-lg">
-                            <span className="text-[1.5rem] md:text-[2rem] text-center font-bold text-shadow-lg/50">
+                            <span className="text-[1rem] md:text-[1.5rem] text-center font-bold text-shadow-lg/50">
+                                {track.label}
+                            </span>
+                            <span className="text-[1rem] md:text-[1.5rem] text-center font-bold text-shadow-lg/50">
                                 {track.title}
                             </span>
                         </div>
