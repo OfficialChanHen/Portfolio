@@ -152,11 +152,10 @@ export default function AboutPage({ initialTracks, initialNowPlaying }: Combined
     }, { dependencies: [] });
 
     return (
-        <div className="relative w-full h-full flex flex-col justify-start items-center">
-            <StarBackground />
+        <div className="relative w-full h-full flex flex-col justify-start items-center bg-primary">
             {/* Scroll Header */}
             <div ref={navRef} className="fixed z-20 top-25 left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-row justify-center items-center text-[0.75rem] md:text-[1rem] text-center text-white/60 gap-4 px-5 py-3 bg-gradient-to-br from-white/5 to-white/[0.02] border border-white/10 backdrop-blur-xs rounded-full cursor-pointer">
-                <a href="#home" className="hover:text-white hover:underline underline-offset-4 transition-all duration-300 ease-in-out">Home</a>
+                <a href="#resume" className="hover:text-white hover:underline underline-offset-4 transition-all duration-300 ease-in-out">Resume</a>
                 <a href="#stack" className="hover:text-white hover:underline underline-offset-4 transition-all duration-300 ease-in-out">Stack</a>
                 <a href="#values" className="hover:text-white hover:underline underline-offset-4 transition-all duration-300 ease-in-out">Values</a>
                 <a href="#music" className="hover:text-white hover:underline underline-offset-4 transition-all duration-300 ease-in-out">Music</a>
@@ -164,7 +163,7 @@ export default function AboutPage({ initialTracks, initialNowPlaying }: Combined
             </div>
 
             {/* Header Page */}
-            <section id="home" className="min-w-screen min-h-[calc(100dvh-66px)] flex flex-col justify-between items-center p-10 gap-10 bg-primary scroll-mt-[var(--nav-height)]">
+            <section id="resume" className="min-w-screen min-h-[calc(100dvh-66px)] flex flex-col justify-between items-center p-10 gap-10 bg-primary scroll-mt-[var(--nav-height)]">
                 <div>{/* Empty */}</div>
                 <div ref={textContainer} className="text-container relative flex flex-col justify-center items-center text-center gap-2">
                     <div className='rocket absolute top-0 left-[48%] z-20 rotate-135 opacity-100'>
