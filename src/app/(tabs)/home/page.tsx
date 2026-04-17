@@ -47,9 +47,9 @@ export default function Home() {
             <Introduction setIntroDone={setIntroDone}/>
 
             {/* Call to action */}
-            <div ref={jobContainer} className='flex flex-col justify-start items-start opacity-0 -translate-y-5 w-full max-w-[1080px] gap-2 px-5 py-3 bg-primary/60 border border-primary backdrop-blur-xs text-white/80 text-[0.75rem] md:text-[1rem] rounded-md'>        
-                <span className="text-highlight font-bold place-self-center md:place-self-start">Available For Work</span>
-                <span className="text-center md:text-left">I'm currently available for freelance projects, part-time work, and full-time opportunities. Let's <em>launch</em> a project that's truly out of this world together!</span>
+            <div ref={jobContainer} className='flex flex-col justify-start items-start opacity-0 w-full max-w-[1080px] gap-2 px-5 py-3 bg-gradient-to-br from-white/5 to-white/[0.02] border border-white/10 backdrop-blur-xs rounded-md'>        
+                <span className="text-highlight place-self-center md:place-self-start text-[1rem] md:text-[1.25rem]">Available For Work</span>
+                <span className="text-center md:text-left text-[0.75rem] md:text-[1rem]">I'm currently available for freelance projects, part-time work, and full-time opportunities. Let's <em>launch</em> a project that's truly out of this world together!</span>
             </div>
         </div>
     );

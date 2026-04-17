@@ -5,6 +5,8 @@ import { useGSAP } from "@gsap/react";
 import { useRef, useState } from "react";
 import { SplitText } from "gsap/SplitText";
 import SpinningCircle from "@/app/_components/SpinningCircle";
+import { ChevronRight } from "lucide-react";
+import Link from "next/link";
 
 gsap.registerPlugin(useGSAP, SplitText);
 
@@ -192,7 +194,15 @@ export default function Welcome({ setToWarp }: WelcomeProps) {
                     <span className="welcome" style={{ display: phase === "welcome" ? "inline-block" : "none" }}>WELCOME<br/>TRAVELER</span>
                     <span className="enter" style={{ display: phase === "enter" ? "inline-block" : "none" }}>TAP TO ENTER<br/>THE COSMOS</span>
                 </button>
+
+                
             </div>
+            <Link href="/home" className="z-30 absolute bottom-8 right-8 md:bottom-10 md:right-10">
+                <button className="group inline-flex items-center justify-center gap-2 px-5 py-3 rounded-md cursor-pointer text-white tracking-widest backdrop-blur-xs bg-secondary border border-white/10 hover:scale-105 text-nowrap transition-all ease-in-out duration-300">
+                    <span className="text-[0.75rem] md:text-[1rem]">Skip</span>
+                    <ChevronRight className="transition-transform duration-300 group-hover:translate-x-2 w-[clamp(16px,2vw,24px)] h-[clamp(16px,2vw,24px)]"/>
+                </button>
+            </Link>
         </div>
     );
 }

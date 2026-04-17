@@ -2,27 +2,42 @@
 
 import StarBackground from "@/app/(tabs)/_components/StarBackground";
 import SpotifyTopTracks from "@/app/(tabs)/_components/SpotifyTopTracks";
-import { AppWindow, Database, Wrench, BookOpenText, Rocket, Download, Zap, BugOff, Users, ChevronsDown } from "lucide-react";
-import { useRef } from 'react';
+import { AppWindow, Database, Wrench, BookOpenText, Rocket, Download, Zap, BugOff, Users, ChevronsDown, ArrowUp } from "lucide-react";
+import { useRef, useEffect } from 'react';
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useNavigationMode } from "@/providers/NavigationModeProvider";
 import TopGames from "../_components/TopGame";
 import { CombinedTracksProps } from "@/lib/spotify";
+import BackToTopButton from "./BackToTopButton";
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
 
 export default function AboutPage({ initialTracks, initialNowPlaying }: CombinedTracksProps) {
     const textContainer = useRef<HTMLDivElement>(null);
+    const navRef = useRef<HTMLDivElement>(null);
 
     const techStackStyle = "w-full flex flex-col justify-start items-start p-10 gap-5 bg-gradient-to-br from-white/5 to-white/[0.02] border border-white/10 text-white rounded-xl group-hover:scale-105 transition-transform ease-in-out duration-300";
-    const techImg = "place-self-center md:place-self-start md:w-full flex flex-col md:flex-row justify-center md:justify-start items-center gap-3 text-[1rem] md:text-[1.25rem] font-bold";
+    const techImg = "place-self-center md:place-self-start md:w-full flex flex-col md:flex-row justify-center md:justify-start items-center gap-3 text-[1rem] md:text-[1.25rem]";
     const techTitleStyle = "group-hover:text-highlight transition-color ease-in-out duration-300";
     const techSubListStyle = "list-disc marker:text-highlight pl-5 space-y-2 text-[0.75rem] md:text-[1rem] text-white/80 group-hover:text-white transition-color";
 
     const navigationMode = useNavigationMode();
     const delayTime = navigationMode === "soft" ? 0.4 : 0.6;
+
+    useEffect(() => {
+        const updateNavHeight = () => {
+            if (navRef.current) {
+                const bottom = navRef.current.getBoundingClientRect().bottom;
+                document.documentElement.style.setProperty("--nav-height", `${bottom + 16}px`); // +16px buffer
+            }
+        };
+
+        updateNavHeight();
+        window.addEventListener("resize", updateNavHeight);
+        return () => window.removeEventListener("resize", updateNavHeight);
+    }, []);
 
     useGSAP(() => {
         const textContainerEl = textContainer.current;
@@ -108,7 +123,7 @@ export default function AboutPage({ initialTracks, initialNowPlaying }: Combined
                         trigger: el,
                         start: "top 60%",
                         end: () => "bottom 50%",
-                        toggleActions: "play none play reverse"
+                        toggleActions: "play none none reverse"
                     },
                 }
             );
@@ -129,7 +144,7 @@ export default function AboutPage({ initialTracks, initialNowPlaying }: Combined
                         trigger: list,
                         start: "top 60%",
                         end: () => "bottom 50%",
-                        toggleActions: "play none play reverse"
+                        toggleActions: "play none none reverse"
                     },
                 }
             );
@@ -137,17 +152,25 @@ export default function AboutPage({ initialTracks, initialNowPlaying }: Combined
     }, { dependencies: [] });
 
     return (
-        <div className="w-full h-full flex flex-col justify-start items-center">
+        <div className="relative w-full h-full flex flex-col justify-start items-center">
             <StarBackground />
+            {/* Scroll Header */}
+            <div ref={navRef} className="fixed z-20 top-25 left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-row justify-center items-center text-[0.75rem] md:text-[1rem] text-center text-white/60 gap-4 px-5 py-3 bg-gradient-to-br from-white/5 to-white/[0.02] border border-white/10 backdrop-blur-xs rounded-full cursor-pointer">
+                <a href="#home" className="hover:text-white hover:underline underline-offset-4 transition-all duration-300 ease-in-out">Home</a>
+                <a href="#stack" className="hover:text-white hover:underline underline-offset-4 transition-all duration-300 ease-in-out">Stack</a>
+                <a href="#values" className="hover:text-white hover:underline underline-offset-4 transition-all duration-300 ease-in-out">Values</a>
+                <a href="#music" className="hover:text-white hover:underline underline-offset-4 transition-all duration-300 ease-in-out">Music</a>
+                <a href="#games" className="hover:text-white hover:underline underline-offset-4 transition-all duration-300 ease-in-out">Games</a>
+            </div>
 
             {/* Header Page */}
-            <div className="min-w-screen min-h-[calc(100dvh-66px)] flex flex-col justify-between items-center p-10 gap-10 bg-primary">
+            <section id="home" className="min-w-screen min-h-[calc(100dvh-66px)] flex flex-col justify-between items-center p-10 gap-10 bg-primary scroll-mt-[var(--nav-height)]">
                 <div>{/* Empty */}</div>
                 <div ref={textContainer} className="text-container relative flex flex-col justify-center items-center text-center gap-2">
                     <div className='rocket absolute top-0 left-[48%] z-20 rotate-135 opacity-100'>
                         <Rocket size={20} />
                     </div>
-                    <div className="intro-text w-fit mx-auto md:mx-0 flex flex-row justify-center items-center gap-2 px-3 py-2 text-[0.75rem] md:text-[1rem] font-bold bg-highlight/20 backdrop-blur-xs text-highlight border border-highlight rounded-full">
+                    <div className="intro-text w-fit mx-auto md:mx-0 flex flex-row justify-center items-center gap-2 px-3 py-2 text-[0.75rem] md:text-[1rem] bg-highlight/20 backdrop-blur-xs text-highlight border border-highlight rounded-full">
                         <BookOpenText className='w-[clamp(16px,2vw,24px)] h-[clamp(16px,2vw,24px)]' />
                         <span>Beyond The Surface</span>
                     </div>
@@ -159,7 +182,7 @@ export default function AboutPage({ initialTracks, initialNowPlaying }: Combined
                     </span>
                     <div className="intro-text text-[0.75rem] md:text-[1.25rem]">
                         <div className="flex flex-row justify-center items-center gap-2 px-5 py-3 mt-5 rounded-md cursor-pointer bg-tertiary border-none shadow-[0_0_25px] shadow-tertiary backdrop-blur-xs hover:shadow-[0_0_5px,_0_0_25px,_0_0_50px,_0_0_100px] hover:shadow-tertiary hover:scale-105 text-nowrap transition-all ease-in-out duration-300">
-                            <a href="/Official-Resume.pdf" download className="text-white/80 font-bold">Download Resume</a>
+                            <a href="/Official-Resume.pdf" download className="text-white/80">Download Resume</a>
                             <Download className="w-[clamp(18px,2vw,20px)] h-[clamp(18px,2vw,20px)]" />
                         </div>
                     </div>
@@ -169,10 +192,10 @@ export default function AboutPage({ initialTracks, initialNowPlaying }: Combined
                     Scroll Down
                     <ChevronsDown className="w-[clamp(24px,2vw,30px)] h-[clamp(24px,2vw,30px)]"/>
                 </div>
-            </div>
+            </section>
 
             {/* Tech Page */}
-            <div className="fade-in-list min-w-screen min-h-[calc(100dvh-66px)] flex flex-col justify-center items-center p-10 gap-10 bg-secondary">
+            <section id="stack" className="fade-in-list min-w-screen min-h-[calc(100dvh-66px)] flex flex-col justify-center items-center p-10 gap-10 bg-secondary scroll-mt-[var(--nav-height)]">
                 <h2 className="text-[2.5rem] md:text-[3.5rem] text-center">
                     <span className="bg-gradient-to-t from-white via-highlight to-tertiary bg-clip-text text-transparent">Tech Stack</span>
                 </h2>
@@ -220,10 +243,10 @@ export default function AboutPage({ initialTracks, initialNowPlaying }: Combined
                         </div>
                     </div>
                 </div>
-            </div>
+            </section>
 
             {/* Values Page */}
-            <div className="fade-in-list min-w-screen min-h-[calc(100dvh-66px)] flex flex-col justify-center items-center p-10 gap-10 bg-primary">
+            <section id="values" className="fade-in-list min-w-screen min-h-[calc(100dvh-66px)] flex flex-col justify-center items-center p-10 gap-10 bg-primary scroll-mt-[var(--nav-height)]">
                 <h2 className="text-[2.5rem] md:text-[3.5rem] text-center">
                     {"What I "}
                     <span className="bg-gradient-to-t from-white via-highlight to-tertiary bg-clip-text text-transparent">Value</span>
@@ -234,7 +257,7 @@ export default function AboutPage({ initialTracks, initialNowPlaying }: Combined
                             <div className="absolute top-[50%] left-[50%] -translate-x-1/2 -translate-y-1/2 w-[clamp(72px,10vw,96px)] h-[clamp(72px,10vw,96px)] flex flex-row justify-center items-center p-5 rounded-2xl bg-gradient-to-r from-cyan-400 to-blue-500 opacity-0 group-hover:opacity-30 blur-xl transition-opacity duration-300" />
                             <BugOff className="absolute top-[50%] left-[50%] -translate-x-1/2 -translate-y-1/2 w-[clamp(36px,5vw,48px)] h-[clamp(36px,5vw,48px)]" />
                         </div>
-                        <span className="font-bold group-hover:text-cyan-200 transition-color ease-in-out duration-300">Code</span>
+                        <span className="group-hover:text-cyan-200 transition-color ease-in-out duration-300">Code</span>
                         <span className="text-[0.75rem] md:text-[1rem] text-white/80 text-center group-hover:text-white transition-color ease-in-out duration-300">Engineering clean, scalable code designed for growth and built to last.</span>
                     </div>
                     <div className="group w-full flex flex-col justify-start items-center gap-3 text-[1rem] md:text-[1.5rem]">
@@ -242,7 +265,7 @@ export default function AboutPage({ initialTracks, initialNowPlaying }: Combined
                             <div className="absolute top-[50%] left-[50%] -translate-x-1/2 -translate-y-1/2 w-[clamp(64px,8vw,96px)] h-[clamp(72px,10vw,96px)] flex flex-row justify-center items-center p-5 rounded-2xl bg-gradient-to-r from-yellow-400 to-orange-500 opacity-0 group-hover:opacity-30 blur-xl transition-opacity duration-300" />
                             <Zap className="absolute top-[50%] left-[50%] -translate-x-1/2 -translate-y-1/2 w-[clamp(36px,5vw,48px)] h-[clamp(36px,5vw,48px)]" />
                         </div>
-                        <span className="font-bold group-hover:text-yellow-200 transition-color ease-in-out duration-300">Performance</span>
+                        <span className="group-hover:text-yellow-200 transition-color ease-in-out duration-300">Performance</span>
                         <span className="text-[0.75rem] md:text-[1rem] text-white/80 text-center group-hover:text-white transition-color ease-in-out duration-300">Optimizing every interaction for speed, responsiveness, and a smoother user experience.</span>
                     </div>
                     <div className="group w-full flex flex-col justify-start items-center gap-3 text-[1rem] md:text-[1.5rem]">
@@ -250,17 +273,24 @@ export default function AboutPage({ initialTracks, initialNowPlaying }: Combined
                             <div className="absolute top-[50%] left-[50%] -translate-x-1/2 -translate-y-1/2 w-[clamp(72px,10vw,96px)] h-[clamp(72px,10vw,96px)] flex flex-row justify-center items-center p-5 rounded-2xl bg-gradient-to-r from-pink-400 to-purple-500 opacity-0 group-hover:opacity-30 blur-xl transition-opacity duration-300" />
                             <Users className="absolute top-[50%] left-[50%] -translate-x-1/2 -translate-y-1/2 w-[clamp(36px,5vw,48px)] h-[clamp(36px,5vw,48px)]" />
                         </div>
-                        <span className="font-bold group-hover:text-purple-300 transition-color ease-in-out duration-300">Collaboration</span>
+                        <span className="group-hover:text-purple-300 transition-color ease-in-out duration-300">Collaboration</span>
                         <span className="text-[0.75rem] md:text-[1rem] text-white/80 text-center group-hover:text-white transition-color ease-in-out duration-300">Working across teams to shape ideas, solve problems, and ship thoughtful digital products.</span>
                     </div>
                 </div>
-            </div>
+            </section>
 
             {/* Music Page */}
-            <SpotifyTopTracks initialTracks={initialTracks} initialNowPlaying={initialNowPlaying}/>
+            <section id="music" className="scroll-mt-[var(--nav-height)]">
+                <SpotifyTopTracks initialTracks={initialTracks} initialNowPlaying={initialNowPlaying}/>
+            </section>
 
             {/* Games Page */}
-            <TopGames/>
+            <section id="games" className="relative scroll-mt-[var(--nav-height)]">
+                <TopGames/>
+                <div className="z-30 absolute bottom-8 right-8 md:bottom-10 md:right-10 text-[1.1rem]">
+                    <BackToTopButton/>
+                </div>
+            </section>
         </div>
     );
 }

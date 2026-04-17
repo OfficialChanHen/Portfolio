@@ -109,7 +109,7 @@ export default function TopGames() {
     return(
         <div
             ref={containerRef}
-            className="z-20 min-w-screen min-h-[calc(100dvh-66px)] flex flex-col justify-center items-center p-10 pb-[66px] gap-10 bg-primary"
+            className="min-w-screen min-h-[calc(100dvh-66px)] flex flex-col justify-center items-center p-10 pb-[66px] gap-10 bg-primary"
         >
             <div className="fade-in-list relative text-center">
                 <h2 className="text-[2.5rem] md:text-[3.5rem]">

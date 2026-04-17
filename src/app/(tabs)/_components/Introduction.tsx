@@ -1,6 +1,6 @@
 'use client';
 
-import { Sparkles, Rocket, Mail, ArrowBigRight, ChevronsDown } from 'lucide-react';
+import { Sparkles, Rocket, Mail, ChevronsDown, ChevronRight } from 'lucide-react';
 import { FiGithub, FiLinkedin } from "react-icons/fi";
 import { FaReact } from "react-icons/fa";
 import { AiOutlinePython } from "react-icons/ai";
@@ -128,8 +128,10 @@ export default function Introduction({
                     delay: delayTime + 0.1,
                 },
                 0
-            )
-            .fromTo(".scroll-down",
+            );
+
+        { isMobile &&
+            introTl.fromTo(".scroll-down",
                 { y: -20, opacity: 0 },
                 {
                     y: 0,
@@ -160,6 +162,8 @@ export default function Introduction({
                     },
                 }
             );
+        }
+            
 
         const interval = setInterval(cycle, 3000);
         return () => clearInterval(interval);
@@ -176,7 +180,7 @@ export default function Introduction({
                     <Rocket size={20}/>
                 </div>
 
-                <div className="intro-text w-fit mx-auto md:mx-0 flex flex-row justify-center md:justify-start items-center gap-2 px-3 py-2 text-[0.75rem] md:text-[1rem] font-bold bg-highlight/20 backdrop-blur-xs text-highlight border border-highlight rounded-full">
+                <div className="intro-text w-fit mx-auto md:mx-0 flex flex-row justify-center md:justify-start items-center gap-2 px-3 py-2 text-[0.75rem] md:text-[1rem] bg-highlight/20 backdrop-blur-xs text-highlight border border-highlight rounded-full">
                     <Sparkles className='w-[clamp(16px,2vw,24px)] h-[clamp(16px,2vw,24px)]'/>
                     <span>Welcome To My Space</span>
                 </div>
@@ -198,15 +202,15 @@ export default function Introduction({
                 </span>
 
                 {/* Intro Buttons */}
-                <div className='intro-text flex flex-row justify-center md:justify-start items-center py-3 gap-5 text-[0.7rem] md:text-[1rem] font-bold'>
+                <div className='intro-text flex flex-row justify-center md:justify-start items-center py-3 gap-5 text-[0.75rem] md:text-[1rem]'>
                     <Link href="/projects">
-                        <button className="group inline-flex items-center justify-center gap-2 px-5 py-3 rounded-md cursor-pointer text-white tracking-widest backdrop-blur-xs bg-primary/40 border-none shadow-[0_0_25px] shadow-tertiary hover:shadow-[0_0_5px,_0_0_25px,_0_0_50px,_0_0_100px] hover:scale-105 hover:shadow-tertiary text-nowrap transition-all ease-in-out duration-300">
+                        <button className="group inline-flex items-center justify-center gap-2 px-5 py-3 rounded-md cursor-pointer text-white tracking-widest backdrop-blur-xs bg-primary/40 border-none shadow-[0_0_25px] shadow-tertiary hover:shadow-[0_0_5px,_0_0_25px,_0_0_50px,_0_0_100px] hover:scale-105 text-nowrap transition-all ease-in-out duration-300">
                             <span>View Projects</span>
-                            <ArrowBigRight className="transition-transform duration-300 group-hover:translate-x-2 w-[clamp(16px,2vw,24px)] h-[clamp(16px,2vw,24px)]"/>
+                            <ChevronRight className="transition-transform duration-300 group-hover:translate-x-2 w-[clamp(16px,2vw,24px)] h-[clamp(16px,2vw,24px)]"/>
                         </button>
                     </Link>
                     <Link href="/contact">
-                        <button className="group inline-flex items-center justify-center w-full px-5 py-3 gap-2 rounded-md cursor-pointer text-white tracking-widest bg-highlight border-none shadow-[0_0_25px] shadow-highlight hover:shadow-[0_0_5px,_0_0_20px,_0_0_50px] hover:shadow-highlight hover:scale-105 transition-all ease-in-out duration-300">
+                        <button className="group inline-flex items-center justify-center w-full px-5 py-3 gap-2 rounded-md cursor-pointer text-white tracking-widest bg-highlight border-none shadow-[0_0_25px] shadow-highlight hover:shadow-[0_0_5px,_0_0_20px,_0_0_50px] hover:scale-105 transition-all ease-in-out duration-300">
                             <Mail className="w-[clamp(16px,2vw,20px)] h-[clamp(16px,2vw,20px)]"/>
                             <span>Connect</span>
                         </button>

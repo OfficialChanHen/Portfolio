@@ -180,7 +180,7 @@ export default function Contacts() {
                     <Rocket size={20}/>
                 </div>
 
-                <div className="intro-text w-fit mx-auto md:mx-0 flex flex-row justify-center md:justify-start items-center gap-2 px-3 py-2 text-[0.75rem] md:text-[1rem] font-bold bg-highlight/20 backdrop-blur-xs text-highlight border border-highlight rounded-full">
+                <div className="intro-text w-fit mx-auto md:mx-0 flex flex-row justify-center md:justify-start items-center gap-2 px-3 py-2 text-[0.75rem] md:text-[1rem]   bg-highlight/20 backdrop-blur-xs text-highlight border border-highlight rounded-full">
                     <MessagesSquare className='w-[clamp(16px,2vw,24px)] h-[clamp(16px,2vw,24px)]'/>
                     <span>Send A Signal</span>
                 </div>
@@ -200,18 +200,18 @@ export default function Contacts() {
                 {/* Email Form */}
                 <form 
                     ref={formContainer}
-                    className="flex flex-col justify-start items-start w-full gap-5 bg-primary/60 border border-primary backdrop-blur-xs p-10 rounded-xl"
+                    className="flex flex-col justify-start items-start w-full gap-5 bg-gradient-to-br from-white/5 to-white/[0.02] border border-white/10 backdrop-blur-xs p-10 rounded-xl"
                     onSubmit={handleSubmit}
                 >
-                    <span className="form text-[1rem] md:text-[1.25rem] font-bold">Send A Message</span>
+                    <span className="form text-[1rem] md:text-[1.25rem]  ">Send A Message</span>
                     {/* Name */}
                     <div className="form flex flex-col w-full gap-1">
-                        <label htmlFor="name" className="text-[0.75rem] md:text-[1rem] text-white/80 font-bold">Name</label>
+                        <label htmlFor="name" className="text-[0.75rem] md:text-[1rem] text-white/80  ">Name</label>
                         <input 
                             id="name"
                             name="name" 
                             type="text"
-                            className="p-2 text-[0.75rem] md:text-[1rem] bg-tertiary/60 border border-tertiary rounded-md focus:outline-none focus:ring-2 focus:ring-highlight/60" 
+                            className="p-2 text-[0.75rem] md:text-[1rem] bg-secondary/60 border border-secondary rounded-md focus:outline-none focus:ring-2 focus:ring-highlight/60" 
                             placeholder="Your Name"
                             value={formData.name}
                             onChange={handleChange}
@@ -222,12 +222,12 @@ export default function Contacts() {
 
                     {/* Email */}
                     <div className="form flex flex-col w-full gap-1">
-                        <label htmlFor="email" className="text-[0.75rem] md:text-[1rem] text-white/80 font-bold ">Email</label>
+                        <label htmlFor="email" className="text-[0.75rem] md:text-[1rem] text-white/80">Email</label>
                         <input 
                             id="email"
                             name="email" 
                             type="Your Email"
-                            className="p-2 text-[0.75rem] md:text-[1rem] bg-tertiary/60 border border-tertiary rounded-md focus:outline-none focus:ring-2 focus:ring-highlight/60" 
+                            className="p-2 text-[0.75rem] md:text-[1rem] bg-secondary/60 border border-secondary rounded-md focus:outline-none focus:ring-2 focus:ring-highlight/60" 
                             placeholder="Your Email"
                             value={formData.email}
                             onChange={handleChange}
@@ -238,12 +238,12 @@ export default function Contacts() {
                     
                     {/* Subject */}
                     <div className="form flex flex-col w-full gap-1">
-                        <label htmlFor="subject" className="text-[0.75rem] md:text-[1rem] text-white/80 font-bold">Subject</label>
+                        <label htmlFor="subject" className="text-[0.75rem] md:text-[1rem] text-white/80">Subject</label>
                         <input 
                             id="subject"
                             name="subject" 
                             type="text"
-                            className="p-2 text-[0.75rem] md:text-[1rem] bg-tertiary/60 border border-tertiary rounded-md focus:outline-none focus:ring-2 focus:ring-highlight/60" 
+                            className="p-2 text-[0.75rem] md:text-[1rem] bg-secondary/60 border border-secondary rounded-md focus:outline-none focus:ring-2 focus:ring-highlight/60" 
                             placeholder="Your Subject"
                             value={formData.subject}
                             onChange={handleChange}
@@ -253,11 +253,11 @@ export default function Contacts() {
                     
                     {/* Message */}
                     <div className="form flex flex-col w-full gap-1">
-                        <label htmlFor="message" className="text-[0.75rem] md:text-[1rem] text-white/80 font-bold">Message</label>
+                        <label htmlFor="message" className="text-[0.75rem] md:text-[1rem] text-white/80">Message</label>
                         <textarea 
                             id="message"
                             name="message" 
-                            className="min-h-30 p-2 text-[0.75rem] md:text-[1rem] bg-tertiary/60 border border-tertiary rounded-md focus:outline-none focus:ring-2 focus:ring-highlight/60" 
+                            className="min-h-30 p-2 text-[0.75rem] md:text-[1rem] bg-secondary/60 border border-secondary rounded-md focus:outline-none focus:ring-2 focus:ring-highlight/60" 
                             placeholder="Your Message"
                             value={formData.message}
                             onChange={handleChange}
@@ -271,7 +271,7 @@ export default function Contacts() {
                         <button
                             type="submit"
                             disabled={status === "sending"}
-                            className="w-full px-5 py-3 text-[0.75rem] md:text-[1rem] rounded-md cursor-pointer text-white font-bold tracking-widest bg-highlight border-none shadow-[0_0_25px] shadow-highlight hover:shadow-[0_0_5px,_0_0_20px,_0_0_50px] hover:shadow-highlight hover:scale-105 transition-all ease-in-out duration-300"
+                            className="w-full px-5 py-3 text-[0.75rem] md:text-[1rem] rounded-md cursor-pointer text-white tracking-widest bg-highlight border-none shadow-[0_0_25px] shadow-highlight hover:shadow-[0_0_5px,_0_0_20px,_0_0_50px] hover:shadow-highlight hover:scale-105 transition-all ease-in-out duration-300"
                         >
                             {status === "sending" ? (
                                 "Sending..."
@@ -305,8 +305,8 @@ export default function Contacts() {
                 </form>
 
                 {/* Social Connections */}
-                <div ref={socialContainer} className="self-start flex flex-col justify-start items-start gap-5 w-full bg-primary/60 border border-primary backdrop-blur-xs p-10 rounded-xl">
-                    <span className="social text-[1rem] md:text-[1.25rem] font-bold">Connect On Socials</span>
+                <div ref={socialContainer} className="self-start flex flex-col justify-start items-start gap-5 w-full bg-gradient-to-br from-white/5 to-white/[0.02] border border-white/10 backdrop-blur-xs p-10 rounded-xl">
+                    <span className="social text-[1rem] md:text-[1.25rem]">Connect On Socials</span>
 
                     <div 
                         className="social group flex flex-row items-center gap-4 text-[0.75rem] md:text-[1rem] text-white/80"
@@ -315,7 +315,7 @@ export default function Contacts() {
                             <Mail className="absolute top-[50%] left-[50%] -translate-x-1/2 -translate-y-1/2 w-[clamp(18px,2vw,20px)] h-[clamp(18px,2vw,20px)]"/>
                         </div>
                         <div className="flex flex-col justify-center items-start">
-                            <span className="group-hover:text-highlight font-bold transition-colors ease-in-out duration-300">Email</span>
+                            <span className="group-hover:text-highlight transition-colors ease-in-out duration-300">Email</span>
                             <span className="text-white/60 group-hover:text-white transition-colors ease-in-out duration-300">Chan Hen</span>
                         </div>
                     </div>
@@ -328,7 +328,7 @@ export default function Contacts() {
                             <FiGithub className="absolute top-[50%] left-[50%] -translate-x-1/2 -translate-y-1/2 w-[clamp(18px,2vw,20px)] h-[clamp(18px,2vw,20px)]"/>
                         </div>
                         <div className="flex flex-col justify-center items-start">
-                            <span className="group-hover:text-highlight font-bold transition-colors ease-in-out duration-300">Github</span>
+                            <span className="group-hover:text-highlight transition-colors ease-in-out duration-300">Github</span>
                             <span className="text-white/60 group-hover:text-white transition-colors ease-in-out duration-300">OfficialChanHen</span>
                         </div>
                     </a>
@@ -341,7 +341,7 @@ export default function Contacts() {
                             <FiLinkedin className="absolute top-[50%] left-[50%] -translate-x-1/2 -translate-y-1/2 w-[clamp(18px,2vw,20px)] h-[clamp(18px,2vw,20px)]"/>
                         </div>
                         <div className="flex flex-col justify-center items-start">
-                            <span className="group-hover:text-highlight font-bold transition-colors ease-in-out duration-300">Linkedin</span>
+                            <span className="group-hover:text-highlight transition-colors ease-in-out duration-300">Linkedin</span>
                             <span className="text-white/60 group-hover:text-white transition-colors ease-in-out duration-300">Chan Hen</span>
                         </div>
                         

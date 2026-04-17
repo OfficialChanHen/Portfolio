@@ -14,7 +14,6 @@ export default async function About() {
         albumImg: track.album.images?.[0]?.url ?? "",
         songUrl: track.external_urls.spotify,
     }));
-    console.log(nowPlayingData)
 
     const nowPlaying: NowPlaying = nowPlayingData?.item
         ? {
