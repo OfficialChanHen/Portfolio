@@ -169,183 +169,185 @@ export default function Contacts() {
     }
 
     return(
-        <div className="w-full max-w-[1080px] h-full flex flex-col justify-start md:justify-center items-center p-10 gap-10 bg-primary">
+        <div className="w-full min-h-[calc(100dvh-66px)] flex flex-col justify-start md:justify-center items-center p-10 gap-10 bg-primary">
             <StarBackground/>
 
             {/* Contact Intro */}
-            <div ref={textContainer} className="relative flex flex-col justify-center items-center text-center">
+            <div className="max-w-[1080px] gap-5">
+                <div ref={textContainer} className="relative flex flex-col justify-center items-center text-center">
 
-                {/* Rocket */}
-                <div className='rocket absolute top-0 left-[48%] z-20 rotate-135 opacity-100'>
-                    <Rocket size={20}/>
+                    {/* Rocket */}
+                    <div className='rocket absolute top-0 left-[48%] z-20 rotate-135 opacity-100'>
+                        <Rocket size={20}/>
+                    </div>
+
+                    <div className="intro-text w-fit mx-auto md:mx-0 flex flex-row justify-center md:justify-start items-center gap-2 px-3 py-2 text-[0.75rem] md:text-[1rem]   bg-highlight/20 backdrop-blur-xs text-highlight border border-highlight rounded-full">
+                        <MessagesSquare className='w-[clamp(16px,2vw,24px)] h-[clamp(16px,2vw,24px)]'/>
+                        <span>Send A Signal</span>
+                    </div>
+                    
+                    <h2 className="intro-text text-[2.5rem] md:text-[3.5rem]">
+                        Get In {" "}
+                        <span className="bg-gradient-to-t from-white via-highlight to-tertiary bg-clip-text text-transparent">
+                            Touch
+                        </span>
+                    </h2>
+
+                    <span className="intro-text text-[1rem] md:text-[1.5rem] text-white/80">Have a project in mind or just <span className="bg-gradient-to-t from-white via-highlight to-tertiary bg-clip-text text-transparent">want to chat?</span> I would love to <span className="bg-gradient-to-t from-white via-highlight to-tertiary bg-clip-text text-transparent">hear from you!</span></span>
                 </div>
 
-                <div className="intro-text w-fit mx-auto md:mx-0 flex flex-row justify-center md:justify-start items-center gap-2 px-3 py-2 text-[0.75rem] md:text-[1rem]   bg-highlight/20 backdrop-blur-xs text-highlight border border-highlight rounded-full">
-                    <MessagesSquare className='w-[clamp(16px,2vw,24px)] h-[clamp(16px,2vw,24px)]'/>
-                    <span>Send A Signal</span>
-                </div>
                 
-                <h2 className="intro-text text-[2.5rem] md:text-[3.5rem]">
-                    Get In {" "}
-                    <span className="bg-gradient-to-t from-white via-highlight to-tertiary bg-clip-text text-transparent">
-                        Touch
-                    </span>
-                </h2>
-
-                <span className="intro-text text-[1rem] md:text-[1.5rem] text-white/80">Have a project in mind or just <span className="bg-gradient-to-t from-white via-highlight to-tertiary bg-clip-text text-transparent">want to chat?</span> I would love to <span className="bg-gradient-to-t from-white via-highlight to-tertiary bg-clip-text text-transparent">hear from you!</span></span>
-            </div>
-
-            
-            <div className="flex flex-col w-full md:flex-row gap-5">
-                {/* Email Form */}
-                <form 
-                    ref={formContainer}
-                    className="flex flex-col justify-start items-start w-full gap-5 bg-gradient-to-br from-white/5 to-white/[0.02] border border-white/10 backdrop-blur-xs p-10 rounded-xl"
-                    onSubmit={handleSubmit}
-                >
-                    <span className="form text-[1rem] md:text-[1.25rem]  ">Send A Message</span>
-                    {/* Name */}
-                    <div className="form flex flex-col w-full gap-1">
-                        <label htmlFor="name" className="text-[0.75rem] md:text-[1rem] text-white/80  ">Name</label>
-                        <input 
-                            id="name"
-                            name="name" 
-                            type="text"
-                            className="p-2 text-[0.75rem] md:text-[1rem] bg-tertiary/60 border border-tertiary/80 rounded-md focus:outline-none focus:ring-2 focus:ring-highlight/60" 
-                            placeholder="Your Name"
-                            value={formData.name}
-                            onChange={handleChange}
-                            required
-                        >  
-                        </input>
-                    </div>
-
-                    {/* Email */}
-                    <div className="form flex flex-col w-full gap-1">
-                        <label htmlFor="email" className="text-[0.75rem] md:text-[1rem] text-white/80">Email</label>
-                        <input 
-                            id="email"
-                            name="email" 
-                            type="Your Email"
-                            className="p-2 text-[0.75rem] md:text-[1rem] bg-tertiary/60 border border-tertiary/80 rounded-md focus:outline-none focus:ring-2 focus:ring-highlight/60" 
-                            placeholder="Your Email"
-                            value={formData.email}
-                            onChange={handleChange}
-                            required
-                        >  
-                        </input>
-                    </div>
-                    
-                    {/* Subject */}
-                    <div className="form flex flex-col w-full gap-1">
-                        <label htmlFor="subject" className="text-[0.75rem] md:text-[1rem] text-white/80">Subject</label>
-                        <input 
-                            id="subject"
-                            name="subject" 
-                            type="text"
-                            className="p-2 text-[0.75rem] md:text-[1rem] bg-tertiary/60 border border-tertiary/80 rounded-md focus:outline-none focus:ring-2 focus:ring-highlight/60" 
-                            placeholder="Your Subject"
-                            value={formData.subject}
-                            onChange={handleChange}
-                        >  
-                        </input>
-                    </div>
-                    
-                    {/* Message */}
-                    <div className="form flex flex-col w-full gap-1">
-                        <label htmlFor="message" className="text-[0.75rem] md:text-[1rem] text-white/80">Message</label>
-                        <textarea 
-                            id="message"
-                            name="message" 
-                            className="min-h-30 p-2 text-[0.75rem] md:text-[1rem] bg-tertiary/60 border border-tertiary/80 rounded-md focus:outline-none focus:ring-2 focus:ring-highlight/60" 
-                            placeholder="Your Message"
-                            value={formData.message}
-                            onChange={handleChange}
-                            required
-                        >  
-                        </textarea>
-                    </div>
-
-                    {/* Submit Button*/}
-                    <div className="form group w-full">
-                        <button
-                            type="submit"
-                            disabled={status === "sending"}
-                            className="w-full px-5 py-3 text-[0.75rem] md:text-[1rem] rounded-md cursor-pointer text-white tracking-widest bg-highlight border-none shadow-[0_0_25px] shadow-highlight hover:shadow-[0_0_5px,_0_0_20px,_0_0_50px] hover:shadow-highlight hover:scale-105 transition-all ease-in-out duration-300"
-                        >
-                            {status === "sending" ? (
-                                "Sending..."
-                            ) : (
-                                <div className="relative flex items-center justify-center gap-2">
-                                    <Send className="w-[clamp(18px,2vw,20px)] h-[clamp(18px,2vw,20px)]"/>
-                                    
-                                    <span className="overflow-hidden whitespace-nowrap max-w-[12rem] opacity-100 transition-all duration-400 group-hover:max-w-0 group-hover:opacity-0">
-                                        Send Message
-                                    </span>
-                                </div>
-                            )}
-                        </button>
-                    </div>
-                    
-
-                    {status === "success" && (
-                        <div className="inline-flex flex-row justify-start items-center gap-2 text-green-400 text-[0.75rem] md:text-[1rem]"> 
-                            <MailCheck className="w-[clamp(18px,2vw,20px)] h-[clamp(18px,2vw,20px)]"/>
-                            <span className="">Your message was sent successfully.</span>
-                        </div>
-                    )}
-
-                    {status === "error" && (
-                        <div className="inline-flex flex-row justify-start items-center gap-2 text-red-400 text-[0.75rem] md:text-[1rem]"> 
-                            <MailX className="w-[clamp(18px,2vw,20px)] h-[clamp(18px,2vw,20px)]"/>
-                            <span className="">Something went wrong. Please try again.</span>
-                        </div>
-                    )}
-
-                </form>
-
-                {/* Social Connections */}
-                <div ref={socialContainer} className="self-start flex flex-col justify-start items-start gap-5 w-full bg-gradient-to-br from-white/5 to-white/[0.02] border border-white/10 backdrop-blur-xs p-10 rounded-xl">
-                    <span className="social text-[1rem] md:text-[1.25rem]">Connect On Socials</span>
-
-                    <div 
-                        className="social group flex flex-row items-center gap-4 text-[0.75rem] md:text-[1rem] text-white/80"
+                <div className="flex flex-col w-full md:flex-row gap-5 mt-5">
+                    {/* Email Form */}
+                    <form 
+                        ref={formContainer}
+                        className="flex flex-col justify-start items-start w-full gap-5 bg-gradient-to-br from-white/5 to-white/[0.02] border border-white/10 backdrop-blur-xs p-10 rounded-xl"
+                        onSubmit={handleSubmit}
                     >
-                        <div className="relative w-[clamp(24px,2vw,30px)] h-[clamp(24px,2vw,30px)] flex flex-row justify-center items-center p-5 bg-linear-to-br from-tertiary to-highlight text-white rounded-md group-hover:scale-105 transition-all ease-in-out duration-300">
-                            <Mail className="absolute top-[50%] left-[50%] -translate-x-1/2 -translate-y-1/2 w-[clamp(18px,2vw,20px)] h-[clamp(18px,2vw,20px)]"/>
+                        <span className="form text-[1rem] md:text-[1.25rem]  ">Send A Message</span>
+                        {/* Name */}
+                        <div className="form flex flex-col w-full gap-1">
+                            <label htmlFor="name" className="text-[0.75rem] md:text-[1rem] text-white/80  ">Name</label>
+                            <input 
+                                id="name"
+                                name="name" 
+                                type="text"
+                                className="p-2 text-[0.75rem] md:text-[1rem] bg-tertiary/60 border border-tertiary/80 rounded-md focus:outline-none focus:ring-2 focus:ring-highlight/60" 
+                                placeholder="Your Name"
+                                value={formData.name}
+                                onChange={handleChange}
+                                required
+                            >  
+                            </input>
                         </div>
-                        <div className="flex flex-col justify-center items-start">
-                            <span className="group-hover:text-highlight transition-colors ease-in-out duration-300">Email</span>
-                            <span className="text-white/60 group-hover:text-white transition-colors ease-in-out duration-300">Chan Hen</span>
-                        </div>
-                    </div>
 
-                    <a 
-                        className="social group flex flex-row items-center gap-4 text-[0.75rem] md:text-[1rem] text-white/80"
-                        href="https://github.com/OfficialChanHen" target="_blank" rel="noopener noreferrer"
-                    >
-                        <div className="relative w-[clamp(24px,2vw,30px)] h-[clamp(24px,2vw,30px)] flex flex-row justify-center items-center p-5 bg-tertiary/60 bg-linear-to-br from-tertiary to-highlight text-white rounded-md group-hover:scale-105 transition-all ease-in-out duration-300">
-                            <FiGithub className="absolute top-[50%] left-[50%] -translate-x-1/2 -translate-y-1/2 w-[clamp(18px,2vw,20px)] h-[clamp(18px,2vw,20px)]"/>
-                        </div>
-                        <div className="flex flex-col justify-center items-start">
-                            <span className="group-hover:text-highlight transition-colors ease-in-out duration-300">Github</span>
-                            <span className="text-white/60 group-hover:text-white transition-colors ease-in-out duration-300">OfficialChanHen</span>
-                        </div>
-                    </a>
-
-                    <a 
-                        className="social group flex flex-row items-center gap-4 text-[0.75rem] md:text-[1rem] text-white/80"
-                        href="https://www.linkedin.com/in/chan-hen-13727b233/" target="_blank" rel="noopener noreferrer"
-                    >
-                        <div className="relative w-[clamp(24px,2vw,30px)] h-[clamp(24px,2vw,30px)] flex flex-row justify-center items-center p-5 bg-linear-to-br from-tertiary to-highlight text-white rounded-md group-hover:scale-105 transition-all ease-in-out duration-300">
-                            <FiLinkedin className="absolute top-[50%] left-[50%] -translate-x-1/2 -translate-y-1/2 w-[clamp(18px,2vw,20px)] h-[clamp(18px,2vw,20px)]"/>
-                        </div>
-                        <div className="flex flex-col justify-center items-start">
-                            <span className="group-hover:text-highlight transition-colors ease-in-out duration-300">Linkedin</span>
-                            <span className="text-white/60 group-hover:text-white transition-colors ease-in-out duration-300">Chan Hen</span>
+                        {/* Email */}
+                        <div className="form flex flex-col w-full gap-1">
+                            <label htmlFor="email" className="text-[0.75rem] md:text-[1rem] text-white/80">Email</label>
+                            <input 
+                                id="email"
+                                name="email" 
+                                type="Your Email"
+                                className="p-2 text-[0.75rem] md:text-[1rem] bg-tertiary/60 border border-tertiary/80 rounded-md focus:outline-none focus:ring-2 focus:ring-highlight/60" 
+                                placeholder="Your Email"
+                                value={formData.email}
+                                onChange={handleChange}
+                                required
+                            >  
+                            </input>
                         </div>
                         
-                    </a>
+                        {/* Subject */}
+                        <div className="form flex flex-col w-full gap-1">
+                            <label htmlFor="subject" className="text-[0.75rem] md:text-[1rem] text-white/80">Subject</label>
+                            <input 
+                                id="subject"
+                                name="subject" 
+                                type="text"
+                                className="p-2 text-[0.75rem] md:text-[1rem] bg-tertiary/60 border border-tertiary/80 rounded-md focus:outline-none focus:ring-2 focus:ring-highlight/60" 
+                                placeholder="Your Subject"
+                                value={formData.subject}
+                                onChange={handleChange}
+                            >  
+                            </input>
+                        </div>
+                        
+                        {/* Message */}
+                        <div className="form flex flex-col w-full gap-1">
+                            <label htmlFor="message" className="text-[0.75rem] md:text-[1rem] text-white/80">Message</label>
+                            <textarea 
+                                id="message"
+                                name="message" 
+                                className="min-h-30 p-2 text-[0.75rem] md:text-[1rem] bg-tertiary/60 border border-tertiary/80 rounded-md focus:outline-none focus:ring-2 focus:ring-highlight/60" 
+                                placeholder="Your Message"
+                                value={formData.message}
+                                onChange={handleChange}
+                                required
+                            >  
+                            </textarea>
+                        </div>
+
+                        {/* Submit Button*/}
+                        <div className="form group w-full">
+                            <button
+                                type="submit"
+                                disabled={status === "sending"}
+                                className="w-full px-5 py-3 text-[0.75rem] md:text-[1rem] rounded-md cursor-pointer text-white tracking-widest bg-highlight border-none shadow-[0_0_25px] shadow-highlight hover:shadow-[0_0_5px,_0_0_20px,_0_0_50px] hover:shadow-highlight hover:scale-105 transition-all ease-in-out duration-300"
+                            >
+                                {status === "sending" ? (
+                                    "Sending..."
+                                ) : (
+                                    <div className="relative flex items-center justify-center gap-2">
+                                        <Send className="w-[clamp(18px,2vw,20px)] h-[clamp(18px,2vw,20px)]"/>
+                                        
+                                        <span className="overflow-hidden whitespace-nowrap max-w-[12rem] opacity-100 transition-all duration-400 group-hover:max-w-0 group-hover:opacity-0">
+                                            Send Message
+                                        </span>
+                                    </div>
+                                )}
+                            </button>
+                        </div>
+                        
+
+                        {status === "success" && (
+                            <div className="inline-flex flex-row justify-start items-center gap-2 text-green-400 text-[0.75rem] md:text-[1rem]"> 
+                                <MailCheck className="w-[clamp(18px,2vw,20px)] h-[clamp(18px,2vw,20px)]"/>
+                                <span className="">Your message was sent successfully.</span>
+                            </div>
+                        )}
+
+                        {status === "error" && (
+                            <div className="inline-flex flex-row justify-start items-center gap-2 text-red-400 text-[0.75rem] md:text-[1rem]"> 
+                                <MailX className="w-[clamp(18px,2vw,20px)] h-[clamp(18px,2vw,20px)]"/>
+                                <span className="">Something went wrong. Please try again.</span>
+                            </div>
+                        )}
+
+                    </form>
+
+                    {/* Social Connections */}
+                    <div ref={socialContainer} className="self-start flex flex-col justify-start items-start gap-5 w-full bg-gradient-to-br from-white/5 to-white/[0.02] border border-white/10 backdrop-blur-xs p-10 rounded-xl">
+                        <span className="social text-[1rem] md:text-[1.25rem]">Connect On Socials</span>
+
+                        <div 
+                            className="social group flex flex-row items-center gap-4 text-[0.75rem] md:text-[1rem] text-white/80"
+                        >
+                            <div className="relative w-[clamp(24px,2vw,30px)] h-[clamp(24px,2vw,30px)] flex flex-row justify-center items-center p-5 bg-linear-to-br from-tertiary to-highlight text-white rounded-md group-hover:scale-105 transition-all ease-in-out duration-300">
+                                <Mail className="absolute top-[50%] left-[50%] -translate-x-1/2 -translate-y-1/2 w-[clamp(18px,2vw,20px)] h-[clamp(18px,2vw,20px)]"/>
+                            </div>
+                            <div className="flex flex-col justify-center items-start">
+                                <span className="group-hover:text-highlight transition-colors ease-in-out duration-300">Email</span>
+                                <span className="text-white/60 group-hover:text-white transition-colors ease-in-out duration-300">Chan Hen</span>
+                            </div>
+                        </div>
+
+                        <a 
+                            className="social group flex flex-row items-center gap-4 text-[0.75rem] md:text-[1rem] text-white/80"
+                            href="https://github.com/OfficialChanHen" target="_blank" rel="noopener noreferrer"
+                        >
+                            <div className="relative w-[clamp(24px,2vw,30px)] h-[clamp(24px,2vw,30px)] flex flex-row justify-center items-center p-5 bg-tertiary/60 bg-linear-to-br from-tertiary to-highlight text-white rounded-md group-hover:scale-105 transition-all ease-in-out duration-300">
+                                <FiGithub className="absolute top-[50%] left-[50%] -translate-x-1/2 -translate-y-1/2 w-[clamp(18px,2vw,20px)] h-[clamp(18px,2vw,20px)]"/>
+                            </div>
+                            <div className="flex flex-col justify-center items-start">
+                                <span className="group-hover:text-highlight transition-colors ease-in-out duration-300">Github</span>
+                                <span className="text-white/60 group-hover:text-white transition-colors ease-in-out duration-300">OfficialChanHen</span>
+                            </div>
+                        </a>
+
+                        <a 
+                            className="social group flex flex-row items-center gap-4 text-[0.75rem] md:text-[1rem] text-white/80"
+                            href="https://www.linkedin.com/in/chan-hen-13727b233/" target="_blank" rel="noopener noreferrer"
+                        >
+                            <div className="relative w-[clamp(24px,2vw,30px)] h-[clamp(24px,2vw,30px)] flex flex-row justify-center items-center p-5 bg-linear-to-br from-tertiary to-highlight text-white rounded-md group-hover:scale-105 transition-all ease-in-out duration-300">
+                                <FiLinkedin className="absolute top-[50%] left-[50%] -translate-x-1/2 -translate-y-1/2 w-[clamp(18px,2vw,20px)] h-[clamp(18px,2vw,20px)]"/>
+                            </div>
+                            <div className="flex flex-col justify-center items-start">
+                                <span className="group-hover:text-highlight transition-colors ease-in-out duration-300">Linkedin</span>
+                                <span className="text-white/60 group-hover:text-white transition-colors ease-in-out duration-300">Chan Hen</span>
+                            </div>
+                            
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>

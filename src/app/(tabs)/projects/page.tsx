@@ -41,9 +41,9 @@ export default function Projects() {
         <div className="relative w-full h-full flex flex-col justify-start items-center bg-secondary">
             <StarBackground />
 
-            <div className="w-full max-w-[1080px] min-h-[calc(100dvh-66px)] flex flex-col justify-center items-center gap-2 p-10">
+            <div className="w-full max-w-[1080px] min-h-[calc(100dvh-66px)] flex flex-col justify-center items-center gap-5 p-10">
 
-                <div className="w-full flex-1 flex flex-row justify-start items-stretch bg-gradient-to-br from-white/5 to-white/[0.02] border border-white/10 backdrop-blur-xs rounded-2xl p-5 gap-5">
+                <div className="w-full flex-1 flex flex-row justify-start items-stretch">
                     <div className="w-full flex-1 flex flex-col md:flex-row  justify-start items-stretch bg-gradient-to-br from-white/5 to-white/[0.02] bg-primary rounded-2xl drop-shadow-lg/60">
                         {/* Image — 1/3 */}
                         <div
