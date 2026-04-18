@@ -32,12 +32,12 @@ export default function ClientTabsLayout({
     }, { dependencies: [pathname] });
     
     return (
-        <div className="min-h-screen max-w-screen z-0 flex flex-col font-mono bg-background/30 ">
+        <div className="min-h-dvh max-w-screen z-0 flex flex-col font-mono bg-background/30 ">
             <BoxFade setBoxReady={setBoxReady}/>
             {boxReady && (
                 <>
                     <Header className={`${barStyle}`}/>
-                    <main className="overflow-hidden h-full w-full flex-1 flex flex-col justify-center items-center">{children}</main>
+                    <main className="overflow-hidden w-full flex-1 flex flex-col justify-center items-center">{children}</main>
                     <Footer className={`${barStyle}`}/>
                 </>
             )}

@@ -169,7 +169,7 @@ export default function Contacts() {
     }
 
     return(
-        <div className="w-full max-w-[1080px] h-full flex flex-col justify-start md:justify-center items-center p-10 gap-10">
+        <div className="w-full max-w-[1080px] h-full flex flex-col justify-start md:justify-center items-center p-10 gap-10 bg-primary">
             <StarBackground/>
 
             {/* Contact Intro */}
@@ -211,7 +211,7 @@ export default function Contacts() {
                             id="name"
                             name="name" 
                             type="text"
-                            className="p-2 text-[0.75rem] md:text-[1rem] bg-secondary/60 border border-secondary rounded-md focus:outline-none focus:ring-2 focus:ring-highlight/60" 
+                            className="p-2 text-[0.75rem] md:text-[1rem] bg-tertiary/60 border border-tertiary/80 rounded-md focus:outline-none focus:ring-2 focus:ring-highlight/60" 
                             placeholder="Your Name"
                             value={formData.name}
                             onChange={handleChange}
@@ -227,7 +227,7 @@ export default function Contacts() {
                             id="email"
                             name="email" 
                             type="Your Email"
-                            className="p-2 text-[0.75rem] md:text-[1rem] bg-secondary/60 border border-secondary rounded-md focus:outline-none focus:ring-2 focus:ring-highlight/60" 
+                            className="p-2 text-[0.75rem] md:text-[1rem] bg-tertiary/60 border border-tertiary/80 rounded-md focus:outline-none focus:ring-2 focus:ring-highlight/60" 
                             placeholder="Your Email"
                             value={formData.email}
                             onChange={handleChange}
@@ -243,7 +243,7 @@ export default function Contacts() {
                             id="subject"
                             name="subject" 
                             type="text"
-                            className="p-2 text-[0.75rem] md:text-[1rem] bg-secondary/60 border border-secondary rounded-md focus:outline-none focus:ring-2 focus:ring-highlight/60" 
+                            className="p-2 text-[0.75rem] md:text-[1rem] bg-tertiary/60 border border-tertiary/80 rounded-md focus:outline-none focus:ring-2 focus:ring-highlight/60" 
                             placeholder="Your Subject"
                             value={formData.subject}
                             onChange={handleChange}
@@ -257,7 +257,7 @@ export default function Contacts() {
                         <textarea 
                             id="message"
                             name="message" 
-                            className="min-h-30 p-2 text-[0.75rem] md:text-[1rem] bg-secondary/60 border border-secondary rounded-md focus:outline-none focus:ring-2 focus:ring-highlight/60" 
+                            className="min-h-30 p-2 text-[0.75rem] md:text-[1rem] bg-tertiary/60 border border-tertiary/80 rounded-md focus:outline-none focus:ring-2 focus:ring-highlight/60" 
                             placeholder="Your Message"
                             value={formData.message}
                             onChange={handleChange}
