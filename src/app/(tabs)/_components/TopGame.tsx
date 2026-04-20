@@ -60,7 +60,7 @@ export default function TopGames() {
             scrollTrigger: {
                 trigger: containerRef.current,
                 start: "top top",
-                end: `+=${containerRef.current.offsetHeight * 3}`,
+                end: () => `+=${window.innerHeight * 3}`,
                 scrub: 1.5,
                 pin: true,
                 pinSpacing: true,
@@ -69,7 +69,8 @@ export default function TopGames() {
                     duration: { min: 0.2, max: 0.4 }, // the snap animation should be at least 0.2 seconds, but no more than 3 seconds (determined by velocity)
                     delay: 0.2, // wait 0.2 seconds from the last scroll event before doing the snapping
                     ease: 'power1.inOut' // the ease of the snap animation ("power3" by default)
-                }
+                },
+                invalidateOnRefresh: true
             }
         });
 

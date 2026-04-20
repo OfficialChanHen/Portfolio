@@ -203,10 +203,10 @@ export default function Introduction({
 
                 {/* Intro Buttons */}
                 <div className='intro-text flex flex-row justify-center md:justify-start items-center py-3 gap-5 text-[0.75rem] md:text-[1rem]'>
-                    <div className="group inline-flex items-center justify-center w-full px-5 py-3 gap-2 rounded-md cursor-pointer text-white text-nowrap tracking-widest bg-highlight border-none shadow-[0_0_25px] shadow-highlight hover:shadow-[0_0_5px,_0_0_20px,_0_0_50px] hover:scale-105 transition-all ease-in-out duration-300">
-                        <a href="/Official-Resume.pdf" download className="text-white/80">Download Resume</a>
+                    <a href="/Official-Resume.pdf" download  className="group inline-flex items-center justify-center w-full px-5 py-3 gap-2 rounded-md cursor-pointer text-white text-nowrap tracking-widest bg-highlight border-none shadow-[0_0_25px] shadow-highlight hover:shadow-[0_0_5px,_0_0_20px,_0_0_50px] hover:scale-105 transition-all ease-in-out duration-300">
+                        <span className="text-white/80">Download Resume</span>
                         <Download className="w-[clamp(18px,2vw,20px)] h-[clamp(18px,2vw,20px)]" />
-                    </div>
+                    </a>
                     <Link href="/contact">
                         <button className="group inline-flex items-center justify-center w-full px-5 py-3 gap-2 rounded-md cursor-pointer text-white tracking-widest bg-highlight border-none shadow-[0_0_25px] shadow-highlight hover:shadow-[0_0_5px,_0_0_20px,_0_0_50px] hover:scale-105 transition-all ease-in-out duration-300">
                             <Mail className="w-[clamp(16px,2vw,20px)] h-[clamp(16px,2vw,20px)]"/>
