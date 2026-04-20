@@ -169,7 +169,7 @@ export default function Contacts() {
     }
 
     return(
-        <div className="w-full min-h-[calc(100dvh-66px)] flex flex-col justify-start md:justify-center items-center p-10 gap-10 bg-primary">
+        <div className="w-screen min-h-dvh flex flex-col justify-start md:justify-center items-center p-10 pt-[106px] gap-10 bg-primary">
             <StarBackground/>
 
             {/* Contact Intro */}

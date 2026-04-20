@@ -24,16 +24,6 @@ export default function Home() {
                 opacity: 1,
                 duration: 0.75,
                 ease: "power2.in",
-                onComplete: () => {
-                    gsap.to(".job-icon", 
-                        {
-                            backgroundColor: "#9b317f",
-                            duration: 2,
-                            yoyo: true, 
-                            repeat: -1,
-                        }
-                    );
-                }
             }
         );
         playOrTrigger(jobContainer.current as HTMLElement, jobTl);
@@ -42,7 +32,7 @@ export default function Home() {
     }, { dependencies: [introDone] })
 
     return(
-        <div className="relative w-full flex flex-col justify-start md:justify-center items-center p-10 gap-5">
+        <div className="relative h-dvh w-screen flex flex-col justify-start md:justify-center items-center p-10 pt-[106px] gap-5">
             <StarBackground/>
             <Introduction setIntroDone={setIntroDone}/>
 

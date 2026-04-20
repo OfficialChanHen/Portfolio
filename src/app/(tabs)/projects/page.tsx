@@ -38,13 +38,13 @@ export default function Projects() {
     }
 
     return(
-        <div className="relative w-full h-full flex flex-col justify-start items-center bg-secondary">
+        <div className="relative w-screen flex flex-col justify-start items-center bg-secondary">
             <StarBackground />
 
-            <div className="w-full max-w-[1080px] min-h-[calc(100dvh-66px)] flex flex-col justify-center items-center gap-5 p-10">
+            <div className="w-screen max-w-[1080px] h-dvh flex flex-col justify-center items-center gap-5 p-10 pt-[106px]">
 
                 <div className="w-full flex-1 flex flex-row justify-start items-stretch">
-                    <div className="w-full flex-1 flex flex-col md:flex-row  justify-start items-stretch bg-gradient-to-br from-white/5 to-white/[0.02] bg-primary rounded-2xl drop-shadow-lg/60">
+                    <div className="w-full flex-1 flex flex-col md:flex-row justify-start items-stretch bg-gradient-to-br from-white/5 to-white/[0.02] bg-primary rounded-2xl drop-shadow-lg/60">
                         {/* Image — 1/3 */}
                         <div
                             className="basis-1/3 md:basis-1/2 shrink-0 bg-cover bg-center rounded-2xl"

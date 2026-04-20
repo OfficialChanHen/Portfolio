@@ -59,7 +59,7 @@ export default function TopGames() {
          const tl = gsap.timeline({
             scrollTrigger: {
                 trigger: containerRef.current,
-                start: "-66px top",
+                start: "top top",
                 end: `+=${containerRef.current.offsetHeight * 3}`,
                 scrub: 1.5,
                 pin: true,
@@ -109,7 +109,7 @@ export default function TopGames() {
     return(
         <div
             ref={containerRef}
-            className="min-w-screen min-h-[calc(100dvh-66px)] flex flex-col justify-center items-center p-10 pb-[66px] gap-10 bg-primary"
+            className="w-screen min-h-dvh flex flex-col justify-center items-center p-10 pt-[106px] gap-10 bg-primary"
         >
             <div className="fade-in-list relative text-center">
                 <h2 className="text-[2.5rem] md:text-[3.5rem]">

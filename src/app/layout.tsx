@@ -49,7 +49,7 @@ export default async function RootLayout({
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} ${dmMono.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">
+      <body>
         <NavigationModeProvider>
           <MobileProvider initialIsMobile={isMobile}>
             {children}

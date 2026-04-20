@@ -11,8 +11,9 @@ import { useNavigationMode } from "@/providers/NavigationModeProvider";
 import TopGames from "../_components/TopGame";
 import { CombinedTracksProps } from "@/lib/spotify";
 import BackToTopButton from "./BackToTopButton";
+import { ScrollSmoother } from "gsap/ScrollSmoother";
 
-gsap.registerPlugin(useGSAP, ScrollTrigger);
+gsap.registerPlugin(useGSAP, ScrollTrigger, ScrollSmoother);
 
 export default function AboutPage({ initialTracks, initialNowPlaying }: CombinedTracksProps) {
     const textContainer = useRef<HTMLDivElement>(null);
@@ -42,6 +43,15 @@ export default function AboutPage({ initialTracks, initialNowPlaying }: Combined
     useGSAP(() => {
         const textContainerEl = textContainer.current;
         if (!textContainerEl) return;
+
+        ScrollTrigger.create({
+            markers: true,
+            trigger: ".nav-bar",
+            start: "top top+=106px",
+            end: "max",
+            pin: true,
+            pinSpacing: false,
+        });
 
         gsap.set(".scroll-down", { opacity: 0 });
 
@@ -151,21 +161,26 @@ export default function AboutPage({ initialTracks, initialNowPlaying }: Combined
         });
     }, { dependencies: [] });
 
-    return (
-        <div className="relative w-full h-full flex flex-col justify-start items-center bg-primary">
-            {/* Scroll Header */}
-            <div ref={navRef} className="fixed z-20 top-25 left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-row justify-center items-center text-[0.75rem] md:text-[1rem] text-center text-white/60 gap-4 px-5 py-3 bg-gradient-to-br from-white/5 to-white/[0.02] border border-white/10 backdrop-blur-xs rounded-full cursor-pointer">
-                <a href="#resume" className="hover:text-white hover:underline underline-offset-4 transition-all duration-300 ease-in-out">Resume</a>
-                <a href="#stack" className="hover:text-white hover:underline underline-offset-4 transition-all duration-300 ease-in-out">Stack</a>
-                <a href="#values" className="hover:text-white hover:underline underline-offset-4 transition-all duration-300 ease-in-out">Values</a>
-                <a href="#music" className="hover:text-white hover:underline underline-offset-4 transition-all duration-300 ease-in-out">Music</a>
-                <a href="#games" className="hover:text-white hover:underline underline-offset-4 transition-all duration-300 ease-in-out">Games</a>
-            </div>
+    function handleNavClick(navSection: String) {
+        const scroller = ScrollSmoother.get();
+        scroller?.scrollTo(navSection, true, "top top+=66");
+    }
 
+    return (
+        <div className="relative w-screen flex flex-col justify-start items-center bg-primary">
             {/* Header Page */}
-            <section id="resume" className="min-w-screen min-h-[calc(100dvh-66px)] flex flex-col justify-between items-center p-10 gap-10 bg-primary scroll-mt-[var(--nav-height)]">
-                <div>{/* Empty */}</div>
-                <div ref={textContainer} className="text-container relative flex flex-col justify-center items-center text-center gap-2">
+            <section id="resume" className="w-screen min-h-dvh flex flex-col justify-between items-center p-10 pt-[106px] gap-10 bg-primary scroll-mt-[var(--nav-height)]">
+                
+                {/* Scroll Header */}
+                <div ref={navRef} className="nav-bar z-20 flex flex-row justify-center items-center text-[0.75rem] md:text-[1rem] text-center text-white/60 gap-4 px-5 py-3 bg-gradient-to-br from-white/5 to-white/[0.02] border border-white/10 backdrop-blur-xs rounded-full cursor-pointer">
+                    <button className="hover:text-white hover:underline underline-offset-4 transition-all duration-300 ease-in-out" onClick={() => handleNavClick("#resume")}>Resume</button>
+                    <button className="hover:text-white hover:underline underline-offset-4 transition-all duration-300 ease-in-out" onClick={() => handleNavClick("#stack")}>Stack</button>
+                    <button className="hover:text-white hover:underline underline-offset-4 transition-all duration-300 ease-in-out" onClick={() => handleNavClick("#values")}>Values</button>
+                    <button className="hover:text-white hover:underline underline-offset-4 transition-all duration-300 ease-in-out" onClick={() => handleNavClick("#music")}>Music</button>
+                    <button className="hover:text-white hover:underline underline-offset-4 transition-all duration-300 ease-in-out" onClick={() => handleNavClick("#games")}>Games</button>
+                </div>
+
+                <div ref={textContainer} className="text-container relative max-w-[1080px] flex flex-col justify-center items-center text-center gap-2">
                     <div className='rocket absolute top-0 left-[48%] z-20 rotate-135 opacity-100'>
                         <Rocket size={20} />
                     </div>
@@ -194,7 +209,7 @@ export default function AboutPage({ initialTracks, initialNowPlaying }: Combined
             </section>
 
             {/* Tech Page */}
-            <section id="stack" className="fade-in-list min-w-screen min-h-[calc(100dvh-66px)] flex flex-col justify-center items-center p-10 gap-10 bg-secondary scroll-mt-[var(--nav-height)]">
+            <section id="stack" className="fade-in-list w-screen min-h-dvh flex flex-col justify-center items-center p-10 pt-[106px] gap-10 bg-secondary scroll-mt-[var(--nav-height)]">
                 <h2 className="text-[2.5rem] md:text-[3.5rem] text-center">
                     <span className="bg-gradient-to-t from-white via-highlight to-tertiary bg-clip-text text-transparent">Tech Stack</span>
                 </h2>
@@ -245,7 +260,7 @@ export default function AboutPage({ initialTracks, initialNowPlaying }: Combined
             </section>
 
             {/* Values Page */}
-            <section id="values" className="fade-in-list min-w-screen min-h-[calc(100dvh-66px)] flex flex-col justify-center items-center p-10 gap-10 bg-primary scroll-mt-[var(--nav-height)]">
+            <section id="values" className="fade-in-list w-screen min-h-dvh flex flex-col justify-center items-center p-10 pt-[106px] gap-10 bg-primary scroll-mt-[var(--nav-height)]">
                 <h2 className="text-[2.5rem] md:text-[3.5rem] text-center">
                     {"What I "}
                     <span className="bg-gradient-to-t from-white via-highlight to-tertiary bg-clip-text text-transparent">Value</span>
@@ -287,7 +302,7 @@ export default function AboutPage({ initialTracks, initialNowPlaying }: Combined
             <section id="games" className="relative scroll-mt-[var(--nav-height)]">
                 <TopGames/>
                 <div className="z-30 absolute bottom-8 right-8 md:bottom-10 md:right-10 text-[1rem] px-3 rounded-md cursor-pointer text-white tracking-widest backdrop-blur-xs bg-secondary text-nowrap border border-white/10 hover:scale-105 text-nowrap transition-all ease-in-out duration-300">
-                    <BackToTopButton/>
+                    <BackToTopButton onClick={() => handleNavClick("#resume")}/>
                 </div>
             </section>
         </div>

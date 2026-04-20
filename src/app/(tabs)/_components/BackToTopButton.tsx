@@ -1,4 +1,6 @@
-export default function BackToTopButton() {
+import { ButtonHTMLAttributes } from "react";
+
+export default function BackToTopButton({...props}: ButtonHTMLAttributes<HTMLButtonElement>) {
     return (
         <>
             <style>{`
@@ -8,7 +10,7 @@ export default function BackToTopButton() {
             `}</style>
 
             <button
-                onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+                onClick={props.onClick}
                 className="back-to-top-btn relative w-[140px] h-[56px] overflow-hidden border-none bg-transparent text-white pb-8 cursor-pointer group"
             >
                 {/* Original text — slides up on hover */}
