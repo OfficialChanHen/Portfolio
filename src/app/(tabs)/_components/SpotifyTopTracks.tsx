@@ -15,6 +15,16 @@ export default function SpotifyTopTracks({ initialTracks, initialNowPlaying }: C
     const tracksRef = useRef<HTMLDivElement>(null);
     const tlRef = useRef<gsap.core.Timeline | null>(null);
 
+    useEffect(() => {
+        const handleResize = () => {
+            // Small debounce prevents thrashing during resize drag
+            ScrollTrigger.refresh(true); // true = safe/force recalculate
+        };
+
+        window.addEventListener("resize", handleResize);
+        return () => window.removeEventListener("resize", handleResize);
+    }, []);
+
     // re-run GSAP when cards change (data loads)
     useGSAP(() => {
         if(!containerRef.current || data.length === 0) return;

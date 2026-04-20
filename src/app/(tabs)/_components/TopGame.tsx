@@ -1,7 +1,7 @@
 "use client"
 
 
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -27,6 +27,16 @@ export default function TopGames() {
     
     const containerRef = useRef<HTMLDivElement>(null);
     const gamesRef = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+        const handleResize = () => {
+            // Small debounce prevents thrashing during resize drag
+            ScrollTrigger.refresh(true); // true = safe/force recalculate
+        };
+
+        window.addEventListener("resize", handleResize);
+        return () => window.removeEventListener("resize", handleResize);
+    }, []);
 
     useGSAP(() => {
         if(!containerRef.current || games.length === 0) return;
