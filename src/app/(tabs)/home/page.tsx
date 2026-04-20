@@ -32,7 +32,7 @@ export default function Home() {
     }, { dependencies: [introDone] })
 
     return(
-        <div className="relative h-dvh w-screen flex flex-col justify-start md:justify-center items-center p-10 pt-[106px] gap-5">
+        <div className="relative min-h-dvh w-screen flex flex-col justify-start md:justify-center items-center p-10 pt-[106px] gap-5">
             <StarBackground/>
             <Introduction setIntroDone={setIntroDone}/>
 

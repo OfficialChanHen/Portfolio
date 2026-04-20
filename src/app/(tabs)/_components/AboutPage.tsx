@@ -1,9 +1,8 @@
 'use client'
 
-import StarBackground from "@/app/(tabs)/_components/StarBackground";
 import SpotifyTopTracks from "@/app/(tabs)/_components/SpotifyTopTracks";
-import { AppWindow, Database, Wrench, BookOpenText, Rocket, Download, Zap, BugOff, Users, ChevronsDown, ArrowUp } from "lucide-react";
-import { useRef, useEffect } from 'react';
+import { AppWindow, Database, Wrench, BookOpenText, Rocket, Download, Zap, BugOff, Users, ChevronsDown, ArrowUp, ChevronDown } from "lucide-react";
+import { useRef, useEffect, useState } from 'react';
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -26,6 +25,7 @@ export default function AboutPage({ initialTracks, initialNowPlaying }: Combined
 
     const navigationMode = useNavigationMode();
     const delayTime = navigationMode === "soft" ? 0.4 : 0.6;
+    const [resumeOpen, setResumeOpen] = useState(false);
 
     useEffect(() => {
         const updateNavHeight = () => {
@@ -45,7 +45,6 @@ export default function AboutPage({ initialTracks, initialNowPlaying }: Combined
         if (!textContainerEl) return;
 
         ScrollTrigger.create({
-            markers: true,
             trigger: ".nav-bar",
             start: "top top+=106px",
             end: "max",
@@ -166,6 +165,10 @@ export default function AboutPage({ initialTracks, initialNowPlaying }: Combined
         scroller?.scrollTo(navSection, true, "top top+=66");
     }
 
+    function handleResumeButton() {
+        setResumeOpen(prev => !prev);
+    }
+
     return (
         <div className="relative w-screen flex flex-col justify-start items-center bg-primary">
             {/* Header Page */}
@@ -194,12 +197,23 @@ export default function AboutPage({ initialTracks, initialNowPlaying }: Combined
                     <span className="intro-text text-[1rem] md:text-[1.5rem] text-white/80">
                         Want to know more? Check out <span className="bg-gradient-to-t from-white via-highlight to-tertiary bg-clip-text text-transparent">my resume</span> and <span className="bg-gradient-to-t from-white via-highlight to-tertiary bg-clip-text text-transparent">continue scrolling</span> down!
                     </span>
-                    <div className="intro-text text-[0.75rem] md:text-[1.25rem]">
-                        <div className="flex flex-row justify-center items-center gap-2 px-5 py-3 mt-5 rounded-md cursor-pointer bg-tertiary border-none shadow-[0_0_25px] shadow-tertiary backdrop-blur-xs hover:shadow-[0_0_5px,_0_0_25px,_0_0_50px,_0_0_100px] hover:shadow-tertiary hover:scale-105 text-nowrap transition-all ease-in-out duration-300">
-                            <a href="/Official-Resume.pdf" download className="text-white/80">Download Resume</a>
-                            <Download className="w-[clamp(18px,2vw,20px)] h-[clamp(18px,2vw,20px)]" />
-                        </div>
+                    <div 
+                        className="intro-text text-[0.75rem] md:text-[1.25rem] flex flex-row justify-center items-center gap-2 px-5 py-3 rounded-md cursor-pointer bg-tertiary border-none shadow-[0_0_25px] shadow-tertiary backdrop-blur-xs hover:shadow-[0_0_5px,_0_0_25px,_0_0_50px,_0_0_100px] hover:shadow-tertiary hover:scale-105 text-nowrap transition-all ease-in-out duration-300"
+                        onClick={handleResumeButton}
+                    >
+                        <button className="text-white/80">{resumeOpen ? "Close" : "Open"} Resume</button>
+                        <ChevronDown className={`w-[clamp(18px,2vw,20px)] h-[clamp(18px,2vw,20px)] transition-transform duration-300 ease-in-out ${resumeOpen ? "rotate-180" : "rotate-0"}`}/>
                     </div>
+
+                    { resumeOpen &&
+                        <iframe
+                            src="/Official-Resume.pdf"
+                            className="w-full h-[80dvh] rounded-xl border border-white/10"
+                            title="Resume PDF"
+                        />
+                    }
+
+                    
                 </div>
 
                 <div className="scroll-down flex flex-col justify-center items-center gap-2 text-[0.75rem] md:text-[1.25rem] text-center">
