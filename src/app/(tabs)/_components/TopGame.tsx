@@ -1,6 +1,5 @@
 "use client"
 
-
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
@@ -15,7 +14,6 @@ type Game = {
     company: string,
 }
 
-
 export default function TopGames() {
     const games: Game[] = [
         { id: 1, title: "Horizon Forbidden West", coverUrl: "horizon.png", company: "Guerrilla Games" },
@@ -29,17 +27,24 @@ export default function TopGames() {
     const gamesRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
+        let timeout: ReturnType<typeof setTimeout>;
+
         const handleResize = () => {
-            // Small debounce prevents thrashing during resize drag
-            ScrollTrigger.refresh(true); // true = safe/force recalculate
+            clearTimeout(timeout);
+            timeout = setTimeout(() => {
+                ScrollTrigger.refresh(true); // debounced — prevents thrashing during resize drag
+            }, 200);
         };
 
         window.addEventListener("resize", handleResize);
-        return () => window.removeEventListener("resize", handleResize);
+        return () => {
+            window.removeEventListener("resize", handleResize);
+            clearTimeout(timeout);
+        };
     }, []);
 
     useGSAP(() => {
-        if(!containerRef.current || games.length === 0) return;
+        if (!containerRef.current || games.length === 0) return;
 
         // --- Fade in lists ---
         gsap.utils.toArray<Element>(".fade-in-list").forEach((list) => {
@@ -54,9 +59,10 @@ export default function TopGames() {
                     stagger: { each: 0.3, from: "start" },
                     scrollTrigger: {
                         trigger: list,
-                        start: "top 60%",
+                        start: () => "top 60%",         // function — re-measured on refresh
                         end: () => "bottom 50%",
-                        toggleActions: "play none play reverse"
+                        toggleActions: "play none none reverse",
+                        invalidateOnRefresh: true,       // re-runs start/end on refresh
                     },
                 }
             );
@@ -66,28 +72,36 @@ export default function TopGames() {
         const total = cardEls.length;
 
         // --- Panel pinning ---
-         const tl = gsap.timeline({
+        const tl = gsap.timeline({
             scrollTrigger: {
                 trigger: containerRef.current,
-                start: "top top",
-                end: () => `+=${window.innerHeight * 3}`,
+                start: () => {
+                    // accounts for mobile browser chrome via visualViewport
+                    const offset = window.visualViewport?.offsetTop ?? 0;
+                    return `top top+=${offset}`;
+                },
+                end: () => {
+                    // uses actual visible height, not static vh
+                    const vh = window.visualViewport?.height ?? window.innerHeight;
+                    return `+=${vh * 3}`;
+                },
                 scrub: 1.5,
                 pin: true,
                 pinSpacing: true,
                 snap: {
-                    snapTo: 'labels', // snap to the closest label in the timeline
-                    duration: { min: 0.2, max: 0.4 }, // the snap animation should be at least 0.2 seconds, but no more than 3 seconds (determined by velocity)
-                    delay: 0.2, // wait 0.2 seconds from the last scroll event before doing the snapping
-                    ease: 'power1.inOut' // the ease of the snap animation ("power3" by default)
+                    snapTo: "labels",
+                    duration: { min: 0.2, max: 0.4 },
+                    delay: 0.2,
+                    ease: "power1.inOut",
                 },
-                invalidateOnRefresh: true
+                invalidateOnRefresh: true,  // re-runs start/end on refresh
+                anticipatePin: 1,           // prevents pin jump/flash
             }
         });
 
         let rotations = cardEls.map(() => gsap.utils.random(-8, 8, 2));
         rotations = rotations.map((_, i) => {
             const prev = i > 0 ? rotations[i - 1] : 0;
-            // flip sign if same direction as previous
             return Math.sign(rotations[i]) === Math.sign(prev) ? (rotations[i] * -1) : rotations[i];
         });
 
@@ -97,27 +111,22 @@ export default function TopGames() {
             const start = i / total;
             const duration = 1 / total;
 
-            
-
-            // Slide up into stacked position
             tl.addLabel(`card-${i}`)
-            tl.fromTo(card, 
-                {
-                    opacity: 0,
-                    y: "100%",
-                },
+            tl.fromTo(card,
+                { opacity: 0, y: "100%" },
                 {
                     rotation: rotations[i],
                     y: i % 2 === 0 ? 10 : -10,
                     opacity: 1,
                     duration: duration,
                     ease: "power2.out",
-                }, 
-            start);
+                },
+                start
+            );
         });
     }, { scope: containerRef, dependencies: [] });
 
-    return(
+    return (
         <div
             ref={containerRef}
             className="w-screen min-h-dvh flex flex-col justify-center items-center p-10 pt-[106px] gap-10 bg-primary"
@@ -129,9 +138,7 @@ export default function TopGames() {
                 </h2>
                 <span className="text-[1rem] md:text-[1.5rem] text-white/80">Top Video Games</span>
             </div>
-            
 
-            {/* Carousel (was TopGames) */}
             <div ref={gamesRef} className="relative w-1/2 min-w-[300px] max-w-[1080px] aspect-3/2">
                 {games.map((game, index) => (
                     <div
@@ -139,7 +146,7 @@ export default function TopGames() {
                         className="card absolute inset-0 w-full h-full flex flex-col justify-center items-center gap-4 p-5 text-white bg-cover bg-center rounded-2xl drop-shadow-xl drop-shadow-black/80"
                         style={{
                             backgroundImage: `url(/${game.coverUrl})`,
-                            zIndex: games.length - index, // first card on top
+                            zIndex: games.length - index,
                         }}
                     >
                         <div className="flex flex-col justify-center items-center p-3 bg-gradient-to-br from-white/30 to-white/5 border border-white/10 text-white rounded-xl drop-shadow-lg">
