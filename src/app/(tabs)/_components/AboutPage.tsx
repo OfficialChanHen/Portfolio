@@ -44,7 +44,7 @@ export default function AboutPage({ initialTracks, initialNowPlaying }: Combined
 
         ScrollTrigger.create({
             trigger: ".nav-bar",
-            start: "top top+=106px",
+            start: "top top+=76px",
             end: "max",
             pin: true,
             pinSpacing: false,
@@ -170,7 +170,7 @@ export default function AboutPage({ initialTracks, initialNowPlaying }: Combined
     return (
         <div className="relative w-screen flex flex-col justify-start items-center bg-primary">
             {/* Header Page */}
-            <section id="resume" className="w-screen min-h-dvh flex flex-col justify-between items-center p-10 pt-[106px] gap-10 bg-primary scroll-mt-[var(--nav-height)]">
+            <section id="resume" className="w-screen min-h-dvh flex flex-col justify-between items-center p-10 pt-[76px] gap-10 bg-primary scroll-mt-[var(--nav-height)]">
                 
                 {/* Scroll Header */}
                 <div ref={navRef} className="nav-bar z-20 flex flex-row justify-center items-center text-[0.75rem] md:text-[1rem] text-center text-white/60 gap-4 px-5 py-3 bg-gradient-to-br from-white/5 to-white/[0.02] border border-white/10 backdrop-blur-xs rounded-full cursor-pointer">
