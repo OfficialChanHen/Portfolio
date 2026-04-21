@@ -7,8 +7,6 @@ import { useGSAP } from "@gsap/react";
 import { useState, useRef } from "react";
 import playOrTrigger from "@/app/utils/playOrTrigger";
 
-gsap.registerPlugin(useGSAP);
-
 export default function Home() {
     const [introDone, setIntroDone] = useState(false);
     const jobContainer = useRef<HTMLDivElement>(null);

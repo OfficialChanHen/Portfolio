@@ -12,8 +12,6 @@ import { CombinedTracksProps } from "@/lib/spotify";
 import BackToTopButton from "./BackToTopButton";
 import { ScrollSmoother } from "gsap/ScrollSmoother";
 
-gsap.registerPlugin(useGSAP, ScrollTrigger, ScrollSmoother);
-
 export default function AboutPage({ initialTracks, initialNowPlaying }: CombinedTracksProps) {
     const textContainer = useRef<HTMLDivElement>(null);
     const navRef = useRef<HTMLDivElement>(null);
@@ -197,14 +195,16 @@ export default function AboutPage({ initialTracks, initialNowPlaying }: Combined
                     <span className="intro-text text-[1rem] md:text-[1.5rem] text-white/80">
                         Want to know more? Check out <span className="bg-gradient-to-t from-white via-highlight to-tertiary bg-clip-text text-transparent">my resume</span> and <span className="bg-gradient-to-t from-white via-highlight to-tertiary bg-clip-text text-transparent">continue scrolling</span> down!
                     </span>
-                    <div 
-                        className="intro-text text-[0.75rem] md:text-[1.25rem] flex flex-row justify-center items-center gap-2 px-5 py-3 rounded-md cursor-pointer bg-tertiary border-none shadow-[0_0_25px] shadow-tertiary backdrop-blur-xs hover:shadow-[0_0_5px,_0_0_25px,_0_0_50px,_0_0_100px] hover:shadow-tertiary hover:scale-105 text-nowrap transition-all ease-in-out duration-300"
-                        onClick={handleResumeButton}
-                    >
-                        <button className="text-white/80">{resumeOpen ? "Close" : "Open"} Resume</button>
-                        <ChevronDown className={`w-[clamp(18px,2vw,20px)] h-[clamp(18px,2vw,20px)] transition-transform duration-300 ease-in-out ${resumeOpen ? "rotate-180" : "rotate-0"}`}/>
+                    <div className="intro-text text-[0.75rem] md:text-[1.25rem]">
+                        <div 
+                            className="flex flex-row justify-center items-center gap-2 px-5 py-3 rounded-md cursor-pointer bg-tertiary border-none shadow-[0_0_25px] shadow-tertiary backdrop-blur-xs hover:shadow-[0_0_5px,_0_0_25px,_0_0_50px,_0_0_100px] hover:shadow-tertiary hover:scale-105 text-nowrap transition-all ease-in-out duration-300"
+                            onClick={handleResumeButton}
+                        >
+                            <button className="text-white/80">{resumeOpen ? "Close" : "Open"} Resume</button>
+                            <ChevronDown className={`w-[clamp(18px,2vw,20px)] h-[clamp(18px,2vw,20px)] transition-transform duration-300 ease-in-out ${resumeOpen ? "rotate-180" : "rotate-0"}`}/>
+                        </div>
                     </div>
-
+                        
                     { resumeOpen &&
                         <iframe
                             src="/Official-Resume.pdf"

@@ -1,12 +1,10 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { Track, NowPlaying, CombinedTracksProps } from "@/lib/spotify";
+import { Track, NowPlaying, CombinedTracksProps, getNowPlaying } from "@/lib/spotify";
 
-gsap.registerPlugin(useGSAP, ScrollTrigger);
 
 export default function SpotifyTopTracks({ initialTracks, initialNowPlaying }: CombinedTracksProps) {
     const [data, setData] = useState<Track[]>(initialTracks);
@@ -15,27 +13,11 @@ export default function SpotifyTopTracks({ initialTracks, initialNowPlaying }: C
     const tracksRef = useRef<HTMLDivElement>(null);
     const tlRef = useRef<gsap.core.Timeline | null>(null);
 
-    useEffect(() => {
-        let timeout: ReturnType<typeof setTimeout>;
-
-        const handleResize = () => {
-            clearTimeout(timeout);
-            timeout = setTimeout(() => {
-                ScrollTrigger.refresh(true); // debounced — prevents thrashing during resize drag
-            }, 200);
-        };
-
-        window.addEventListener("resize", handleResize);
-        return () => {
-            window.removeEventListener("resize", handleResize);
-            clearTimeout(timeout);
-        };
-    }, []);
-
+    // re-run GSAP when cards change (data loads)
     useGSAP(() => {
-        if (!containerRef.current || data.length === 0) return;
+        if(!containerRef.current || data.length === 0) return;
 
-        // kill only the previous timeline from this component
+         // Kill only the previous timeline from this component
         tlRef.current?.kill();
 
         // --- Fade in lists ---
@@ -51,45 +33,37 @@ export default function SpotifyTopTracks({ initialTracks, initialNowPlaying }: C
                     stagger: { each: 0.3, from: "start" },
                     scrollTrigger: {
                         trigger: list,
-                        start: () => "top 60%",     // function — re-measured on refresh
+                        start: "top 60%",
                         end: () => "bottom 50%",
-                        toggleActions: "play none play reverse",
-                        invalidateOnRefresh: true,   // re-runs start/end on refresh
+                        toggleActions: "play none none reverse"
                     },
                 }
             );
         });
 
         const cardEls = gsap.utils.toArray<HTMLAnchorElement>(".card").reverse();
+        console.log(cardEls)
         const total = cardEls.length;
 
         // --- Panel pinning ---
-        const tl = gsap.timeline({
+         const tl = gsap.timeline({
             scrollTrigger: {
                 trigger: containerRef.current,
-                start: () => {
-                    // accounts for mobile browser chrome via visualViewport
-                    const offset = window.visualViewport?.offsetTop ?? 0;
-                    return `top top+=${offset}`;
-                },
-                end: () => {
-                    // uses actual visible height, not static vh
-                    const vh = window.visualViewport?.height ?? window.innerHeight;
-                    return `+=${vh * 3}`;
-                },
+                start: "top top",
+                end: `+=${containerRef.current.offsetHeight * 3}`,
                 scrub: 1.5,
                 pin: true,
                 pinSpacing: true,
                 snap: {
-                    snapTo: "labels",
-                    duration: { min: 0.2, max: 0.4 },
-                    delay: 0.2,
-                    ease: "power1.inOut",
-                },
-                invalidateOnRefresh: true,  // re-runs start/end on refresh
-                anticipatePin: 1,           // prevents pin jump/flash
+                    snapTo: 'labels', // snap to the closest label in the timeline
+                    duration: { min: 0.2, max: 0.4 }, // the snap animation should be at least 0.2 seconds, but no more than 3 seconds (determined by velocity)
+                    delay: 0.2, // wait 0.2 seconds from the last scroll event before doing the snapping
+                    ease: 'power1.inOut' // the ease of the snap animation ("power3" by default)
+                }
             }
         });
+
+        
 
         let rotations = cardEls.map(() => gsap.utils.random(-8, 8, 2));
         rotations = rotations.map((_, i) => {
@@ -104,10 +78,13 @@ export default function SpotifyTopTracks({ initialTracks, initialNowPlaying }: C
             const start = i / total;
             const duration = 1 / total;
 
-            // slide up into stacked position
+            // Slide up into stacked position
             tl.addLabel(`card-${i}`)
-            tl.fromTo(card,
-                { opacity: 0, y: "100%" },
+            tl.fromTo(card, 
+                {
+                    opacity: 0,
+                    y: "100%",
+                },
                 {
                     rotation: rotations[i],
                     y: i % 2 === 0 ? 10 : -10,
@@ -115,15 +92,14 @@ export default function SpotifyTopTracks({ initialTracks, initialNowPlaying }: C
                     duration: duration,
                     ease: "power2.out",
                     immediateRender: false,
-                },
-                start
-            );
+                }, 
+            start);
         });
-
-        tlRef.current = tl; // save reference
+        tlRef.current = tl; // ← save reference
     }, { scope: containerRef, dependencies: [data, nowPlaying] });
 
-    // combine now-playing + top tracks into one list
+
+    // Combine now-playing + top tracks into one list
     const tracks: { id: string; title: string; artists: string; albumImg: string; songUrl: string; label: string }[] = [
         ...(nowPlaying?.isPlaying ? [{
             id: "now-playing",

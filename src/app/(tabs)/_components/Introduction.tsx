@@ -12,8 +12,6 @@ import playOrTrigger from '@/app/utils/playOrTrigger';
 import { useNavigationMode } from '@/providers/NavigationModeProvider';
 import { useMobile } from '@/providers/MobileProvider';
 
-gsap.registerPlugin(useGSAP);
-
 type IntroductionProps = {
     setIntroDone: Dispatch<SetStateAction<boolean>>
 }

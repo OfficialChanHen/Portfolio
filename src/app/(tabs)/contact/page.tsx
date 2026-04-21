@@ -11,8 +11,6 @@ import { MessagesSquare } from 'lucide-react';
 import playOrTrigger from "@/app/utils/playOrTrigger";
 import { useNavigationMode } from "@/providers/NavigationModeProvider";
 
-gsap.registerPlugin(useGSAP, ScrollTrigger);
-
 type FormData = {
     name: string;
     email: string;

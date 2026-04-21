@@ -23,6 +23,7 @@ export default function ClientTabsLayout({
 
     useEffect(() => {
         window.history.scrollRestoration = "manual";
+        ScrollTrigger.normalizeScroll(true);
     }, []);
 
     useGSAP(() => {

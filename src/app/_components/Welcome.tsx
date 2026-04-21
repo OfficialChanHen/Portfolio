@@ -8,7 +8,7 @@ import SpinningCircle from "@/app/_components/SpinningCircle";
 import { ChevronRight } from "lucide-react";
 import Link from "next/link";
 
-gsap.registerPlugin(useGSAP, SplitText);
+gsap.registerPlugin(SplitText);
 
 type WelcomeProps = {
     setToWarp: React.Dispatch<React.SetStateAction<boolean>>

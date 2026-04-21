@@ -5,8 +5,6 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 
-gsap.registerPlugin(ScrollTrigger);
-
 const images = [
     'https://picsum.photos/seed/alpha/400/600',
     'https://picsum.photos/seed/bravo/400/600',
