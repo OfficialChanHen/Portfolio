@@ -34,7 +34,7 @@ export default function ClientTabsLayout({
         const smoother = ScrollSmoother.create({
             wrapper: "#smooth-wrapper",
             content: "#smooth-content",
-            smooth: 1,
+            smooth: 1.5,
             smoothTouch: 0.1,
             effects: true,
         });
