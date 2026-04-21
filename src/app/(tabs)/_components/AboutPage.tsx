@@ -66,9 +66,7 @@ export default function AboutPage({ initialTracks, initialNowPlaying }: Combined
             }
         })
         
-
         /*
-
         const totalLength = sectionsContainerRef.current.offsetHeight;
         const heights = sections.map(id => (document.querySelector(id) as HTMLDivElement)?.offsetHeight ?? 0);
 
@@ -244,10 +242,10 @@ export default function AboutPage({ initialTracks, initialNowPlaying }: Combined
                         <span>Beyond The Surface</span>
                     </div>
                     <h2 className="intro-text text-[2.5rem] md:text-[3.5rem]">
-                        <span className="bg-gradient-to-t from-white via-highlight to-tertiary bg-clip-text text-transparent">Discover</span>{" "}Who I Am
+                        <span className="text-gradient">Discover</span>{" "}Who I Am
                     </h2>
                     <span className="intro-text text-[1rem] md:text-[1.5rem] text-white/80">
-                        Want to know more? Check out <span className="bg-gradient-to-t from-white via-highlight to-tertiary bg-clip-text text-transparent">my resume</span> and <span className="bg-gradient-to-t from-white via-highlight to-tertiary bg-clip-text text-transparent">continue scrolling</span> down!
+                        Want to know more? Check out <span className="text-gradient">my resume</span> and <span className="text-gradient">continue scrolling</span> down!
                     </span>
                     <div className="intro-text text-[0.75rem] md:text-[1.25rem]">
                         <div 
@@ -278,7 +276,7 @@ export default function AboutPage({ initialTracks, initialNowPlaying }: Combined
             {/* Tech Page */}
             <section id="stack" className="fade-in-list w-screen min-h-dvh flex flex-col justify-center items-center p-10 pt-[106px] gap-10 bg-secondary scroll-mt-[var(--nav-height)]">
                 <h2 className="text-[2.5rem] md:text-[3.5rem] text-center">
-                    <span className="bg-gradient-to-t from-white via-highlight to-tertiary bg-clip-text text-transparent">Tech Stack</span>
+                    <span className="text-gradient">Tech Stack</span>
                 </h2>
                 <div className="fade-in-list md:w-full max-w-[1080px] flex flex-col md:flex-row justify-center md:items-stretch gap-5">
                     
@@ -330,7 +328,7 @@ export default function AboutPage({ initialTracks, initialNowPlaying }: Combined
             <section id="values" className="fade-in-list w-screen min-h-dvh flex flex-col justify-center items-center p-10 pt-[106px] gap-10 bg-primary scroll-mt-[var(--nav-height)]">
                 <h2 className="text-[2.5rem] md:text-[3.5rem] text-center">
                     {"What I "}
-                    <span className="bg-gradient-to-t from-white via-highlight to-tertiary bg-clip-text text-transparent">Value</span>
+                    <span className="text-gradient">Value</span>
                 </h2>
                 <div className="fade-in-list md:w-full max-w-[1080px] flex flex-col md:flex-row justify-center md:items-stretch gap-5">
                     <div className="group w-full flex flex-col justify-start items-center gap-3 text-[1rem] md:text-[1.5rem]">

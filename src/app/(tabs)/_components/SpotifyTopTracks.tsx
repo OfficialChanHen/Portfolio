@@ -123,7 +123,7 @@ export default function SpotifyTopTracks({ initialTracks, initialNowPlaying }: C
             <div className="fade-in-list relative text-center">
                 <h2 className="text-[2.5rem] md:text-[3.5rem]">
                     {"Personal Interests: "}
-                    <span className="bg-gradient-to-t from-white via-highlight to-tertiary bg-clip-text text-transparent">
+                    <span className="text-gradient">
                         Music
                     </span>
                 </h2>

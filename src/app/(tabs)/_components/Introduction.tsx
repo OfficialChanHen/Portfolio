@@ -185,7 +185,7 @@ export default function Introduction({
                 
                 <div className="flex flex-col justify-center items-center md:justify-center md:items-start tracking-tight">
                     <span className="intro-text text-[2rem] md:text-[2.5rem]">Hi, I'm</span>
-                    <span className="intro-text text-[2.5rem] md:text-[3.5rem] bg-gradient-to-t from-white via-highlight to-tertiary bg-clip-text text-transparent">
+                    <span className="intro-text text-[2.5rem] md:text-[3.5rem] text-gradient">
                         Chan Hen
                     </span>
                 </div>
@@ -195,8 +195,8 @@ export default function Introduction({
                         Software Engineer
                     </span>
                 </div>
-                <span className="intro-text text-[0.75rem] md:text-[1rem] text-white/50">
-                    Crafting <span className="bg-gradient-to-t from-white via-highlight to-tertiary bg-clip-text text-transparent">digital experiences</span> across the universe
+                <span className="intro-text text-[0.75rem] md:text-[1rem] text-white/80">
+                    Crafting <span className="text-gradient">digital experiences</span> across the universe
                 </span>
 
                 {/* Intro Buttons */}

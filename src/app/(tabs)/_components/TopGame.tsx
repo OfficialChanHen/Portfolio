@@ -110,7 +110,7 @@ export default function TopGames() {
             <div className="fade-in-list relative text-center">
                 <h2 className="text-[2.5rem] md:text-[3.5rem]">
                     {"Personal Interests: "}
-                    <span className="bg-gradient-to-t from-white via-highlight to-tertiary bg-clip-text text-transparent">Games</span>
+                    <span className="text-gradient">Games</span>
                 </h2>
                 <span className="text-[1rem] md:text-[1.5rem] text-white/80">Top Video Games</span>
             </div>
