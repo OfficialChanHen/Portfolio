@@ -13,6 +13,7 @@ import BackToTopButton from "./BackToTopButton";
 import { ScrollSmoother } from "gsap/ScrollSmoother";
 
 export default function AboutPage({ initialTracks, initialNowPlaying }: CombinedTracksProps) {
+    const sectionsContainerRef = useRef<HTMLDivElement>(null);
     const textContainer = useRef<HTMLDivElement>(null);
     const navRef = useRef<HTMLDivElement>(null);
 
@@ -24,6 +25,7 @@ export default function AboutPage({ initialTracks, initialNowPlaying }: Combined
     const navigationMode = useNavigationMode();
     const delayTime = navigationMode === "soft" ? 0.4 : 0.6;
     const [resumeOpen, setResumeOpen] = useState(false);
+    const sections = ["#resume", "#stack", "#values", "#music", "#games"];
 
     useEffect(() => {
         const updateNavHeight = () => {
@@ -39,9 +41,8 @@ export default function AboutPage({ initialTracks, initialNowPlaying }: Combined
     }, []);
 
     useGSAP(() => {
-        const textContainerEl = textContainer.current;
-        if (!textContainerEl) return;
-
+        if (!textContainer.current || !sectionsContainerRef.current || !navRef.current) return;
+        
         ScrollTrigger.create({
             trigger: ".nav-bar",
             start: "top top+=76px",
@@ -49,6 +50,54 @@ export default function AboutPage({ initialTracks, initialNowPlaying }: Combined
             pin: true,
             pinSpacing: false,
         });
+
+        gsap.from(".progress-line", {
+            scaleX: 0,
+            transformOrigin: "left center",
+            markers: true,
+            ease: "none",
+            scrollTrigger: {
+                trigger: ".progress-line",
+                start: "top top+=66px",
+                end: "max",
+                pin: true,
+                pinSpacing: false,
+                scrub: 1,
+            }
+        })
+        
+
+        /*
+
+        const totalLength = sectionsContainerRef.current.offsetHeight;
+        const heights = sections.map(id => (document.querySelector(id) as HTMLDivElement)?.offsetHeight ?? 0);
+
+        const navBar = navRef.current;
+        const navButtons = navBar.querySelectorAll("button");
+        const navBarWidth = navBar.offsetWidth;
+
+        // Get each button's right edge as a fraction of the nav bar width
+        const buttonBreakpoints = [...navButtons].map(btn => {
+            const rect = btn.getBoundingClientRect();
+            const navRect = navBar.getBoundingClientRect();
+            return (rect.right - navRect.left) / navBarWidth;
+        });
+        // e.g. [0.18, 0.36, 0.55, 0.74, 1.0]
+
+        sections.forEach((id, i) => {
+            ScrollTrigger.create({
+                trigger: id,
+                start: "top center",
+                scrub: 1,
+                onEnter: () => gsap.to(".progress-line", {
+                    scaleX: buttonBreakpoints[i],
+                    duration: 0.3,
+                    ease: "power2.out",
+                }),
+            });
+        });
+        */
+        
 
         gsap.set(".scroll-down", { opacity: 0 });
 
@@ -59,7 +108,7 @@ export default function AboutPage({ initialTracks, initialNowPlaying }: Combined
                 { x: 0, y: -30, opacity: 0 },
                 {
                     x: 0,
-                    y: textContainerEl.offsetHeight,
+                    y: textContainer.current.offsetHeight,
                     duration: 1.6,
                     ease: "power2.inOut",
                     delay: delayTime,
@@ -168,17 +217,22 @@ export default function AboutPage({ initialTracks, initialNowPlaying }: Combined
     }
 
     return (
-        <div className="relative w-screen flex flex-col justify-start items-center bg-primary">
+        <div ref={sectionsContainerRef} className="w-screen flex flex-col justify-start items-center bg-primary">
             {/* Header Page */}
-            <section id="resume" className="w-screen min-h-dvh flex flex-col justify-between items-center p-10 pt-[76px] gap-10 bg-primary scroll-mt-[var(--nav-height)]">
+            <section id="resume" className="w-screen min-h-dvh flex flex-col justify-between items-center p-10 pt-[66px] gap-10 bg-primary scroll-mt-[var(--nav-height)]">
                 
-                {/* Scroll Header */}
-                <div ref={navRef} className="nav-bar z-20 flex flex-row justify-center items-center text-[0.75rem] md:text-[1rem] text-center text-white/60 gap-4 px-5 py-3 bg-gradient-to-br from-white/5 to-white/[0.02] border border-white/10 backdrop-blur-xs rounded-full cursor-pointer">
-                    <button className="hover:text-white hover:underline underline-offset-4 transition-all duration-300 ease-in-out" onClick={() => handleNavClick("#resume")}>Resume</button>
-                    <button className="hover:text-white hover:underline underline-offset-4 transition-all duration-300 ease-in-out" onClick={() => handleNavClick("#stack")}>Stack</button>
-                    <button className="hover:text-white hover:underline underline-offset-4 transition-all duration-300 ease-in-out" onClick={() => handleNavClick("#values")}>Values</button>
-                    <button className="hover:text-white hover:underline underline-offset-4 transition-all duration-300 ease-in-out" onClick={() => handleNavClick("#music")}>Music</button>
-                    <button className="hover:text-white hover:underline underline-offset-4 transition-all duration-300 ease-in-out" onClick={() => handleNavClick("#games")}>Games</button>
+                <div className="flex flex-col justify-center items-start">
+                    {/* Progress Bar */}
+                    <div className="progress-line z-20 h-[4px] w-screen bg-highlight"/>
+
+                    {/* Scroll Header */}
+                    <div ref={navRef} className="nav-bar z-20 place-self-center inline-flex flex-row justify-center items-center text-[0.75rem] md:text-[1rem] text-center text-white/60 gap-4 px-5 py-3 mt-[6px] bg-gradient-to-br from-white/5 to-white/[0.02] border border-white/10 backdrop-blur-xs rounded-full cursor-pointer">
+                        <button className="z-10 hover:text-white hover:underline underline-offset-4 transition-all duration-300 ease-in-out" onClick={() => handleNavClick("#resume")}>Resume</button>
+                        <button className="z-10 hover:text-white hover:underline underline-offset-4 transition-all duration-300 ease-in-out" onClick={() => handleNavClick("#stack")}>Stack</button>
+                        <button className="z-10 hover:text-white hover:underline underline-offset-4 transition-all duration-300 ease-in-out" onClick={() => handleNavClick("#values")}>Values</button>
+                        <button className="z-10 hover:text-white hover:underline underline-offset-4 transition-all duration-300 ease-in-out" onClick={() => handleNavClick("#music")}>Music</button>
+                        <button className="z-10 hover:text-white hover:underline underline-offset-4 transition-all duration-300 ease-in-out" onClick={() => handleNavClick("#games")}>Games</button>
+                    </div>
                 </div>
 
                 <div ref={textContainer} className="text-container relative max-w-[1080px] flex flex-col justify-center items-center text-center gap-2">
@@ -212,10 +266,9 @@ export default function AboutPage({ initialTracks, initialNowPlaying }: Combined
                             title="Resume PDF"
                         />
                     }
-
-                    
                 </div>
 
+                {/* Scroll Down */}
                 <div className="scroll-down flex flex-col justify-center items-center gap-2 text-[0.75rem] md:text-[1.25rem] text-center">
                     Scroll Down
                     <ChevronsDown className="w-[clamp(24px,2vw,30px)] h-[clamp(24px,2vw,30px)]"/>

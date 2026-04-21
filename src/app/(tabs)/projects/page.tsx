@@ -1,6 +1,7 @@
 "use client";
 
 import StarBackground from "@/app/(tabs)/_components/StarBackground";
+import { useGSAP } from "@gsap/react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useRef, useState } from "react";
 
@@ -16,6 +17,10 @@ const images = [
 
 export default function Projects() {
     const [ currentIndex, setCurrentIndex ] = useState(0);
+
+    useGSAP(() => {
+
+    }, { dependencies: [] })
 
     function handlePrevClick() {
         setCurrentIndex((prev) => {
@@ -40,23 +45,26 @@ export default function Projects() {
     return(
         <div className="relative w-screen flex flex-col justify-start items-center bg-secondary">
             <StarBackground />
+            {/* Intro Page */}
 
+            {/* Projects */}
             <div className="w-screen max-w-[1080px] h-dvh flex flex-col justify-center items-center gap-5 p-10 pt-[106px]">
 
-                <div className="w-full flex-1 flex flex-row justify-start items-stretch">
-                    <div className="w-full flex-1 flex flex-col md:flex-row justify-start items-stretch bg-gradient-to-br from-white/5 to-white/[0.02] bg-primary rounded-2xl drop-shadow-lg/60">
-                        {/* Image — 1/3 */}
-                        <div
-                            className="basis-1/3 md:basis-1/2 shrink-0 bg-cover bg-center rounded-2xl"
-                            style={{ backgroundImage: `url(/TFT.png)` }}
-                        />
-
-                        {/* Content — 2/3 */}
-                        <div className="basis-2/3 md:basis-1/2">
-                            {/* your content here */}
+                <div className="w-[120vw] h-full flex flex-row justify-center items-center gap-4 border border-white/20">
+                    <div className="w-[clamp(300px,30vw,400px)] h-[90%] flex flex-col justify-center items-center p-3 bg-gradient-to-br from-white/5 to-white/[0.02] border border-white/20 rounded-2xl">
+                        <div className="relative w-full h-full rounded-2xl overflow-hidden">
+                            <img src="/TFT.png" alt="TFT image" className="absolute bottom-0 h-full w-[160%] object-cover"/>
                         </div>
-                    </div>    
+                    </div>
+
+                    <div className="w-[clamp(300px,30vw,400px)] h-[90%] flex flex-col justify-center items-center p-3 bg-gradient-to-br from-white/5 to-white/[0.02] border border-white/20 rounded-2xl">
+                        <div className="relative w-full h-full rounded-2xl overflow-hidden">
+                            <img src="/TFT.png" alt="TFT image" className="absolute bottom-0 h-full w-[160%] object-cover"/>
+                        </div>
+                    </div>      
                 </div>
+
+                {/* Next and Prev buttons */}
                 <div className="flex justify-center items-center gap-4">
                     <button
                         onClick={handlePrevClick}
