@@ -199,9 +199,25 @@ export default function Introduction({
                     Crafting <span className="text-gradient">digital experiences</span> across the universe
                 </span>
 
+                {/* Socials */}
+                <div className='intro-text flex flex-row justify-center md:justify-start items-stretch gap-3 text-white'>
+                    <Link href="/projects">
+                        <button className="group inline-flex items-center justify-center gap-2 px-5 py-3 rounded-md cursor-pointer text-white text-[0.75rem] md:text-[1rem] tracking-widest backdrop-blur-xs bg-primary/40 border-none shadow-[0_0_25px] shadow-tertiary hover:shadow-[0_0_5px,_0_0_25px,_0_0_50px,_0_0_100px] hover:scale-105 text-nowrap transition-all ease-in-out duration-300">
+                            <span>View Projects</span>
+                            <ChevronRight className="transition-transform duration-300 group-hover:translate-x-2 w-[clamp(16px,2vw,24px)] h-[clamp(16px,2vw,24px)]"/>
+                        </button>
+                    </Link>
+                    <a href="https://github.com/OfficialChanHen" target="_blank" rel="noopener noreferrer" className={`p-2 border-2 ${isMobile ? "border-primary/40" : "border-transparent"} flex flex-col justify-center items-center bg-primary/40 rounded-md shadow-[0_0_25px] shadow-tertiary hover:shadow-[0_0_5px,_0_0_25px,_0_0_50px,_0_0_100px] hover:scale-105 transition-all ease-in-out duration-300`}>
+                        <FiGithub className='w-[clamp(20px,2vw,24px)] h-[clamp(20px,2vw,24px)]'/>
+                    </a>
+                    <a href="https://www.linkedin.com/in/chan-hen-13727b233/" target="_blank" rel="noopener noreferrer" className={`p-2 border-2 ${isMobile ? "border-primary/40" : "border-transparent"} flex flex-col justify-center items-center bg-primary/40 rounded-md shadow-[0_0_25px] shadow-tertiary hover:shadow-[0_0_5px,_0_0_25px,_0_0_50px,_0_0_100px] hover:scale-105 transition-all ease-in-out duration-300`}>
+                        <FiLinkedin className='w-[clamp(20px,2vw,24px)] h-[clamp(20px,2vw,24px)]'/>
+                    </a>
+                </div>
+
                 {/* Intro Buttons */}
                 <div className='intro-text flex flex-row justify-center md:justify-start items-center py-3 gap-5 text-[0.75rem] md:text-[1rem]'>
-                    <a href="/Official-Resume.pdf" download  className="group inline-flex items-center justify-center w-full px-5 py-3 gap-2 rounded-md cursor-pointer text-white text-nowrap tracking-widest bg-highlight border-none shadow-[0_0_25px] shadow-highlight hover:shadow-[0_0_5px,_0_0_20px,_0_0_50px] hover:scale-105 transition-all ease-in-out duration-300">
+                    <a href="/Official-Resume.pdf" download className="group inline-flex items-center justify-center w-full px-5 py-3 gap-2 rounded-md cursor-pointer text-white text-nowrap tracking-widest bg-highlight border-none shadow-[0_0_25px] shadow-highlight hover:shadow-[0_0_5px,_0_0_20px,_0_0_50px] hover:scale-105 transition-all ease-in-out duration-300">
                         <span className="text-white/80">Download Resume</span>
                         <Download className="w-[clamp(18px,2vw,20px)] h-[clamp(18px,2vw,20px)]" />
                     </a>
@@ -211,22 +227,6 @@ export default function Introduction({
                             <span>Connect</span>
                         </button>
                     </Link>
-                </div>
-
-                {/* Socials */}
-                <div className='intro-text flex flex-row justify-center md:justify-start items-center gap-1 text-primary/40'>
-                    <Link href="/projects">
-                        <button className="group inline-flex items-center justify-center gap-2 px-5 py-3 rounded-md cursor-pointer text-white text-[0.75rem] md:text-[1rem] tracking-widest backdrop-blur-xs bg-primary/40 border-none shadow-[0_0_25px] shadow-tertiary hover:shadow-[0_0_5px,_0_0_25px,_0_0_50px,_0_0_100px] hover:scale-105 text-nowrap transition-all ease-in-out duration-300">
-                            <span>View Projects</span>
-                            <ChevronRight className="transition-transform duration-300 group-hover:translate-x-2 w-[clamp(16px,2vw,24px)] h-[clamp(16px,2vw,24px)]"/>
-                        </button>
-                    </Link>
-                    <a href="https://github.com/OfficialChanHen" target="_blank" rel="noopener noreferrer" className={`p-2 border-2 ${isMobile ? "border-primary/40" : "border-transparent"} hover:border-primary/40 rounded-md hover:scale-105 transition-all ease-in-out duration-300`}>
-                        <FiGithub className='w-[clamp(20px,2vw,24px)] h-[clamp(20px,2vw,24px)]'/>
-                    </a>
-                    <a href="https://www.linkedin.com/in/chan-hen-13727b233/" target="_blank" rel="noopener noreferrer" className={`p-2 border-2 ${isMobile ? "border-primary/40" : "border-transparent"} hover:border-primary/40 rounded-md hover:scale-105 transition-all ease-in-out duration-300`}>
-                        <FiLinkedin className='w-[clamp(20px,2vw,24px)] h-[clamp(20px,2vw,24px)]'/>
-                    </a>
                 </div>
             </div>
             {isMobile &&

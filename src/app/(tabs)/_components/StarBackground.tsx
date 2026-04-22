@@ -132,14 +132,14 @@ export default function StarBackground() {
                 <StarField />
                 {pathName === '/home' &&
                     <>  
-                        <Planet sphereColor1="#A98307" sphereColor2="#f0d785" spherePosition={{x: -10, y: 20, z: -20}} ringColor="#534104"/>
-                        <Planet sphereColor1="#210535" sphereColor2="#063971" spherePosition={{x: 15, y: 5, z: -30}} ringColor="#7B337D"/>
-                        <Planet sphereColor1="#C1440E" sphereColor2="#E8735A" spherePosition={{x: 8, y: -12, z: -15}} ringColor="#7A2A08"/>
-                        <Planet sphereColor1="#1B4F8A" sphereColor2="#5B9BD5" spherePosition={{x: -18, y: -5, z: -25}} ringColor="#0D2B4E"/>
-                        <Planet sphereColor1="#4A7C59" sphereColor2="#8FBC8F" spherePosition={{x: 20, y: 15, z: -35}} ringColor="#1E3D2A"/>
-                        <Planet sphereColor1="#8B6914" sphereColor2="#D4A843" spherePosition={{x: -6, y: 10, z: -12}} ringColor="#5C420D"/>
-                        <Planet sphereColor1="#6B2D8B" sphereColor2="#B07FD4" spherePosition={{x: 12, y: -18, z: -28}} ringColor="#3A1250"/>
-                        <Planet sphereColor1="#1A5C6B" sphereColor2="#4AB8CC" spherePosition={{x: -22, y: 8, z: -40}} ringColor="#0B3540"/>
+                        <Planet sphereColor1="#A98307" sphereColor2="#f0d785" spherePosition={{x: -15, y: 16, z: -20}} ringColor="#534104"/>
+                        <Planet sphereColor1="#8B6914" sphereColor2="#D4A843" spherePosition={{x: 20, y: -12, z: -45}} ringColor="#5C420D"/>
+                        <Planet sphereColor1="#1A5C6B" sphereColor2="#4AB8CC" spherePosition={{x: 14, y: 22, z: -15}} ringColor="#0B3540"/>
+                        <Planet sphereColor1="#1B4F8A" sphereColor2="#5B9BD5" spherePosition={{x: -30, y: -18, z: -35}} ringColor="#0D2B4E"/>
+                        <Planet sphereColor1="#4A7C59" sphereColor2="#8FBC8F" spherePosition={{x: 32, y: 10, z: -28}} ringColor="#1E3D2A"/>
+                        <Planet sphereColor1="#210535" sphereColor2="#063971" spherePosition={{x: -12, y: -28, z: -20}} ringColor="#7B337D"/>
+                        <Planet sphereColor1="#6B2D8B" sphereColor2="#B07FD4" spherePosition={{x: 6, y: -22, z: -48}} ringColor="#3A1250"/>
+                        <Planet sphereColor1="#C1440E" sphereColor2="#E8735A" spherePosition={{x: -38, y: 14, z: -32}} ringColor="#7A2A08"/>
                     </> 
                 }
 
