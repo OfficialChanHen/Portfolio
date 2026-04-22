@@ -32,6 +32,8 @@ export default function Projects() {
     const navigationMode = useNavigationMode();
     const delayTime = navigationMode === "soft" ? 0.4 : 0.6;
 
+    const navButtonStyle = "flex items-center justify-center w-11 h-11 rounded-full bg-white/10 border border-white/20 backdrop-blur-xs text-white hover:bg-white/20 disabled:opacity-30 transition-all duration-200 cursor-pointer";
+
     // --- GSAP intro + scroll animations (unchanged) ---
     useGSAP(() => {
         if (!textContainer.current) return;
@@ -321,7 +323,7 @@ export default function Projects() {
                     <button
                         onClick={handlePrevClick}
                         disabled={currentIndex === 0}
-                        className="flex items-center justify-center w-11 h-11 rounded-full bg-white/10 border border-white/20 text-white hover:bg-white/20 disabled:opacity-30 transition-all duration-200 cursor-pointer"
+                        className={navButtonStyle}
                     >
                         <ChevronLeft className="w-[clamp(16px,2vw,20px)] h-[clamp(16px,2vw,20px)]" />
                     </button>
@@ -337,7 +339,7 @@ export default function Projects() {
                     <button
                         onClick={handleNextClick}
                         disabled={currentIndex === projects.length - 1}
-                        className="flex items-center justify-center w-11 h-11 rounded-full bg-white/10 border border-white/20 text-white hover:bg-white/20 disabled:opacity-30 transition-all duration-200 cursor-pointer"
+                        className={navButtonStyle}
                     >
                         <ChevronRight className="w-[clamp(16px,2vw,20px)] h-[clamp(16px,2vw,24px)]" />
                     </button>
