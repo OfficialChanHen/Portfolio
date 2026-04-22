@@ -128,7 +128,7 @@ export default function SpotifyTopTracks({ initialTracks, initialNowPlaying }: C
                     </span>
                 </h2>
                 <span className="text-[1rem] md:text-[1.5rem] text-white/80">
-                    Tap the card To listen
+                    Tap the card to listen
                 </span>
             </div>
 

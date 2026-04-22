@@ -13,10 +13,10 @@ import { type Swiper as SwiperType } from "swiper";
 // --- Project Data ---
 const projects = [
     { id: 1, title: "Teamfight Tactics", image: "/TFT.png", tags: ["React", "TypeScript"], description: "A description of the project goes here." },
-    { id: 2, title: "Project Two", image: "/TFT.png", tags: ["Next.js", "GSAP"], description: "A description of the project goes here." },
-    { id: 3, title: "Project Three", image: "/TFT.png", tags: ["Python", "FastAPI"], description: "A description of the project goes here." },
-    { id: 4, title: "Project Four", image: "/TFT.png", tags: ["Three.js", "WebGL"], description: "A description of the project goes here." },
-    { id: 5, title: "Project Five", image: "/TFT.png", tags: ["Tailwind", "Framer"], description: "A description of the project goes here." },
+    { id: 2, title: "Project Two", image: "/Ark.jpg", tags: ["Next.js", "GSAP"], description: "A description of the project goes here." },
+    { id: 3, title: "Project Three", image: "/horizon.png", tags: ["Python", "FastAPI"], description: "A description of the project goes here." },
+    { id: 4, title: "Project Four", image: "/terraria_cover.jpeg", tags: ["Three.js", "WebGL"], description: "A description of the project goes here." },
+    { id: 5, title: "Project Five", image: "/League.png", tags: ["Tailwind", "Framer"], description: "A description of the project goes here." },
 ];
 
 export default function Projects() {
@@ -213,17 +213,19 @@ export default function Projects() {
                         >
                             <X className="w-[clamp(20px,2vw,24px)] h-[clamp(20px,2vw,24px)]" />
                         </button>
-                        <p className="project-content text-highlight text-sm uppercase tracking-widest mb-2">Featured Project</p>
-                        <h2 className="project-content text-4xl md:text-6xl font-bold text-white mb-4">{project.title}</h2>
-                        <p className="project-content text-white/70 max-w-xl mb-6">{project.description}</p>
-                        <div className="project-content flex gap-3 flex-wrap mb-8">
-                            {project.tags.map(tag => (
-                                <span key={tag} className="px-3 py-1 bg-white/10 border border-white/20 rounded-full text-sm text-white">{tag}</span>
-                            ))}
+                        <div className="project-content p-8 bg-white/5 border border-white/10 backdrop-blur-xs rounded-xl">
+                            <p className="project-content text-highlight text-sm uppercase tracking-widest mb-2">Featured Project</p>
+                            <h2 className="project-content text-4xl md:text-6xl font-bold text-white mb-4">{project.title}</h2>
+                            <p className="project-content text-white/70 max-w-xl mb-6">{project.description}</p>
+                            <div className="project-content flex gap-3 flex-wrap mb-8">
+                                {project.tags.map(tag => (
+                                    <span key={tag} className="px-3 py-1 bg-white/10 border border-white/20 rounded-full text-sm text-white">{tag}</span>
+                                ))}
+                            </div>
+                            <a href="#" target="_blank" rel="noopener noreferrer" className="project-content w-fit px-6 py-3 bg-highlight rounded-full text-white font-medium">
+                                View Project →
+                            </a>
                         </div>
-                        <a href="#" target="_blank" rel="noopener noreferrer" className="project-content w-fit px-6 py-3 bg-highlight rounded-full text-white font-medium">
-                            View Project →
-                        </a>
                     </div>
                 </div>
             </div>
@@ -255,7 +257,17 @@ export default function Projects() {
             </section>
 
             {/* Projects Section */}
-            <section id="projects" className="relative w-screen h-dvh flex flex-col justify-center items-center py-10 overflow-hidden">
+            <section id="projects" className="relative w-screen h-dvh flex flex-col justify-center items-center py-10 gap-5 overflow-hidden">
+                <div className="fade-in-list relative text-center">
+                    <h2 className="text-[2.5rem] md:text-[3.5rem]">
+                        <span className="text-gradient">
+                            My Projects
+                        </span>
+                    </h2>
+                    <span className="text-[1rem] md:text-[1.5rem] text-white/80">
+                        Tap the card to learn more
+                    </span>
+                </div>
 
                 <Swiper
                     onSwiper={(swiper) => { swiperRef.current = swiper; }}
@@ -264,7 +276,8 @@ export default function Projects() {
                     centeredSlides={true}
                     spaceBetween={24}
                     grabCursor={true}
-                    speed={600}
+                    speed={800}
+                    parallax={true}
                     className="w-full"
                 >
                     {projects.map((proj, i) => (
@@ -277,22 +290,23 @@ export default function Projects() {
                                 <div
                                     ref={isActive ? cardRef : null}
                                     onClick={() => isActive ? handleProjectClick() : swiperRef.current?.slideTo(i)}
-                                    className={`relative w-full h-[clamp(300px,60vh,700px)] flex flex-col justify-center items-center p-3 border rounded-2xl cursor-pointer transition-all duration-500 overflow-hidden
+                                    className={`relative w-full h-[clamp(300px,60vh,700px)] border-3 border-white rounded-2xl  cursor-pointer transition-all duration-500 overflow-hidden
                                         ${isActive
-                                            ? "border-highlight/60 bg-gradient-to-br from-white/10 to-white/[0.03] scale-100 opacity-100"
-                                            : "border-white/10 bg-gradient-to-br from-white/5 to-white/[0.01] scale-95 opacity-50"
+                                            ? "scale-100 opacity-100"
+                                            : "scale-95 opacity-50"
                                         }`}
                                 >
-                                    <div className="relative w-full h-full rounded-xl overflow-hidden">
-                                        <img
-                                            ref={isActive ? imgRef : null}
-                                            src={proj.image}
-                                            alt={proj.title}
-                                            className="absolute bottom-0 h-full w-[140%] object-cover will-change-transform"
-                                        />
-                                        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
-                                    </div>
-                                    <div className="absolute bottom-4 left-1/2 -translate-x-1/2 px-4 py-2 bg-highlight rounded-full text-[clamp(0.75rem,1.5vw,1rem)] text-nowrap font-medium">
+                                    <img
+                                        ref={isActive ? imgRef : null}
+                                        src={proj.image}
+                                        alt={proj.title}
+                                        data-swiper-parallax-x="-25%"
+                                        data-swiper-parallax-scale="1.15"
+                                        className="w-full h-full object-cover will-change-transform"
+                                        loading="lazy"
+                                    />
+                                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
+                                    <div className="absolute bottom-5 left-1/2 -translate-x-1/2 px-4 py-2 bg-white/20 backdrop-blur-xs rounded-full text-[clamp(0.75rem,1.5vw,1rem)] text-nowrap font-medium">
                                         {proj.title}
                                     </div>
                                 </div>
