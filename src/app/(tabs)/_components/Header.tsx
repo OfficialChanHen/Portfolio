@@ -35,7 +35,7 @@ export default function Header({ className }: HeaderProps) {
         
     return(
         <div className={`${className} header fixed top-0 min-h-16 flex flex-col justify-center items-center border-b-2`}>
-            <div className="max-w-[1080px] w-full h-16 flex flex-row justify-between items-stretch px-10">
+            <div className="max-w-[1160px] w-full h-16 flex flex-row justify-between items-stretch px-10">
                 <div className='flex flex-row justify-center items-center gap-2'>
                     <CodeXml className='text-highlight'/>
                     <span className="text-[1.5rem]">Chan Hen</span>

@@ -29,32 +29,30 @@ export default function ClientTabsLayout({
     useGSAP(() => {
         if (!boxReady) return;
 
-        ScrollSmoother.get()?.kill();
 
-        const smoother = ScrollSmoother.create({
-            wrapper: "#smooth-wrapper",
-            content: "#smooth-content",
-            smooth: 1.5,
-            smoothTouch: 0.1,
-            effects: true,
+        let smoother = ScrollSmoother.get();
+        if (!smoother) {
+            smoother = ScrollSmoother.create({
+                wrapper: "#smooth-wrapper",
+                content: "#smooth-content",
+                smooth: 1.5,
+                smoothTouch: 0.1,
+                effects: true,
+            });
+        }
+
+        requestAnimationFrame(() => {
+            smoother.scrollTo(0, false);
+            ScrollTrigger.refresh();
         });
-
-        smoother.scrollTo(0, false);
 
         gsap.fromTo("main",
             { opacity: 0 },
-            { 
-                opacity: 1, 
-                duration: 0.4, 
-                ease: "power1.out",
-            }
-        )
+            { opacity: 1, duration: 0.4, ease: "power1.out" }
+        );
 
-        return () => {
-            smoother.kill();
-        };
 
-    }, { dependencies: [boxReady, pathname], revertOnUpdate: true });
+    }, { dependencies: [boxReady, pathname] });
 
     return (
         <div className="font-mono bg-background/30">

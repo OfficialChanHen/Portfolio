@@ -199,7 +199,7 @@ export default function Introduction({
                     Crafting <span className="text-gradient">digital experiences</span> across the universe
                 </span>
 
-                {/* Socials */}
+                {/* Socials + Projects */}
                 <div className='intro-text flex flex-row justify-center md:justify-start items-stretch gap-3 text-white'>
                     <Link href="/projects">
                         <button className="group inline-flex items-center justify-center gap-2 px-5 py-3 rounded-md cursor-pointer text-white text-[0.75rem] md:text-[1rem] tracking-widest backdrop-blur-xs bg-primary/40 border-none shadow-[0_0_25px] shadow-tertiary hover:shadow-[0_0_5px,_0_0_25px,_0_0_50px,_0_0_100px] hover:scale-105 text-nowrap transition-all ease-in-out duration-300">
@@ -217,9 +217,10 @@ export default function Introduction({
 
                 {/* Intro Buttons */}
                 <div className='intro-text flex flex-row justify-center md:justify-start items-center py-3 gap-5 text-[0.75rem] md:text-[1rem]'>
-                    <a href="/Official-Resume.pdf" download className="group inline-flex items-center justify-center w-full px-5 py-3 gap-2 rounded-md cursor-pointer text-white text-nowrap tracking-widest bg-highlight border-none shadow-[0_0_25px] shadow-highlight hover:shadow-[0_0_5px,_0_0_20px,_0_0_50px] hover:scale-105 transition-all ease-in-out duration-300">
+                    <a href="/Official-Resume.pdf" download className="group relative inline-flex items-center justify-center w-full px-5 py-3 gap-2 rounded-md cursor-pointer text-white text-nowrap tracking-widest bg-highlight border-none shadow-[0_0_25px] shadow-highlight hover:shadow-[0_0_5px,_0_0_20px,_0_0_50px] hover:scale-105 transition-all ease-in-out duration-300">
                         <span className="text-white/80">Download Resume</span>
                         <Download className="w-[clamp(18px,2vw,20px)] h-[clamp(18px,2vw,20px)]" />
+                        <span className='absolute -bottom-5 text-[0.5rem] md:text-[0.75rem] text-white/60'>Embedded on the About page!</span>
                     </a>
                     <Link href="/contact">
                         <button className="group inline-flex items-center justify-center w-full px-5 py-3 gap-2 rounded-md cursor-pointer text-white tracking-widest bg-highlight border-none shadow-[0_0_25px] shadow-highlight hover:shadow-[0_0_5px,_0_0_20px,_0_0_50px] hover:scale-105 transition-all ease-in-out duration-300">
@@ -228,6 +229,8 @@ export default function Introduction({
                         </button>
                     </Link>
                 </div>
+
+                
             </div>
             {isMobile &&
                 <div className="z-10 mt-2 scroll-down flex flex-col justify-center items-center gap-2 text-[0.75rem] md:text-[1.25rem] text-center">

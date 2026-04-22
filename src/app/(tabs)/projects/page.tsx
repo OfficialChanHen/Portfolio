@@ -261,8 +261,9 @@ export default function Projects() {
                 <div className="fade-in-list relative text-center">
                     <h2 className="text-[2.5rem] md:text-[3.5rem]">
                         <span className="text-gradient">
-                            My Projects
+                            Personal
                         </span>
+                        {" Projects"}
                     </h2>
                     <span className="text-[1rem] md:text-[1.5rem] text-white/80">
                         Tap the card to learn more

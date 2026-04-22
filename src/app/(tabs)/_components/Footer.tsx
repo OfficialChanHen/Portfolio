@@ -15,9 +15,7 @@ export default function Footer({ className }: FooterProps) {
                 <div className="inline-flex flex-col justify-center items-center gap-2 text-[0.75rem] md:text-[1rem]">
                     <span className="w-full text-left">
                         {`"Looking at the stars always makes me dream,`}
-                        {isMobile && <br/>}
                         {` as simply as I dream over the black dots`}
-                        {isMobile && <br/>}
                         {` representing villages and towns on a map."`}
                     </span>
                     <span className="w-full text-right">— Vincent Van Gogh</span>
