@@ -12,11 +12,52 @@ import { type Swiper as SwiperType } from "swiper";
 
 // --- Project Data ---
 const projects = [
-    { id: 1, title: "Teamfight Tactics", image: "/TFT.png", tags: ["React", "TypeScript"], description: "A description of the project goes here." },
-    { id: 2, title: "Project Two", image: "/Ark.jpg", tags: ["Next.js", "GSAP"], description: "A description of the project goes here." },
-    { id: 3, title: "Project Three", image: "/horizon.png", tags: ["Python", "FastAPI"], description: "A description of the project goes here." },
-    { id: 4, title: "Project Four", image: "/terraria_cover.jpeg", tags: ["Three.js", "WebGL"], description: "A description of the project goes here." },
-    { id: 5, title: "Project Five", image: "/League.png", tags: ["Tailwind", "Framer"], description: "A description of the project goes here." },
+    {
+        id: 1,
+        title: "Legacy Portfolio",
+        image: "/legacy-portfolio.png",
+        tags: ["React", "TypeScript", "TailwindCSS", "Next.js", "Web App"],
+        description:
+        "My first personal portfolio website, a static page built to showcase my projects and resume early in my development journey.",
+        github: "https://github.com/OfficialChanHen/PersonalPage",
+        link: "https://portfolio-five-blue.vercel.app/",
+    },
+    {
+        id: 2,
+        title: "Intraday Momentum Backtester",
+        image: "/trading.png",
+        tags: ["Python", "Data Analysis"],
+        description:
+        "A Python trading strategy script that runs a momentum-based backtest for any stock, and outputs an interactive HTML chart image with buy/sell signals.",
+        github: "https://github.com/OfficialChanHen/StockTrader",
+    },
+    {
+        id: 3,
+        title: "TANKS!",
+        image: "/Tank-Thumbnail.png",
+        tags: ["Unity", "C#", "Game Development"],
+        description:
+        "TANKS! is a local multiplayer arena battle game built in Unity, including a first-to-three win format, powerups, multiple tank types, and a player select screen.",
+        github: "https://github.com/OfficialChanHen/TANKS",
+        link: "https://play.unity.com/api/v1/games/game/94d9e7c0-b608-42aa-be14-75f5d990b8d1/build/latest/frame",
+    },
+    {
+        id: 4,
+        title: "Sketchpad",
+        image: "/sketch_example.png",
+        tags: ["JavaScript", "CSS", "Web App"],
+        description:
+        "Draw freely on a canvas, pick any color, adjust brush size, and erase mistakes.",
+        github: "https://github.com/OfficialChanHen/sketch-pad",
+        link: "https://sketch-k8rcnsc1e-officialchanhens-projects.vercel.app/",
+    },
+    {
+        id: 5,
+        title: "TBD Project",
+        image: "/coming-soon.jpg",
+        tags: ["TBD"],
+        description: "Upcoming project to be announced. Check back here for updates!",
+    },
 ];
 
 export default function Projects() {
@@ -208,25 +249,34 @@ export default function Projects() {
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent" />
                 <div className="absolute inset-0 flex flex-col justify-end">
-                    <div className="relative w-full max-w-[1080px] h-full mx-auto px-10 pb-10 flex flex-col justify-end">
+                    <div className="relative w-full max-w-[1080px] min-h-full mx-auto px-10 pb-10 flex flex-col justify-end">
                         <button
                             onClick={handleProjectClick}
-                            className="project-content absolute top-[86px] right-10 rounded-full bg-white/10 p-2 border border-white/20 text-white flex items-center justify-center hover:bg-white/20 transition-all cursor-pointer"
+                            className="project-content absolute z-50 top-[86px] right-10 rounded-full bg-white/10 p-2 border border-white/20 text-white flex items-center justify-center backdrop-blur-xs hover:bg-white/20 transition-all cursor-pointer"
                         >
                             <X className="w-[clamp(20px,2vw,24px)] h-[clamp(20px,2vw,24px)]" />
                         </button>
-                        <div className="project-content p-8 bg-white/5 border border-white/10 backdrop-blur-xs rounded-xl">
-                            <p className="project-content text-highlight text-sm uppercase tracking-widest mb-2">Featured Project</p>
-                            <h2 className="project-content text-4xl md:text-6xl font-bold text-white mb-4">{project.title}</h2>
-                            <p className="project-content text-white/70 max-w-xl mb-6">{project.description}</p>
+                        <div className="project-content p-8 bg-white/5 border border-white/10 backdrop-blur-md rounded-xl">
+                            <p className="project-content text-highlight text-sm md:text-md uppercase tracking-widest mb-2">Featured Project</p>
+                            <h2 className="project-content text-3xl md:text-6xl font-bold text-white mb-4">{project.title}</h2>
+                            <p className="project-content text-md md:text-lg text-white/70 max-w-xl mb-6">{project.description}</p>
                             <div className="project-content flex gap-3 flex-wrap mb-8">
                                 {project.tags.map(tag => (
-                                    <span key={tag} className="px-3 py-1 bg-white/10 border border-white/20 rounded-full text-sm text-white">{tag}</span>
+                                    <span key={tag} className="px-3 py-1 bg-white/10 border border-white/20 rounded-full text-xs md:text-sm text-white">{tag}</span>
                                 ))}
                             </div>
-                            <a href="#" target="_blank" rel="noopener noreferrer" className="project-content w-fit px-6 py-3 bg-highlight rounded-full text-white font-medium">
-                                View Project →
-                            </a>
+                            <div className="project-content flex flex-wrap text-nowrap gap-3 text-sm md:text-md">
+                                { project.github && 
+                                    <a href={project.github} target="_blank" rel="noopener noreferrer" className="w-fit px-6 py-3 bg-highlight rounded-full text-white font-medium cursor-pointer text-white tracking-widest bg-highlight border-none shadow-[0_0_25px] shadow-highlight hover:shadow-[0_0_5px,_0_0_20px,_0_0_50px] hover:scale-105 transition-all ease-in-out duration-300">
+                                        Source Code
+                                    </a>
+                                }
+                                { project.link && 
+                                    <a href={project.link} target="_blank" rel="noopener noreferrer" className="w-fit px-6 py-3 bg-highlight rounded-full text-white font-medium cursor-pointer text-white tracking-widest bg-highlight border-none shadow-[0_0_25px] shadow-highlight hover:shadow-[0_0_5px,_0_0_20px,_0_0_50px] hover:scale-105 transition-all ease-in-out duration-300">
+                                        View Project →
+                                    </a>
+                                }
+                            </div>
                         </div>
                     </div>
                 </div>
