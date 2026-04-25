@@ -138,11 +138,11 @@ export default function Introduction({
                     ease: "power2.out",
                     onComplete: () => {
                         gsap.to(".scroll-down", {
-                            y: 10,          // shorter range feels smoother
-                            duration: 0.75,  // slightly slower = more floaty
+                            y: 10,          
+                            duration: 0.75,  
                             repeat: -1,
                             yoyo: true,
-                            ease: "sine.inOut", // ← sine is much smoother than power2 for loops
+                            ease: "sine.inOut", 
                         });
 
                         gsap.fromTo(".scroll-down",

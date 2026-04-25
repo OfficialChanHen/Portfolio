@@ -132,7 +132,7 @@ export default function SpotifyTopTracks({ initialTracks, initialNowPlaying }: C
                 </span>
             </div>
 
-            <div ref={tracksRef} className="relative w-1/2 min-w-[300px] max-w-[1080px] aspect-3/2">
+            <div ref={tracksRef} className="relative w-1/3 min-w-[300px] max-w-[1080px] aspect-3/2">
                 {tracks.map((track, i) => (
                     <a
                         key={track.id}

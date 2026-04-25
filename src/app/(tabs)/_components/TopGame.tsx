@@ -117,7 +117,7 @@ export default function TopGames() {
             
 
             {/* Carousel (was TopGames) */}
-            <div ref={gamesRef} className="relative w-1/2 min-w-[300px] max-w-[1080px] aspect-3/2">
+            <div ref={gamesRef} className="relative w-1/3 min-w-[300px] max-w-[1080px] aspect-3/2">
                 {games.map((game, index) => (
                     <div
                         key={game.id}

@@ -40,6 +40,11 @@ export default function AboutPage({ initialTracks, initialNowPlaying }: Combined
         return () => window.removeEventListener("resize", updateNavHeight);
     }, []);
 
+    useEffect(() => {
+        const timeout = setTimeout(() => ScrollTrigger.refresh(), 300);
+        return () => clearTimeout(timeout);
+    }, [resumeOpen]);
+
     useGSAP(() => {
         if (!textContainer.current || !sectionsContainerRef.current || !navRef.current) return;
         
@@ -138,11 +143,11 @@ export default function AboutPage({ initialTracks, initialNowPlaying }: Combined
                     ease: "power2.out",
                     onComplete: () => {
                         gsap.to(".scroll-down", {
-                            y: 10,          // shorter range feels smoother
-                            duration: 0.75,  // slightly slower = more floaty
+                            y: 10,          
+                            duration: 0.75,  
                             repeat: -1,
                             yoyo: true,
-                            ease: "sine.inOut", // ← sine is much smoother than power2 for loops
+                            ease: "sine.inOut", 
                         });
 
                         gsap.fromTo(".scroll-down",
