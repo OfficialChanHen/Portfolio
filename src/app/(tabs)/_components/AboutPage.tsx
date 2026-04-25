@@ -70,37 +70,6 @@ export default function AboutPage({ initialTracks, initialNowPlaying }: Combined
                 scrub: 1,
             }
         })
-        
-        /*
-        const totalLength = sectionsContainerRef.current.offsetHeight;
-        const heights = sections.map(id => (document.querySelector(id) as HTMLDivElement)?.offsetHeight ?? 0);
-
-        const navBar = navRef.current;
-        const navButtons = navBar.querySelectorAll("button");
-        const navBarWidth = navBar.offsetWidth;
-
-        // Get each button's right edge as a fraction of the nav bar width
-        const buttonBreakpoints = [...navButtons].map(btn => {
-            const rect = btn.getBoundingClientRect();
-            const navRect = navBar.getBoundingClientRect();
-            return (rect.right - navRect.left) / navBarWidth;
-        });
-        // e.g. [0.18, 0.36, 0.55, 0.74, 1.0]
-
-        sections.forEach((id, i) => {
-            ScrollTrigger.create({
-                trigger: id,
-                start: "top center",
-                scrub: 1,
-                onEnter: () => gsap.to(".progress-line", {
-                    scaleX: buttonBreakpoints[i],
-                    duration: 0.3,
-                    ease: "power2.out",
-                }),
-            });
-        });
-        */
-        
 
         gsap.set(".scroll-down", { opacity: 0 });
 

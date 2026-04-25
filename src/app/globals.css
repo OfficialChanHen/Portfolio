@@ -33,7 +33,10 @@
 
 @layer utilities {
     .text-gradient {
-        @apply bg-gradient-to-t from-white via-highlight to-tertiary bg-clip-text text-transparent;
+      @apply bg-gradient-to-t from-white via-highlight to-tertiary bg-clip-text text-transparent;
+    }
+    .no-scrollbar {
+      @apply [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]
     }
 }
 

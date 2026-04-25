@@ -1,6 +1,6 @@
 'use client';
 
-import { Sparkles, Rocket, Mail, ChevronsDown, ChevronRight, Download } from 'lucide-react';
+import { Sparkles, Rocket, Mail, ChevronsDown, ChevronRight, Download, ArrowRight } from 'lucide-react';
 import { FiGithub, FiLinkedin } from "react-icons/fi";
 import { FaReact } from "react-icons/fa";
 import { AiOutlinePython } from "react-icons/ai";
@@ -204,7 +204,7 @@ export default function Introduction({
                     <Link href="/projects">
                         <button className="group inline-flex items-center justify-center gap-2 px-5 py-3 rounded-md cursor-pointer text-white text-[0.75rem] md:text-[1rem] tracking-widest backdrop-blur-xs bg-primary/40 border-none shadow-[0_0_25px] shadow-tertiary hover:shadow-[0_0_5px,_0_0_25px,_0_0_50px,_0_0_100px] hover:scale-105 text-nowrap transition-all ease-in-out duration-300">
                             <span>View Projects</span>
-                            <ChevronRight className="transition-transform duration-300 group-hover:translate-x-2 w-[clamp(16px,2vw,24px)] h-[clamp(16px,2vw,24px)]"/>
+                            <ArrowRight className="transition-transform duration-300 group-hover:translate-x-2 w-[clamp(16px,2vw,24px)] h-[clamp(16px,2vw,24px)]"/>
                         </button>
                     </Link>
                     <a href="https://github.com/OfficialChanHen" target="_blank" rel="noopener noreferrer" className={`p-2 border-2 ${isMobile ? "border-primary/40" : "border-transparent"} flex flex-col justify-center items-center bg-primary/40 rounded-md shadow-[0_0_25px] shadow-tertiary hover:shadow-[0_0_5px,_0_0_25px,_0_0_50px,_0_0_100px] hover:scale-105 transition-all ease-in-out duration-300`}>

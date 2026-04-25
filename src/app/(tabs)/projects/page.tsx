@@ -3,8 +3,8 @@
 import StarBackground from "@/app/(tabs)/_components/StarBackground";
 import { useNavigationMode } from "@/providers/NavigationModeProvider";
 import { useGSAP } from "@gsap/react";
-import { ChevronLeft, ChevronRight, ChevronsDown, Rocket, Wrench, X } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
+import { ArrowRight, ChevronLeft, ChevronRight, ChevronsDown, Rocket, Wrench, X } from "lucide-react";
+import { useRef, useState } from "react";
 import gsap from "gsap";
 import { ScrollSmoother } from "gsap/ScrollSmoother";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -66,6 +66,7 @@ export default function Projects() {
     const overlayRef = useRef<HTMLDivElement>(null);
     const imgRef = useRef<HTMLImageElement>(null);
     const swiperRef = useRef<SwiperType | null>(null);
+    const scrollContainerRef = useRef<HTMLDivElement>(null);
 
     const [currentIndex, setCurrentIndex] = useState(0);
     const [projectOpen, setProjectOpen] = useState(false);
@@ -77,7 +78,7 @@ export default function Projects() {
 
     // --- GSAP intro + scroll animations (unchanged) ---
     useGSAP(() => {
-        if (!textContainer.current) return;
+        if (!textContainer.current || !scrollContainerRef.current) return;
 
         gsap.set(".scroll-down", { opacity: 0 });
         gsap.set(".project-content", { opacity: 0, y: 20 });
@@ -241,41 +242,61 @@ export default function Projects() {
             <StarBackground />
 
             {/* Project Overlay */}
-            <div ref={overlayRef} style={{ display: "none" }}>
+            <div ref={overlayRef} style={{ display: "none" }} className="fixed inset-0">
+                {/* Fixed background layers */}
                 <img
                     src={project.image}
                     alt={project.title}
                     className="absolute inset-0 w-full h-full object-cover"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent" />
-                <div className="absolute inset-0 flex flex-col justify-end">
-                    <div className="relative w-full max-w-[1080px] min-h-full mx-auto px-10 pb-10 flex flex-col justify-end">
-                        <button
-                            onClick={handleProjectClick}
-                            className="project-content absolute z-50 top-[86px] right-10 rounded-full bg-white/10 p-2 border border-white/20 text-white flex items-center justify-center backdrop-blur-xs hover:bg-white/20 transition-all cursor-pointer"
-                        >
-                            <X className="w-[clamp(20px,2vw,24px)] h-[clamp(20px,2vw,24px)]" />
-                        </button>
-                        <div className="project-content p-8 bg-white/5 border border-white/10 backdrop-blur-md rounded-xl">
-                            <p className="project-content text-highlight text-sm md:text-md uppercase tracking-widest mb-2">Featured Project</p>
-                            <h2 className="project-content text-3xl md:text-6xl font-bold text-white mb-4">{project.title}</h2>
-                            <p className="project-content text-md md:text-lg text-white/70 max-w-xl mb-6">{project.description}</p>
-                            <div className="project-content flex gap-3 flex-wrap mb-8">
-                                {project.tags.map(tag => (
-                                    <span key={tag} className="px-3 py-1 bg-white/10 border border-white/20 rounded-full text-xs md:text-sm text-white">{tag}</span>
-                                ))}
-                            </div>
-                            <div className="project-content flex flex-wrap text-nowrap gap-3 text-sm md:text-md">
-                                { project.github && 
-                                    <a href={project.github} target="_blank" rel="noopener noreferrer" className="w-fit px-6 py-3 bg-highlight rounded-full text-white font-medium cursor-pointer text-white tracking-widest bg-highlight border-none shadow-[0_0_25px] shadow-highlight hover:shadow-[0_0_5px,_0_0_20px,_0_0_50px] hover:scale-105 transition-all ease-in-out duration-300">
-                                        Source Code
-                                    </a>
-                                }
-                                { project.link && 
-                                    <a href={project.link} target="_blank" rel="noopener noreferrer" className="w-fit px-6 py-3 bg-highlight rounded-full text-white font-medium cursor-pointer text-white tracking-widest bg-highlight border-none shadow-[0_0_25px] shadow-highlight hover:shadow-[0_0_5px,_0_0_20px,_0_0_50px] hover:scale-105 transition-all ease-in-out duration-300">
-                                        View Project →
-                                    </a>
-                                }
+
+                {/* Scrollable layer */}
+                <div ref={scrollContainerRef} className="absolute inset-0 overflow-y-auto no-scrollbar">
+                    <div className="flex flex-col items-center justify-end pb-10 px-10 min-h-full">
+
+                        {/* Overlay Container */}
+                        <div className="relative w-full max-w-[1080px] pt-[50dvh] min-h-full flex flex-col justify-end">
+
+                            {/* Close Button */}
+                            <button
+                                onClick={handleProjectClick}
+                                className="project-close project-content absolute top-[86px] self-end z-50 mb-4 rounded-full bg-white/10 p-2 border border-white/20 text-white flex items-center justify-center backdrop-blur-xs hover:bg-white/20 transition-all cursor-pointer"
+                            >
+                                <X className="w-[clamp(20px,2vw,24px)] h-[clamp(20px,2vw,24px)]" />
+                            </button>
+
+                            {/* Main Content */}
+                            <div className="project-content p-8 bg-white/5 border border-white/10 backdrop-blur-md rounded-xl">
+
+                                {/* Header */}
+                                <p className="project-content text-highlight text-sm md:text-md uppercase tracking-widest mb-2">Featured Project</p>
+                                <h2 className="project-content text-3xl md:text-6xl font-bold text-white mb-4">{project.title}</h2>
+                                <p className="project-content text-md md:text-lg text-white/70 max-w-xl mb-6">{project.description}</p>
+
+                                {/* Tags */}
+                                <div className="project-content flex gap-3 flex-wrap mb-8">
+                                    {project.tags.map(tag => (
+                                        <span key={tag} className="px-3 py-1 bg-white/10 border border-white/20 rounded-full text-xs md:text-sm text-white">{tag}</span>
+                                    ))}
+                                </div>
+
+                                {/* Buttons */}
+                                <div className="project-content flex flex-wrap text-nowrap gap-3 text-sm md:text-md">
+                                    { project.github && 
+                                        <a href={project.github} target="_blank" rel="noopener noreferrer" className="w-fit px-6 py-3 bg-highlight rounded-full text-white font-medium cursor-pointer text-white tracking-widest bg-highlight border-none shadow-[0_0_25px] shadow-highlight hover:shadow-[0_0_5px,_0_0_20px,_0_0_50px] hover:scale-105 transition-all ease-in-out duration-300">
+                                            Source Code
+                                        </a>
+                                    }
+                                    { project.link && 
+                                        <a href={project.link} target="_blank" rel="noopener noreferrer">
+                                            <button className="group inline-flex items-center justify-center gap-2 w-fit px-6 py-3 bg-highlight rounded-full text-white font-medium cursor-pointer text-white tracking-widest bg-highlight border-none shadow-[0_0_25px] shadow-highlight hover:shadow-[0_0_5px,_0_0_20px,_0_0_50px] hover:scale-105 transition-all ease-in-out duration-300">
+                                                <span>View Projects</span>
+                                                <ArrowRight className="transition-transform duration-300 group-hover:translate-x-2 w-[clamp(16px,2vw,24px)] h-[clamp(16px,2vw,24px)]"/>
+                                            </button>
+                                        </a>
+                                    }
+                                </div>
                             </div>
                         </div>
                     </div>
