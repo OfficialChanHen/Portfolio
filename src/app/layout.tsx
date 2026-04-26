@@ -31,7 +31,13 @@ export const metadata: Metadata = {
 async function isServerMobile() {
   const headersList = await headers();
   const userAgent = headersList.get("user-agent") || "";
+  const viewportWidth = headersList.get("sec-ch-viewport-width") || headersList.get("viewport-width");
   const isMobile = /android.+mobile|ip(hone|[oa]d)/i.test(userAgent);
+
+  if (viewportWidth) {
+    const width = parseInt(viewportWidth);
+    return isMobile && width < 768;
+  }
 
   return isMobile;
 }

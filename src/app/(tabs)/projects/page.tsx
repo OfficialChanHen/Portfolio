@@ -9,6 +9,7 @@ import gsap from "gsap";
 import { ScrollSmoother } from "gsap/ScrollSmoother";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { type Swiper as SwiperType } from "swiper";
+import { useMobile } from "@/providers/MobileProvider";
 
 // --- Project Data ---
 const projects = [
@@ -70,6 +71,7 @@ export default function Projects() {
 
     const [currentIndex, setCurrentIndex] = useState(0);
     const [projectOpen, setProjectOpen] = useState(false);
+    const isMobile = useMobile();
 
     const navigationMode = useNavigationMode();
     const delayTime = navigationMode === "soft" ? 0.4 : 0.6;
@@ -78,7 +80,7 @@ export default function Projects() {
 
     // --- GSAP intro + scroll animations (unchanged) ---
     useGSAP(() => {
-        if (!textContainer.current || !scrollContainerRef.current) return;
+        if (!textContainer.current) return;
 
         gsap.set(".scroll-down", { opacity: 0 });
         gsap.set(".project-content", { opacity: 0, y: 20 });
@@ -135,6 +137,8 @@ export default function Projects() {
                 scrollTrigger: { trigger: list, start: "top 60%", toggleActions: "play none none reverse" },
             });
         });
+
+        
     }, { dependencies: [] });
 
     // --- Swiper slide change: GSAP parallax on incoming image ---
@@ -191,7 +195,8 @@ export default function Projects() {
 
             scroller?.paused(true);
 
-            gsap.to(overlayRef.current, {
+            const tlOverlayEnter = gsap.timeline();
+            tlOverlayEnter.to(overlayRef.current, {
                 top: scrollY,
                 left: 0,
                 width: "100vw",
@@ -199,11 +204,13 @@ export default function Projects() {
                 borderRadius: 0,
                 ease: "power3.inOut",
                 duration: 0.6,
-                onComplete: () => {
-                    gsap.to(".project-content", {
-                        opacity: 1, y: 0, stagger: 0.08, duration: 0.4, ease: "power2.out",
-                    });
-                }
+            })
+            .to(".project-content", {
+                opacity: 1,
+                y: 0,
+                stagger: 0.08,
+                duration: 0.4,
+                ease: "power2.out",
             });
 
             setProjectOpen(true);
@@ -212,22 +219,24 @@ export default function Projects() {
             const rect = cardRef.current!.getBoundingClientRect();
             const scrollY = scroller?.scrollTop() ?? window.scrollY;
 
-            gsap.to(".project-content", {
+            const tlOverlayExit = gsap.timeline();
+            tlOverlayExit.to(".project-content", {
                 opacity: 0, y: 20, duration: 0.2, ease: "power2.in",
                 onComplete: () => {
-                    gsap.to(overlayRef.current, {
-                        top: rect.top + scrollY,
-                        left: rect.left,
-                        width: rect.width,
-                        height: rect.height,
-                        borderRadius: 16,
-                        ease: "power3.inOut",
-                        duration: 0.5,
-                        onComplete: () => {
-                            gsap.set(overlayRef.current, { display: "none" });
-                            scroller?.paused(false);
-                        }
-                    });
+                    gsap.set(".scroll-more", { opacity: 1, y: 0 });
+                }
+            })
+            .to(overlayRef.current, {
+                top: rect.top + scrollY,
+                left: rect.left,
+                width: rect.width,
+                height: rect.height,
+                borderRadius: 16,
+                ease: "power3.inOut",
+                duration: 0.5,
+                onComplete: () => {
+                    gsap.set(overlayRef.current, { display: "none" });
+                    scroller?.paused(false);
                 }
             });
 
@@ -253,21 +262,27 @@ export default function Projects() {
 
                 {/* Scrollable layer */}
                 <div ref={scrollContainerRef} className="absolute inset-0 overflow-y-auto no-scrollbar">
-                    <div className="flex flex-col items-center justify-end pb-10 px-10 min-h-full">
+                    <div className="flex flex-col items-center pb-10 px-10 min-h-full">
 
                         {/* Overlay Container */}
-                        <div className="relative w-full max-w-[1080px] pt-[50dvh] min-h-full flex flex-col justify-end">
+                        <div className="relative w-full max-w-[1080px] pt-[50dvh] min-h-full flex flex-col justify-end items-center gap-3">
 
                             {/* Close Button */}
                             <button
                                 onClick={handleProjectClick}
-                                className="project-close project-content absolute top-[86px] self-end z-50 mb-4 rounded-full bg-white/10 p-2 border border-white/20 text-white flex items-center justify-center backdrop-blur-xs hover:bg-white/20 transition-all cursor-pointer"
+                                className="project-close project-content absolute top-[86px] self-end z-50 mb-4 rounded-full bg-white/10 p-2 border border-white/20 text-highlight flex items-center justify-center backdrop-blur-xs hover:bg-white/20 transition-all cursor-pointer"
                             >
                                 <X className="w-[clamp(20px,2vw,24px)] h-[clamp(20px,2vw,24px)]" />
                             </button>
 
+                            {isMobile && (
+                                <div className="project-content z-10 px-4 py-3 w-fit rounded-full bg-white/5 border border-white/10 backdrop-blur-md text-center text-[1rem] md:text-[1.25rem] ">
+                                    Scroll For More
+                                </div>
+                            )}
+
                             {/* Main Content */}
-                            <div className="project-content p-8 bg-white/5 border border-white/10 backdrop-blur-md rounded-xl">
+                            <div className="project-content z-20 p-8 bg-white/5 border border-white/10 backdrop-blur-md rounded-xl">
 
                                 {/* Header */}
                                 <p className="project-content text-highlight text-sm md:text-md uppercase tracking-widest mb-2">Featured Project</p>
