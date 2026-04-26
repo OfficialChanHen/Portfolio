@@ -3,7 +3,7 @@
 import StarBackground from "@/app/(tabs)/_components/StarBackground";
 import { useNavigationMode } from "@/providers/NavigationModeProvider";
 import { useGSAP } from "@gsap/react";
-import { ArrowRight, ChevronLeft, ChevronRight, ChevronsDown, Rocket, Wrench, X } from "lucide-react";
+import { ArrowLeft, ArrowRight, ChevronLeft, ChevronRight, ChevronsDown, Rocket, Undo2, Wrench, X } from "lucide-react";
 import { useRef, useState } from "react";
 import gsap from "gsap";
 import { ScrollSmoother } from "gsap/ScrollSmoother";
@@ -138,7 +138,8 @@ export default function Projects() {
             });
         });
 
-        
+        const scroller = ScrollSmoother.get();
+        return () => scroller?.paused(false);
     }, { dependencies: [] });
 
     // --- Swiper slide change: GSAP parallax on incoming image ---
@@ -265,15 +266,18 @@ export default function Projects() {
                     <div className="flex flex-col items-center pb-10 px-10 min-h-full">
 
                         {/* Overlay Container */}
-                        <div className="relative w-full max-w-[1080px] pt-[50dvh] min-h-full flex flex-col justify-end items-center gap-3">
+                        <div className="relative w-full max-w-[1080px] pt-[50dvh] flex-1 flex flex-col justify-end items-center gap-3">
 
                             {/* Close Button */}
-                            <button
-                                onClick={handleProjectClick}
-                                className="project-close project-content absolute top-[86px] self-end z-50 mb-4 rounded-full bg-white/10 p-2 border border-white/20 text-highlight flex items-center justify-center backdrop-blur-xs hover:bg-white/20 transition-all cursor-pointer"
-                            >
-                                <X className="w-[clamp(20px,2vw,24px)] h-[clamp(20px,2vw,24px)]" />
-                            </button>
+                            <div className="project-content absolute top-[86px] self-end z-50">
+                                <button
+                                    onClick={handleProjectClick}
+                                    className="rounded-full bg-highlight p-2 border border-white/20 text-white flex items-center justify-center backdrop-blur-xs hover:bg-tertiary transition-all cursor-pointer"
+                                >
+                                    <X className="w-[clamp(20px,2vw,24px)] h-[clamp(20px,2vw,24px)]" />
+                                </button>
+                            </div>
+                            
 
                             {isMobile && (
                                 <div className="project-content z-10 px-4 py-3 w-fit rounded-full bg-white/5 border border-white/10 backdrop-blur-md text-center text-[1rem] md:text-[1.25rem] ">
@@ -282,37 +286,63 @@ export default function Projects() {
                             )}
 
                             {/* Main Content */}
-                            <div className="project-content z-20 p-8 bg-white/5 border border-white/10 backdrop-blur-md rounded-xl">
+                            <div className="project-content z-20 w-full flex flex-col justify-start items-start gap-3 p-8 bg-white/5 border border-white/10 backdrop-blur-md rounded-xl">
 
                                 {/* Header */}
-                                <p className="project-content text-highlight text-sm md:text-md uppercase tracking-widest mb-2">Featured Project</p>
-                                <h2 className="project-content text-3xl md:text-6xl font-bold text-white mb-4">{project.title}</h2>
-                                <p className="project-content text-md md:text-lg text-white/70 max-w-xl mb-6">{project.description}</p>
+                                <p className="project-content text-highlight text-sm md:text-md uppercase tracking-widest">Featured Project</p>
+                                <h2 className="project-content text-3xl md:text-6xl font-bold text-white">{project.title}</h2>
 
                                 {/* Tags */}
-                                <div className="project-content flex gap-3 flex-wrap mb-8">
+                                <div className="project-content flex gap-3 flex-wrap">
                                     {project.tags.map(tag => (
                                         <span key={tag} className="px-3 py-1 bg-white/10 border border-white/20 rounded-full text-xs md:text-sm text-white">{tag}</span>
                                     ))}
                                 </div>
 
+                                <p className="project-content text-md md:text-lg text-white/80 max-w-xl mb-4">{project.description}</p>
+
                                 {/* Buttons */}
                                 <div className="project-content flex flex-wrap text-nowrap gap-3 text-sm md:text-md">
-                                    { project.github && 
-                                        <a href={project.github} target="_blank" rel="noopener noreferrer" className="w-fit px-6 py-3 bg-highlight rounded-full text-white font-medium cursor-pointer text-white tracking-widest bg-highlight border-none shadow-[0_0_25px] shadow-highlight hover:shadow-[0_0_5px,_0_0_20px,_0_0_50px] hover:scale-105 transition-all ease-in-out duration-300">
-                                            Source Code
-                                        </a>
-                                    }
-                                    { project.link && 
-                                        <a href={project.link} target="_blank" rel="noopener noreferrer">
-                                            <button className="group inline-flex items-center justify-center gap-2 w-fit px-6 py-3 bg-highlight rounded-full text-white font-medium cursor-pointer text-white tracking-widest bg-highlight border-none shadow-[0_0_25px] shadow-highlight hover:shadow-[0_0_5px,_0_0_20px,_0_0_50px] hover:scale-105 transition-all ease-in-out duration-300">
-                                                <span>View Projects</span>
-                                                <ArrowRight className="transition-transform duration-300 group-hover:translate-x-2 w-[clamp(16px,2vw,24px)] h-[clamp(16px,2vw,24px)]"/>
-                                            </button>
-                                        </a>
-                                    }
+                                    {project.github && (
+                                        <div className="project-content">
+                                            <a
+                                                href={project.github}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className="block w-fit px-6 py-3 bg-highlight rounded-full text-white font-medium cursor-pointer tracking-widest border-none shadow-[0_0_25px] shadow-highlight hover:shadow-[0_0_5px,_0_0_20px,_0_0_50px] hover:scale-105 transition-all ease-in-out duration-300"
+                                            >
+                                                Source Code
+                                            </a>
+                                        </div>
+                                    )}
+                                    {project.link && (
+                                        <div className="project-content">
+                                            <a href={project.link} target="_blank" rel="noopener noreferrer">
+                                                <button className="group inline-flex items-center justify-center gap-2 w-fit px-6 py-3 bg-highlight rounded-full text-white font-medium cursor-pointer tracking-widest border-none shadow-[0_0_25px] shadow-highlight hover:shadow-[0_0_5px,_0_0_20px,_0_0_50px] hover:scale-105 transition-all ease-in-out duration-300">
+                                                    <span>View Projects</span>
+                                                    <ArrowRight className="transition-transform duration-300 group-hover:translate-x-2 w-[clamp(16px,2vw,24px)] h-[clamp(16px,2vw,24px)]" />
+                                                </button>
+                                            </a>
+                                        </div>
+                                    )}
                                 </div>
+
+                                {isMobile && (
+                                    <div className="project-content text-nowrap text-sm md:text-md">
+                                        <button
+                                            onClick={handleProjectClick}
+                                            className="inline-flex items-center justify-center gap-2 w-fit px-6 py-3 bg-primary/40 rounded-full text-white font-medium cursor-pointer tracking-widest border-none shadow-[0_0_25px] shadow-tertiary hover:shadow-[0_0_5px,_0_0_20px,_0_0_50px] hover:scale-105 transition-all ease-in-out duration-300"
+                                        >
+                                            <span>Return Back</span>
+                                            <Undo2 className="w-[clamp(16px,2vw,24px)] h-[clamp(16px,2vw,24px)]" />
+                                        </button>
+                                    </div>
+                                )}
                             </div>
+
+                            {
+                                
+                            }
                         </div>
                     </div>
                 </div>
