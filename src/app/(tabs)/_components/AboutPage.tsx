@@ -233,7 +233,7 @@ export default function AboutPage({ initialTracks, initialNowPlaying }: Combined
                         
                     { resumeOpen &&
                         <iframe
-                            src="/Official-Resume.pdf"
+                            src="/Chan_Hen_Resume.pdf"
                             className="w-full h-[80dvh] rounded-xl border border-white/10"
                             title="Resume PDF"
                         />
