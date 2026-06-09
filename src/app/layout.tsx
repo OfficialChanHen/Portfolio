@@ -3,6 +3,7 @@ import { Geist, Geist_Mono, DM_Mono} from "next/font/google";
 import { headers } from "next/headers";
 import { MobileProvider } from "@/providers/MobileProvider";
 import { NavigationModeProvider } from "@/providers/NavigationModeProvider";
+import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -61,6 +62,7 @@ export default async function RootLayout({
             {children}
           </MobileProvider>
         </NavigationModeProvider>
+        <Analytics />
       </body>
     </html>
   );
