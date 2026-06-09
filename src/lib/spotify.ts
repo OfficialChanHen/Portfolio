@@ -1,3 +1,8 @@
+// Dormant: the portfolio currently sources its listening feed from Last.fm
+// (see lastfm.ts). This module is kept intact for when Spotify access returns.
+// Shared types now live in music.ts; re-exported here for backwards compatibility.
+export type { NowPlaying, Track, CombinedTracksProps } from "@/lib/music";
+
 const clientId = process.env.SPOTIFY_CLIENT_ID!;
 const clientSecret = process.env.SPOTIFY_CLIENT_SECRET!;
 const refreshToken = process.env.SPOTIFY_REFRESH_TOKEN!;
@@ -7,27 +12,6 @@ const TOKEN_ENDPOINT = "https://accounts.spotify.com/api/token";
 const NOW_PLAYING_ENDPOINT = "https://api.spotify.com/v1/me/player/currently-playing";
 const TOP_TRACKS_ENDPOINT = "https://api.spotify.com/v1/me/top/tracks";
 
-export type NowPlaying = {
-    isPlaying: boolean;
-    title?: string;
-    artists?: string;
-    albumImg?: string;
-    songUrl?: string;
-};
-
-export type Track = {
-    id: string;
-    title: string;
-    artists: string;
-    albumImg: string;
-    songUrl: string;
-};
-
-export type CombinedTracksProps = {
-    initialTracks: Track[];
-    initialNowPlaying: NowPlaying;
-};
-
 export async function getSpotifyAccessToken() {
     const res = await fetch(TOKEN_ENDPOINT, {
         method: "POST",
@@ -35,7 +19,7 @@ export async function getSpotifyAccessToken() {
             Authorization: `Basic ${basic}`,
             "Content-Type": "application/x-www-form-urlencoded",
         },
-            body: new URLSearchParams({
+        body: new URLSearchParams({
             grant_type: "refresh_token",
             refresh_token: refreshToken,
         }),

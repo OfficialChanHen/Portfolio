@@ -77,6 +77,7 @@ export default function TopGames() {
         });
 
         gsap.set(cardEls, { opacity: 0, y: "100%" });
+        gsap.set(".games-hint", { opacity: 0, y: 20 });
 
         cardEls.forEach((card, i) => {
             const start = i / total;
@@ -100,6 +101,19 @@ export default function TopGames() {
                 }, 
             start);
         });
+
+        // Reveal the "Top Video Games" subtitle as the first card slides in (position 0).
+        // Added after the card loop so it doesn't shift the snap labels placed above.
+        tl.fromTo(".games-hint",
+            { opacity: 0, y: 20 },
+            {
+                opacity: 1,
+                y: 0,
+                duration: 1 / total,
+                ease: "power2.out",
+                immediateRender: false,
+            },
+        0);
     }, { scope: containerRef, dependencies: [] });
 
     return(
@@ -107,12 +121,14 @@ export default function TopGames() {
             ref={containerRef}
             className="w-screen min-h-dvh flex flex-col justify-center items-center p-10 pt-[106px] gap-10 bg-primary"
         >
-            <div className="fade-in-list relative text-center">
-                <h2 className="text-[2.5rem] md:text-[3.5rem]">
-                    {"Personal Interests: "}
-                    <span className="text-gradient">Games</span>
-                </h2>
-                <span className="text-[1rem] md:text-[1.5rem] text-white/80">Top Video Games</span>
+            <div className="relative text-center">
+                <div className="fade-in-list">
+                    <h2 className="text-[2.5rem] md:text-[3.5rem]">
+                        {"Personal Interests: "}
+                        <span className="text-gradient">Games</span>
+                    </h2>
+                </div>
+                <span className="games-hint block opacity-0 text-[1rem] md:text-[1.5rem] text-white/80">Top Video Games</span>
             </div>
             
 

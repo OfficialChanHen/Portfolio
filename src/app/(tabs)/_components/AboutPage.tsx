@@ -8,7 +8,7 @@ import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useNavigationMode } from "@/providers/NavigationModeProvider";
 import TopGames from "../_components/TopGame";
-import { CombinedTracksProps } from "@/lib/spotify";
+import { CombinedTracksProps } from "@/lib/music";
 import BackToTopButton from "./BackToTopButton";
 import { ScrollSmoother } from "gsap/ScrollSmoother";
 
@@ -59,7 +59,6 @@ export default function AboutPage({ initialTracks, initialNowPlaying }: Combined
         gsap.from(".progress-line", {
             scaleX: 0,
             transformOrigin: "left center",
-            markers: true,
             ease: "none",
             scrollTrigger: {
                 trigger: ".progress-line",

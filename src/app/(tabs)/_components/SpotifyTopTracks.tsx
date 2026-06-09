@@ -3,7 +3,7 @@
 import { useRef, useState } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
-import { Track, NowPlaying, CombinedTracksProps, getNowPlaying } from "@/lib/spotify";
+import { Track, NowPlaying, CombinedTracksProps } from "@/lib/music";
 
 
 export default function SpotifyTopTracks({ initialTracks, initialNowPlaying }: CombinedTracksProps) {
@@ -73,6 +73,7 @@ export default function SpotifyTopTracks({ initialTracks, initialNowPlaying }: C
         });
 
         gsap.set(cardEls, { opacity: 0, y: "100%" });
+        gsap.set(".tap-hint", { opacity: 0, y: 20 });
 
         cardEls.forEach((card, i) => {
             const start = i / total;
@@ -95,6 +96,20 @@ export default function SpotifyTopTracks({ initialTracks, initialNowPlaying }: C
                 }, 
             start);
         });
+
+        // Reveal the "Tap the card to listen" hint as the first card slides in (position 0).
+        // Added after the card loop so it doesn't shift the snap labels placed above.
+        tl.fromTo(".tap-hint",
+            { opacity: 0, y: 20 },
+            {
+                opacity: 1,
+                y: 0,
+                duration: 1 / total,
+                ease: "power2.out",
+                immediateRender: false,
+            },
+        0);
+
         tlRef.current = tl; // ← save reference
     }, { scope: containerRef, dependencies: [data, nowPlaying] });
 
@@ -120,14 +135,16 @@ export default function SpotifyTopTracks({ initialTracks, initialNowPlaying }: C
             ref={containerRef}
             className="w-screen min-h-dvh flex flex-col justify-center items-center p-10 pt-[106px] gap-10 bg-secondary"
         >
-            <div className="fade-in-list relative text-center">
-                <h2 className="text-[2.5rem] md:text-[3.5rem]">
-                    {"Personal Interests: "}
-                    <span className="text-gradient">
-                        Music
-                    </span>
-                </h2>
-                <span className="text-[1rem] md:text-[1.5rem] text-white/80">
+            <div className="relative text-center">
+                <div className="fade-in-list">
+                    <h2 className="text-[2.5rem] md:text-[3.5rem]">
+                        {"Personal Interests: "}
+                        <span className="text-gradient">
+                            Music
+                        </span>
+                    </h2>
+                </div>
+                <span className="tap-hint block opacity-0 text-[1rem] md:text-[1.5rem] text-white/80">
                     Tap the card to listen
                 </span>
             </div>
