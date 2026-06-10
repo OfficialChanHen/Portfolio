@@ -2,6 +2,7 @@
 
 import StarBackground from "@/app/(tabs)/_components/StarBackground";
 import Introduction from "@/app/(tabs)/_components/Introduction";
+import RecentUpdates from "@/app/(tabs)/_components/RecentUpdates";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { useState, useRef } from "react";
@@ -9,14 +10,19 @@ import playOrTrigger from "@/app/utils/playOrTrigger";
 
 export default function Home() {
     const [introDone, setIntroDone] = useState(false);
+    const [updatesReady, setUpdatesReady] = useState(false);
     const jobContainer = useRef<HTMLDivElement>(null);
 
     useGSAP(() => {
         if (!introDone || !jobContainer.current) return;
 
 
-        const jobTl = gsap.timeline({ paused: true });
-        jobTl.to(jobContainer.current, 
+        const jobTl = gsap.timeline({
+            paused: true,
+            // Reveal the updates section only once "Available For Work" has finished animating in.
+            onComplete: () => setUpdatesReady(true),
+        });
+        jobTl.to(jobContainer.current,
             {
                 y: 0,
                 opacity: 1,
@@ -26,7 +32,7 @@ export default function Home() {
         );
         playOrTrigger(jobContainer.current as HTMLElement, jobTl);
 
-        
+
     }, { dependencies: [introDone] })
 
     return(
@@ -39,6 +45,8 @@ export default function Home() {
                 <span className="text-highlight place-self-center md:place-self-start text-[1rem] md:text-[1.25rem]">Available For Work</span>
                 <span className="text-center md:text-left text-[0.75rem] md:text-[1rem]">I'm currently available for freelance projects, part-time work, and full-time opportunities. Let's <em>launch</em> a project that's truly out of this world together!</span>
             </div>
+
+            <RecentUpdates reveal={updatesReady} />
         </div>
     );
 }
