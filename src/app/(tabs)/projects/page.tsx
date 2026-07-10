@@ -54,10 +54,11 @@ const projects = [
     },
     {
         id: 5,
-        title: "TBD Project",
+        title: "Aline",
         image: "/coming-soon.jpg",
-        tags: ["TBD"],
-        description: "Upcoming project to be announced. Check back here for updates!",
+        tags: ["Next.js", "TypeScript", "Supabase", "Leaflet", "GSAP"],
+        description:
+        "A modern take on when2meet that handles the full life of getting a group together: finding a time everyone is free on a shared availability grid, voting on where to meet on a map, building a route for multi-stop days, chatting in real time, and tracking who is actually coming. Friends and coworkers join with a share link — no account needed. In active development; live preview coming soon.",
     },
 ];
 
@@ -249,7 +250,6 @@ export default function Projects() {
 
     return (
         <div className="relative w-screen flex flex-col justify-start items-center bg-secondary">
-            <StarBackground />
 
             {/* Project Overlay */}
             <div ref={overlayRef} style={{ display: "none" }} className="fixed inset-0">
