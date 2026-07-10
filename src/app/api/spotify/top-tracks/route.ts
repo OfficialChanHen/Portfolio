@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { getTopTracks } from "@/lib/lastfm";
+import { getTopTracks } from "@/lib/musicFeed";
 import type { Track } from "@/lib/music";
 
 let cachedTracks: Track[] | null = null;

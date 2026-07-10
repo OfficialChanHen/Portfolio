@@ -1,18 +1,23 @@
-// Dormant: the portfolio currently sources its listening feed from Last.fm
-// (see lastfm.ts). This module is kept intact for when Spotify access returns.
-// Shared types now live in music.ts; re-exported here for backwards compatibility.
+// Spotify is the primary listening-feed source. These functions return normalized
+// Track[] / NowPlaying (the same shapes as lastfm.ts), or `null` when Spotify is
+// unavailable — missing credentials, an expired/revoked refresh token, or an API
+// error — so callers can fall back to Last.fm. See musicFeed.ts for the
+// primary/fallback orchestration.
+import type { NowPlaying, Track } from "@/lib/music";
 export type { NowPlaying, Track, CombinedTracksProps } from "@/lib/music";
 
-const clientId = process.env.SPOTIFY_CLIENT_ID!;
-const clientSecret = process.env.SPOTIFY_CLIENT_SECRET!;
-const refreshToken = process.env.SPOTIFY_REFRESH_TOKEN!;
+const clientId = process.env.SPOTIFY_CLIENT_ID;
+const clientSecret = process.env.SPOTIFY_CLIENT_SECRET;
+const refreshToken = process.env.SPOTIFY_REFRESH_TOKEN;
 
-const basic = Buffer.from(`${clientId}:${clientSecret}`).toString("base64");
 const TOKEN_ENDPOINT = "https://accounts.spotify.com/api/token";
 const NOW_PLAYING_ENDPOINT = "https://api.spotify.com/v1/me/player/currently-playing";
 const TOP_TRACKS_ENDPOINT = "https://api.spotify.com/v1/me/top/tracks";
 
-export async function getSpotifyAccessToken() {
+async function getAccessToken(): Promise<string | null> {
+    if (!clientId || !clientSecret || !refreshToken) return null;
+
+    const basic = Buffer.from(`${clientId}:${clientSecret}`).toString("base64");
     const res = await fetch(TOKEN_ENDPOINT, {
         method: "POST",
         headers: {
@@ -26,34 +31,61 @@ export async function getSpotifyAccessToken() {
         cache: "no-store",
     });
 
-    return res.json();
+    if (!res.ok) return null;
+    const data = await res.json();
+    return data?.access_token ?? null;
 }
 
-export async function getNowPlaying() {
-    const { access_token } = await getSpotifyAccessToken();
+// null => Spotify unavailable (fall back to Last.fm). Otherwise the top tracks.
+export async function getTopTracks(): Promise<Track[] | null> {
+    try {
+        const token = await getAccessToken();
+        if (!token) return null;
 
-    const res = await fetch(NOW_PLAYING_ENDPOINT, {
-        headers: {
-            Authorization: `Bearer ${access_token}`,
-        },
-        cache: "no-store",
-    });
+        const res = await fetch(`${TOP_TRACKS_ENDPOINT}?limit=5`, {
+            headers: { Authorization: `Bearer ${token}` },
+            next: { revalidate: 60 },
+        });
+        if (!res.ok) return null;
 
-    if (res.status === 204 || !res.ok) return null;
-    
-    return res.json();
+        const data = await res.json();
+        const items: any[] = data?.items ?? [];
+        return items.map((t) => ({
+            id: t.id,
+            title: t.name,
+            artists: t.artists.map((a: any) => a.name).join(", "),
+            albumImg: t.album?.images?.[0]?.url ?? "",
+            songUrl: t.external_urls?.spotify ?? "",
+        }));
+    } catch {
+        return null;
+    }
 }
 
-export async function getTopTracks() {
-    const { access_token } = await getSpotifyAccessToken();
-    const numTracks = 5;
-    
-    const res = await fetch(`${TOP_TRACKS_ENDPOINT}?limit=${numTracks}`, {
-        headers: {
-            Authorization: `Bearer ${access_token}`,
-        },
-        next: { revalidate: 60 },
-    });
-    if (res.status === 204 || !res.ok) return null;
-    return res.json();
+// null => Spotify unavailable (fall back). { isPlaying: false } => reachable, nothing playing.
+export async function getNowPlaying(): Promise<NowPlaying | null> {
+    try {
+        const token = await getAccessToken();
+        if (!token) return null;
+
+        const res = await fetch(NOW_PLAYING_ENDPOINT, {
+            headers: { Authorization: `Bearer ${token}` },
+            cache: "no-store",
+        });
+        if (res.status === 204) return { isPlaying: false };
+        if (!res.ok) return null;
+
+        const song = await res.json();
+        if (!song?.item) return { isPlaying: false };
+
+        return {
+            isPlaying: song.is_playing,
+            title: song.item.name,
+            artists: song.item.artists.map((a: any) => a.name).join(", "),
+            albumImg: song.item.album?.images?.[0]?.url ?? "",
+            songUrl: song.item.external_urls?.spotify ?? "",
+        };
+    } catch {
+        return null;
+    }
 }
