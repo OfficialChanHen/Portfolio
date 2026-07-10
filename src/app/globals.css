@@ -3,6 +3,14 @@
 @import "swiper/css/navigation";
 @import "swiper/css/pagination";
 
+/* Light-mode-only variant (scoped to the .light class on <html>), so individual
+   pages can be tuned for light mode without touching their dark-mode styles. */
+@custom-variant light (&:where(.light, .light *));
+
+/* Dark is the default theme (the site's identity). Light mode is opt-in via the
+   `.light` class on <html> (set by the theme toggle + the no-FOUC script).
+   `--color-white` is overridden in light mode so the ~150 literal text-white /
+   bg-white/x / border-white/x utilities flip to dark ink automatically. */
 :root {
   --primary: #150322;
   --secondary: #210535;
@@ -10,6 +18,23 @@
   --highlight: #C874B2;
   --background: #09010F;
   --foreground: #FFFFFF;
+  color-scheme: dark;
+}
+
+/* Light mode: airy lavender surfaces with the brand purple/magenta accents.
+   `--color-white` is remapped to dark ink so the many literal text-white /
+   bg-white/x utilities flip to readable dark on light (Tailwind v4 resolves them
+   via var(--color-white)). `--color-black` is left at its default so card shadows
+   stay dark for depth. */
+html.light {
+  --background: #FAF7FC;   /* near-white, faint lavender */
+  --foreground: #1E0A30;   /* dark purple ink */
+  --primary: #F2E9F8;      /* light lavender section bg */
+  --secondary: #E7D8F0;    /* slightly deeper lavender section bg */
+  --tertiary: #8E3F8C;     /* purple accent */
+  --highlight: #B83D8F;    /* magenta accent */
+  --color-white: #1E0A30;  /* literal "white" ink -> dark on light */
+  color-scheme: light;
 }
 
 @theme inline {
@@ -24,11 +49,13 @@
   --font-mono: var(--font-dm-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #09010F;
-    --foreground: #FFFFFF;
-  }
+/* Smooth theme switch. Limited to color properties so it never interferes with
+   GSAP (which animates transform/opacity, not these). */
+*,
+*::before,
+*::after {
+  transition: background-color 0.3s ease, border-color 0.3s ease,
+    color 0.3s ease, fill 0.3s ease, stroke 0.3s ease;
 }
 
 @layer utilities {

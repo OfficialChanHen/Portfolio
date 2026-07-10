@@ -215,14 +215,14 @@ export default function AboutPage({ initialTracks, initialNowPlaying }: Combined
                         <span>Beyond The Surface</span>
                     </div>
                     <h2 className="intro-text text-[2.5rem] md:text-[3.5rem]">
-                        <span className="text-gradient">Discover</span>{" "}Who I Am
+                        <span className="bg-gradient-to-t from-white via-highlight to-tertiary bg-clip-text text-transparent light:from-foreground light:via-foreground light:to-secondary">Discover</span>{" "}Who I Am
                     </h2>
                     <span className="intro-text text-[1rem] md:text-[1.5rem] text-white/80">
-                        Want to know more? Check out <span className="text-gradient">my resume</span> and <span className="text-gradient">continue scrolling</span> down!
+                        Want to know more? Check out <span className="bg-gradient-to-t from-white via-highlight to-tertiary bg-clip-text text-transparent light:from-foreground light:via-foreground light:to-secondary">my resume</span> and <span className="bg-gradient-to-t from-white via-highlight to-tertiary bg-clip-text text-transparent light:from-foreground light:via-foreground light:to-secondary">continue scrolling</span> down!
                     </span>
                     <div className="intro-text text-[0.75rem] md:text-[1.25rem]">
                         <div 
-                            className="flex flex-row justify-center items-center gap-2 px-5 py-3 rounded-md cursor-pointer bg-tertiary border-none shadow-[0_0_25px] shadow-tertiary backdrop-blur-xs hover:shadow-[0_0_5px,_0_0_25px,_0_0_50px,_0_0_100px] hover:shadow-tertiary hover:scale-105 text-nowrap transition-all ease-in-out duration-300"
+                            className="flex flex-row justify-center items-center gap-2 px-5 py-3 rounded-md cursor-pointer bg-tertiary light:bg-secondary border-none shadow-[0_0_25px] shadow-tertiary backdrop-blur-xs hover:shadow-[0_0_5px,_0_0_25px,_0_0_50px,_0_0_100px] hover:shadow-tertiary hover:scale-105 text-nowrap transition-all ease-in-out duration-300"
                             onClick={handleResumeButton}
                         >
                             <button className="text-white/80">{resumeOpen ? "Close" : "Open"} Resume</button>

@@ -168,8 +168,7 @@ export default function Contacts() {
 
     return(
         <div className="w-screen min-h-dvh flex flex-col justify-start md:justify-center items-center p-10 pt-[106px] gap-10 bg-primary">
-            <StarBackground/>
-
+            
             {/* Contact Intro */}
             <div className="max-w-[1080px] gap-5">
                 <div ref={textContainer} className="relative flex flex-col justify-center items-center text-center">

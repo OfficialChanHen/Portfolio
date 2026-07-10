@@ -4,6 +4,8 @@ import { useState } from 'react';
 import { usePathname } from 'next/navigation';
 import { Menu, X, CodeXml } from 'lucide-react';
 import Link from 'next/link';
+// Theme toggle temporarily disabled (kept for later). See ThemeToggle.tsx.
+// import ThemeToggle from '@/app/(tabs)/_components/ThemeToggle';
 
 type HeaderProps = {
     className?: string;
@@ -42,26 +44,32 @@ export default function Header({ className }: HeaderProps) {
                 </div>
                 
 
-                {/* desktop tabs */}
-                <div className="hidden md:flex h-full flex-row justify-center items-stretch gap-4">
-                    {navLinks.map(({ path, label }) => (
-                        <Link
-                            key={path}
-                            className={`${tabStyles} ${isActive(path) && selectedStyle}`}
-                            href={`${path}`}
-                        >
-                            {label}
-                        </Link>
-                    ))}
-                </div>
+                {/* right-side controls */}
+                <div className="flex flex-row items-center gap-4">
+                    {/* desktop tabs */}
+                    <div className="hidden md:flex h-full flex-row justify-center items-stretch gap-4">
+                        {navLinks.map(({ path, label }) => (
+                            <Link
+                                key={path}
+                                className={`${tabStyles} ${isActive(path) && selectedStyle}`}
+                                href={`${path}`}
+                            >
+                                {label}
+                            </Link>
+                        ))}
+                    </div>
 
-                {/* mobile hamburger */}
-                <button
-                    onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                    className="md:hidden text-white py-5"
-                >
-                    {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-                </button>
+                    {/* theme toggle (top right) — temporarily disabled, kept for later */}
+                    {/* <ThemeToggle /> */}
+
+                    {/* mobile hamburger */}
+                    <button
+                        onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                        className="md:hidden py-5"
+                    >
+                        {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+                    </button>
+                </div>
             </div>
 
             {/* mobile dropdown */}
