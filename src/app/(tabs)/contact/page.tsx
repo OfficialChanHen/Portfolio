@@ -6,7 +6,6 @@ import { FiGithub, FiLinkedin } from "react-icons/fi";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import StarBackground from "@/app/(tabs)/_components/StarBackground";
 import { MessagesSquare } from 'lucide-react';
 import playOrTrigger from "@/app/utils/playOrTrigger";
 import { useNavigationMode } from "@/providers/NavigationModeProvider";
@@ -167,7 +166,7 @@ export default function Contacts() {
     }
 
     return(
-        <div className="w-screen min-h-dvh flex flex-col justify-start md:justify-center items-center p-10 pt-[106px] gap-10 bg-primary">
+        <div className="w-screen min-h-dvh flex flex-col justify-start md:justify-center items-center p-10 pt-[106px] gap-10">
             
             {/* Contact Intro */}
             <div className="max-w-[1080px] gap-5">
@@ -178,19 +177,19 @@ export default function Contacts() {
                         <Rocket size={20}/>
                     </div>
 
-                    <div className="intro-text w-fit mx-auto md:mx-0 flex flex-row justify-center md:justify-start items-center gap-2 px-3 py-2 text-[0.75rem] md:text-[1rem]   bg-highlight/20 backdrop-blur-xs text-highlight border border-highlight rounded-full">
-                        <MessagesSquare className='w-[clamp(16px,2vw,24px)] h-[clamp(16px,2vw,24px)]'/>
+                    <div className="intro-text eyebrow mx-auto mb-2">
+                        <MessagesSquare className='w-3.5 h-3.5 md:w-4 md:h-4'/>
                         <span>Send A Signal</span>
                     </div>
                     
                     <h2 className="intro-text text-[2.5rem] md:text-[3.5rem]">
                         Get In {" "}
-                        <span className="bg-gradient-to-t from-white via-highlight to-tertiary bg-clip-text text-transparent">
+                        <span className="text-gradient">
                             Touch
                         </span>
                     </h2>
 
-                    <span className="intro-text text-[1rem] md:text-[1.5rem] text-white/80">
+                    <span className="intro-text text-[1rem] md:text-[1.35rem] text-white/70">
                         Have a <span className="text-gradient">project in mind</span> or <span className="text-gradient">just want to chat?</span> I would love to hear from you!
                     </span>
                 </div>
@@ -200,19 +199,20 @@ export default function Contacts() {
                     {/* Email Form */}
                     <form 
                         ref={formContainer}
-                        className="flex flex-col justify-start items-start w-full gap-5 bg-gradient-to-br from-white/5 to-white/[0.02] border border-white/10 backdrop-blur-xs p-10 rounded-xl"
+                        className="glass flex flex-col justify-start items-start w-full gap-5 p-8 md:p-10 rounded-3xl"
                         onSubmit={handleSubmit}
                     >
-                        <span className="form text-[1rem] md:text-[1.25rem]  ">Send A Message</span>
+                        <span className="form text-[1.05rem] md:text-[1.3rem] tracking-tight">Send A Message</span>
                         {/* Name */}
-                        <div className="form flex flex-col w-full gap-1">
-                            <label htmlFor="name" className="text-[0.75rem] md:text-[1rem] text-white/80  ">Name</label>
+                        <div className="form flex flex-col w-full gap-2">
+                            <label htmlFor="name" className="text-[0.7rem] md:text-[0.8rem] uppercase tracking-[0.18em] text-white/55">Name</label>
                             <input 
                                 id="name"
                                 name="name" 
                                 type="text"
-                                className="p-2 text-[0.75rem] md:text-[1rem] bg-tertiary/60 border border-tertiary/80 rounded-md focus:outline-none focus:ring-2 focus:ring-highlight/60" 
-                                placeholder="Your Name"
+                                className="px-3.5 py-2.5 text-[0.8rem] md:text-[0.95rem] text-white bg-white/[0.035] border border-white/10 rounded-xl placeholder:text-white/25 shadow-[inset_0_1px_2px_rgba(0,0,0,0.3)] transition-all duration-300 hover:border-white/20 focus:outline-none focus:border-highlight/60 focus:bg-white/[0.05] focus:ring-4 focus:ring-highlight/15" 
+                                placeholder="Alex Rivera"
+                                autoComplete="name"
                                 value={formData.name}
                                 onChange={handleChange}
                                 required
@@ -221,14 +221,15 @@ export default function Contacts() {
                         </div>
 
                         {/* Email */}
-                        <div className="form flex flex-col w-full gap-1">
-                            <label htmlFor="email" className="text-[0.75rem] md:text-[1rem] text-white/80">Email</label>
+                        <div className="form flex flex-col w-full gap-2">
+                            <label htmlFor="email" className="text-[0.7rem] md:text-[0.8rem] uppercase tracking-[0.18em] text-white/55">Email</label>
                             <input 
                                 id="email"
                                 name="email" 
-                                type="Your Email"
-                                className="p-2 text-[0.75rem] md:text-[1rem] bg-tertiary/60 border border-tertiary/80 rounded-md focus:outline-none focus:ring-2 focus:ring-highlight/60" 
-                                placeholder="Your Email"
+                                type="email"
+                                autoComplete="email"
+                                className="px-3.5 py-2.5 text-[0.8rem] md:text-[0.95rem] text-white bg-white/[0.035] border border-white/10 rounded-xl placeholder:text-white/25 shadow-[inset_0_1px_2px_rgba(0,0,0,0.3)] transition-all duration-300 hover:border-white/20 focus:outline-none focus:border-highlight/60 focus:bg-white/[0.05] focus:ring-4 focus:ring-highlight/15" 
+                                placeholder="you@example.com"
                                 value={formData.email}
                                 onChange={handleChange}
                                 required
@@ -237,14 +238,14 @@ export default function Contacts() {
                         </div>
                         
                         {/* Subject */}
-                        <div className="form flex flex-col w-full gap-1">
-                            <label htmlFor="subject" className="text-[0.75rem] md:text-[1rem] text-white/80">Subject</label>
+                        <div className="form flex flex-col w-full gap-2">
+                            <label htmlFor="subject" className="text-[0.7rem] md:text-[0.8rem] uppercase tracking-[0.18em] text-white/55">Subject</label>
                             <input 
                                 id="subject"
                                 name="subject" 
                                 type="text"
-                                className="p-2 text-[0.75rem] md:text-[1rem] bg-tertiary/60 border border-tertiary/80 rounded-md focus:outline-none focus:ring-2 focus:ring-highlight/60" 
-                                placeholder="Your Subject"
+                                className="px-3.5 py-2.5 text-[0.8rem] md:text-[0.95rem] text-white bg-white/[0.035] border border-white/10 rounded-xl placeholder:text-white/25 shadow-[inset_0_1px_2px_rgba(0,0,0,0.3)] transition-all duration-300 hover:border-white/20 focus:outline-none focus:border-highlight/60 focus:bg-white/[0.05] focus:ring-4 focus:ring-highlight/15" 
+                                placeholder="Freelance project"
                                 value={formData.subject}
                                 onChange={handleChange}
                             >  
@@ -252,13 +253,13 @@ export default function Contacts() {
                         </div>
                         
                         {/* Message */}
-                        <div className="form flex flex-col w-full gap-1">
-                            <label htmlFor="message" className="text-[0.75rem] md:text-[1rem] text-white/80">Message</label>
+                        <div className="form flex flex-col w-full gap-2">
+                            <label htmlFor="message" className="text-[0.7rem] md:text-[0.8rem] uppercase tracking-[0.18em] text-white/55">Message</label>
                             <textarea 
                                 id="message"
                                 name="message" 
-                                className="min-h-30 p-2 text-[0.75rem] md:text-[1rem] bg-tertiary/60 border border-tertiary/80 rounded-md focus:outline-none focus:ring-2 focus:ring-highlight/60" 
-                                placeholder="Your Message"
+                                className="min-h-32 resize-y px-3.5 py-2.5 text-[0.8rem] md:text-[0.95rem] text-white bg-white/[0.035] border border-white/10 rounded-xl placeholder:text-white/25 shadow-[inset_0_1px_2px_rgba(0,0,0,0.3)] transition-all duration-300 hover:border-white/20 focus:outline-none focus:border-highlight/60 focus:bg-white/[0.05] focus:ring-4 focus:ring-highlight/15" 
+                                placeholder="Hi Chan, I'd love to talk about..."
                                 value={formData.message}
                                 onChange={handleChange}
                                 required
@@ -271,7 +272,7 @@ export default function Contacts() {
                             <button
                                 type="submit"
                                 disabled={status === "sending"}
-                                className="w-full px-5 py-3 text-[0.75rem] md:text-[1rem] rounded-md cursor-pointer text-white tracking-widest bg-highlight border-none shadow-[0_0_25px] shadow-highlight hover:shadow-[0_0_5px,_0_0_20px,_0_0_50px] hover:shadow-highlight hover:scale-105 transition-all ease-in-out duration-300"
+                                className="btn-primary w-full text-[0.8rem] md:text-[0.95rem] disabled:opacity-60 disabled:pointer-events-none"
                             >
                                 {status === "sending" ? (
                                     "Sending..."
@@ -305,44 +306,44 @@ export default function Contacts() {
                     </form>
 
                     {/* Social Connections */}
-                    <div ref={socialContainer} className="self-start flex flex-col justify-start items-start gap-5 w-full bg-gradient-to-br from-white/5 to-white/[0.02] border border-white/10 backdrop-blur-xs p-10 rounded-xl">
-                        <span className="social text-[1rem] md:text-[1.25rem]">Connect On Socials</span>
+                    <div ref={socialContainer} className="glass self-start flex flex-col justify-start items-start gap-3 w-full p-8 md:p-10 rounded-3xl">
+                        <span className="social mb-2 text-[1.05rem] md:text-[1.3rem] tracking-tight">Connect On Socials</span>
 
                         <div 
-                            className="social group flex flex-row items-center gap-4 text-[0.75rem] md:text-[1rem] text-white/80"
+                            className="social group w-full flex flex-row items-center gap-4 -mx-3 px-3 py-2.5 rounded-xl text-[0.75rem] md:text-[1rem] text-white/85 hover:bg-white/[0.04] transition-colors"
                         >
-                            <div className="relative w-[clamp(24px,2vw,30px)] h-[clamp(24px,2vw,30px)] flex flex-row justify-center items-center p-5 bg-linear-to-br from-tertiary to-highlight text-white rounded-md group-hover:scale-105 transition-all ease-in-out duration-300">
+                            <div className="relative w-[clamp(24px,2vw,30px)] h-[clamp(24px,2vw,30px)] flex flex-row justify-center items-center p-5 bg-linear-to-br from-tertiary to-highlight text-white rounded-lg shadow-[inset_0_1px_0_rgba(255,255,255,0.3),0_8px_24px_-8px] shadow-highlight/70 group-hover:scale-105 transition-all ease-in-out duration-300">
                                 <Mail className="absolute top-[50%] left-[50%] -translate-x-1/2 -translate-y-1/2 w-[clamp(18px,2vw,20px)] h-[clamp(18px,2vw,20px)]"/>
                             </div>
                             <div className="flex flex-col justify-center items-start">
                                 <span className="group-hover:text-highlight transition-colors ease-in-out duration-300">Email</span>
-                                <span className="text-white/60 group-hover:text-white transition-colors ease-in-out duration-300">Chan Hen</span>
+                                <span className="text-white/45 group-hover:text-white/80 transition-colors ease-in-out duration-300">Chan Hen</span>
                             </div>
                         </div>
 
                         <a 
-                            className="social group flex flex-row items-center gap-4 text-[0.75rem] md:text-[1rem] text-white/80"
+                            className="social group w-full flex flex-row items-center gap-4 -mx-3 px-3 py-2.5 rounded-xl text-[0.75rem] md:text-[1rem] text-white/85 hover:bg-white/[0.04] transition-colors"
                             href="https://github.com/OfficialChanHen" target="_blank" rel="noopener noreferrer"
                         >
-                            <div className="relative w-[clamp(24px,2vw,30px)] h-[clamp(24px,2vw,30px)] flex flex-row justify-center items-center p-5 bg-tertiary/60 bg-linear-to-br from-tertiary to-highlight text-white rounded-md group-hover:scale-105 transition-all ease-in-out duration-300">
+                            <div className="relative w-[clamp(24px,2vw,30px)] h-[clamp(24px,2vw,30px)] flex flex-row justify-center items-center p-5 bg-linear-to-br from-tertiary to-highlight text-white rounded-lg shadow-[inset_0_1px_0_rgba(255,255,255,0.3),0_8px_24px_-8px] shadow-highlight/70 group-hover:scale-105 transition-all ease-in-out duration-300">
                                 <FiGithub className="absolute top-[50%] left-[50%] -translate-x-1/2 -translate-y-1/2 w-[clamp(18px,2vw,20px)] h-[clamp(18px,2vw,20px)]"/>
                             </div>
                             <div className="flex flex-col justify-center items-start">
                                 <span className="group-hover:text-highlight transition-colors ease-in-out duration-300">Github</span>
-                                <span className="text-white/60 group-hover:text-white transition-colors ease-in-out duration-300">OfficialChanHen</span>
+                                <span className="text-white/45 group-hover:text-white/80 transition-colors ease-in-out duration-300">OfficialChanHen</span>
                             </div>
                         </a>
 
                         <a 
-                            className="social group flex flex-row items-center gap-4 text-[0.75rem] md:text-[1rem] text-white/80"
+                            className="social group w-full flex flex-row items-center gap-4 -mx-3 px-3 py-2.5 rounded-xl text-[0.75rem] md:text-[1rem] text-white/85 hover:bg-white/[0.04] transition-colors"
                             href="https://www.linkedin.com/in/chan-hen-13727b233/" target="_blank" rel="noopener noreferrer"
                         >
-                            <div className="relative w-[clamp(24px,2vw,30px)] h-[clamp(24px,2vw,30px)] flex flex-row justify-center items-center p-5 bg-linear-to-br from-tertiary to-highlight text-white rounded-md group-hover:scale-105 transition-all ease-in-out duration-300">
+                            <div className="relative w-[clamp(24px,2vw,30px)] h-[clamp(24px,2vw,30px)] flex flex-row justify-center items-center p-5 bg-linear-to-br from-tertiary to-highlight text-white rounded-lg shadow-[inset_0_1px_0_rgba(255,255,255,0.3),0_8px_24px_-8px] shadow-highlight/70 group-hover:scale-105 transition-all ease-in-out duration-300">
                                 <FiLinkedin className="absolute top-[50%] left-[50%] -translate-x-1/2 -translate-y-1/2 w-[clamp(18px,2vw,20px)] h-[clamp(18px,2vw,20px)]"/>
                             </div>
                             <div className="flex flex-col justify-center items-start">
                                 <span className="group-hover:text-highlight transition-colors ease-in-out duration-300">Linkedin</span>
-                                <span className="text-white/60 group-hover:text-white transition-colors ease-in-out duration-300">Chan Hen</span>
+                                <span className="text-white/45 group-hover:text-white/80 transition-colors ease-in-out duration-300">Chan Hen</span>
                             </div>
                             
                         </a>

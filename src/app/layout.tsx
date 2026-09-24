@@ -95,6 +95,8 @@ export default async function RootLayout({
       lang="en"
       suppressHydrationWarning
       className={`${geistSans.variable} ${geistMono.variable} ${dmMono.variable} h-full antialiased`}
+      // Paint the void from the very first byte, before any stylesheet loads.
+      style={{ background: "#09010F" }}
     >
       {/* Light/dark theme toggle is temporarily disabled (kept for later). When
           re-enabling, restore this no-FOUC script and the <ThemeToggle /> in Header.

@@ -76,28 +76,31 @@ export default function RecentUpdates({ reveal }: { reveal: boolean }) {
     return (
         <div
             ref={containerRef}
-            className="flex flex-col w-full max-w-[1080px] gap-3 px-5 py-3 bg-gradient-to-br from-white/5 to-white/[0.02] border border-white/10 backdrop-blur-xs rounded-md"
+            className="glass flex flex-col w-full max-w-[1080px] gap-3 px-6 py-5 rounded-2xl"
         >
             <div className="flex items-baseline justify-between gap-2">
-                <span className="text-highlight text-[1rem] md:text-[1.25rem]">Recent Updates</span>
-                <span className="text-white/50 text-[0.625rem] md:text-[0.75rem]">via GitHub</span>
+                <span className="text-white text-[0.95rem] md:text-[1.15rem]">Recent Updates</span>
+                <span className="text-white/40 text-[0.625rem] md:text-[0.7rem] uppercase tracking-[0.2em]">via GitHub</span>
             </div>
 
-            <ul className="flex flex-col gap-2">
+            <div className="hairline" />
+
+            <ul className="flex flex-col -mx-3">
                 {commits!.map((c) => (
                     <li key={c.sha} className="update-item">
                         <a
                             href={c.url}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="group flex flex-col md:flex-row md:items-baseline md:justify-between gap-0.5 md:gap-4"
+                            className="group flex flex-col md:flex-row md:items-baseline md:justify-between gap-0.5 md:gap-4 px-3 py-2 rounded-lg hover:bg-white/[0.04] transition-colors"
                         >
-                            <span className="text-[0.75rem] md:text-[1rem] text-white/90 group-hover:text-highlight transition-colors">
+                            <span className="flex items-baseline gap-3 text-[0.75rem] md:text-[0.95rem] text-white/80 group-hover:text-white transition-colors">
+                                <span className="shrink-0 w-1 h-1 translate-y-[-0.2em] rounded-full bg-highlight/70 group-hover:bg-highlight group-hover:shadow-[0_0_8px] group-hover:shadow-highlight transition-all" />
                                 {c.message}
                             </span>
                             <time
                                 dateTime={c.date}
-                                className="shrink-0 text-[0.625rem] md:text-[0.75rem] text-white/50 whitespace-nowrap"
+                                className="shrink-0 pl-4 md:pl-0 text-[0.625rem] md:text-[0.75rem] text-white/40 whitespace-nowrap tabular-nums"
                             >
                                 {formatDate(c.date)}
                             </time>

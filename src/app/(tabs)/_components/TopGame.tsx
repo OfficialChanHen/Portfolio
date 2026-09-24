@@ -124,7 +124,7 @@ export default function TopGames() {
     return(
         <div
             ref={containerRef}
-            className="w-screen min-h-dvh flex flex-col justify-center items-center p-10 pt-[106px] gap-10 bg-primary"
+            className="w-screen min-h-dvh flex flex-col justify-center items-center p-10 pt-[106px] gap-10"
         >
             <div className="relative text-center">
                 <div className="fade-in-list">
@@ -133,7 +133,7 @@ export default function TopGames() {
                         <span className="text-gradient">Games</span>
                     </h2>
                 </div>
-                <span className="games-hint block opacity-0 text-[1rem] md:text-[1.5rem] text-white/80">Top Video Games</span>
+                <span className="games-hint block opacity-0 text-[1rem] md:text-[1.35rem] text-white/60">Top Video Games</span>
             </div>
             
 
@@ -142,14 +142,14 @@ export default function TopGames() {
                 {games.map((game, index) => (
                     <div
                         key={game.id}
-                        className="card absolute inset-0 w-full h-full flex flex-col justify-center items-center gap-4 p-5 text-white bg-cover bg-center rounded-2xl drop-shadow-xl drop-shadow-black/80"
+                        className="card absolute inset-0 w-full h-full flex flex-col justify-end items-center gap-4 p-5 text-white bg-cover bg-center rounded-2xl ring-1 ring-white/15 shadow-[0_30px_70px_-25px_rgba(0,0,0,0.95)] overflow-hidden"
                         style={{
                             backgroundImage: `url(/${game.coverUrl})`,
                             zIndex: games.length - index, // first card on top
                         }}
                     >
-                        <div className="flex flex-col justify-center items-center p-3 bg-gradient-to-br from-white/30 to-white/5 border border-white/10 text-white rounded-xl drop-shadow-lg">
-                            <span className="text-[1rem] md:text-[2rem] text-center font-bold text-shadow-lg/50">
+                        <div className="relative flex flex-col justify-center items-center px-4 py-2.5 bg-black/35 border border-white/15 backdrop-blur-md text-white rounded-xl shadow-[inset_0_1px_0_rgba(255,255,255,0.12)]">
+                            <span className="text-[0.95rem] md:text-[1.35rem] text-center font-bold text-shadow-lg/50">
                                 {game.title}
                             </span>
                         </div>

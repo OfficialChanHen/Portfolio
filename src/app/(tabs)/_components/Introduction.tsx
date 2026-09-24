@@ -75,7 +75,8 @@ export default function Introduction({
     useGSAP(() => {
         if (!textContainer.current || !titleRef.current || !headshotContainer.current ) return;
 
-        gsap.set(".scroll-down", { opacity: 0 });
+        // The scroll hint only exists on mobile.
+        if (isMobile) gsap.set(".scroll-down", { opacity: 0 });
         const introTl = gsap.timeline({
             onComplete: () => {
                 playOrTrigger(headshotContainer.current as HTMLElement, headshotTl);
@@ -128,7 +129,7 @@ export default function Introduction({
                 0
             );
 
-        { isMobile &&
+        if (isMobile) {
             introTl.fromTo(".scroll-down",
                 { y: -20, opacity: 0 },
                 {
@@ -178,55 +179,51 @@ export default function Introduction({
                     <Rocket size={20}/>
                 </div>
 
-                <div className="intro-text w-fit mx-auto md:mx-0 flex flex-row justify-center md:justify-start items-center gap-2 px-3 py-2 text-[0.75rem] md:text-[1rem] bg-highlight/20 backdrop-blur-xs text-highlight border border-highlight rounded-full">
-                    <Sparkles className='w-[clamp(16px,2vw,24px)] h-[clamp(16px,2vw,24px)]'/>
+                <div className="intro-text eyebrow mx-auto md:mx-0 mb-2">
+                    <Sparkles className='w-3.5 h-3.5 md:w-4 md:h-4'/>
                     <span>Welcome To My Space</span>
                 </div>
                 
                 <div className="flex flex-col justify-center items-center md:justify-center md:items-start tracking-tight">
-                    <span className="intro-text text-[2rem] md:text-[2.5rem]">Hi, I'm</span>
-                    <span className="intro-text text-[2.5rem] md:text-[3.5rem] text-gradient">
+                    <span className="intro-text text-[1.75rem] md:text-[2.25rem] text-white/85">Hi, I'm</span>
+                    <span className="intro-text text-[3rem] md:text-[4.25rem] leading-[1.05] tracking-tight text-gradient pb-1">
                         Chan Hen
                     </span>
                 </div>
                 
                 <div className="overflow-hidden">
-                    <span ref={titleRef} className="intro-text inline-block text-[1rem] md:text-[1.5rem] text-white/80">
+                    <span ref={titleRef} className="intro-text inline-block text-[1rem] md:text-[1.5rem] text-white/90">
                         Software Engineer
                     </span>
                 </div>
-                <span className="intro-text text-[0.75rem] md:text-[1rem] text-white/80">
+                <span className="intro-text text-[0.8rem] md:text-[1rem] text-white/60 mb-3">
                     Crafting <span className="text-gradient">digital experiences</span> across the universe
                 </span>
 
                 {/* Socials + Projects */}
                 <div className='intro-text flex flex-row justify-center md:justify-start items-stretch gap-3 text-white'>
-                    <Link href="/projects">
-                        <button className="group inline-flex items-center justify-center gap-2 px-5 py-3 rounded-md cursor-pointer text-white text-[0.75rem] md:text-[1rem] tracking-widest backdrop-blur-xs bg-primary/40 border-none shadow-[0_0_25px] shadow-tertiary hover:shadow-[0_0_5px,_0_0_25px,_0_0_50px,_0_0_100px] hover:scale-105 text-nowrap transition-all ease-in-out duration-300">
-                            <span>View Projects</span>
-                            <ArrowRight className="transition-transform duration-300 group-hover:translate-x-2 w-[clamp(16px,2vw,24px)] h-[clamp(16px,2vw,24px)]"/>
-                        </button>
+                    <Link href="/projects" className="group btn-ghost text-[0.75rem] md:text-[0.95rem]">
+                        <span>View Projects</span>
+                        <ArrowRight className="transition-transform duration-300 group-hover:translate-x-1.5 w-4 h-4 md:w-5 md:h-5"/>
                     </Link>
-                    <a href="https://github.com/OfficialChanHen" target="_blank" rel="noopener noreferrer" className={`p-2 border-2 ${isMobile ? "border-primary/40" : "border-transparent"} flex flex-col justify-center items-center bg-primary/40 rounded-md shadow-[0_0_25px] shadow-tertiary hover:shadow-[0_0_5px,_0_0_25px,_0_0_50px,_0_0_100px] hover:scale-105 transition-all ease-in-out duration-300`}>
-                        <FiGithub className='w-[clamp(20px,2vw,24px)] h-[clamp(20px,2vw,24px)]'/>
+                    <a href="https://github.com/OfficialChanHen" target="_blank" rel="noopener noreferrer" aria-label="GitHub" className="btn-ghost px-3!">
+                        <FiGithub className='w-5 h-5'/>
                     </a>
-                    <a href="https://www.linkedin.com/in/chan-hen-13727b233/" target="_blank" rel="noopener noreferrer" className={`p-2 border-2 ${isMobile ? "border-primary/40" : "border-transparent"} flex flex-col justify-center items-center bg-primary/40 rounded-md shadow-[0_0_25px] shadow-tertiary hover:shadow-[0_0_5px,_0_0_25px,_0_0_50px,_0_0_100px] hover:scale-105 transition-all ease-in-out duration-300`}>
-                        <FiLinkedin className='w-[clamp(20px,2vw,24px)] h-[clamp(20px,2vw,24px)]'/>
+                    <a href="https://www.linkedin.com/in/chan-hen-13727b233/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" className="btn-ghost px-3!">
+                        <FiLinkedin className='w-5 h-5'/>
                     </a>
                 </div>
 
                 {/* Intro Buttons */}
-                <div className='intro-text flex flex-row justify-center md:justify-start items-center py-3 gap-5 text-[0.75rem] md:text-[1rem]'>
-                    <a href="/Chan_Hen_Resume.pdf" download className="group relative inline-flex items-center justify-center w-full px-5 py-3 gap-2 rounded-md cursor-pointer text-white text-nowrap tracking-widest bg-highlight border-none shadow-[0_0_25px] shadow-highlight hover:shadow-[0_0_5px,_0_0_20px,_0_0_50px] hover:scale-105 transition-all ease-in-out duration-300">
-                        <span className="text-white/80">Download Resume</span>
-                        <Download className="w-[clamp(18px,2vw,20px)] h-[clamp(18px,2vw,20px)]" />
-                        <span className='absolute -bottom-5 text-[0.5rem] md:text-[0.75rem] text-white/60'>Embedded on the About page!</span>
+                <div className='intro-text flex flex-row justify-center md:justify-start items-center pt-3 pb-5 gap-3 md:gap-4 text-[0.75rem] md:text-[0.95rem]'>
+                    <a href="/Chan_Hen_Resume.pdf" download className="relative btn-primary">
+                        <span>Download Resume</span>
+                        <Download className="w-4 h-4 md:w-5 md:h-5" />
+                        <span className='absolute -bottom-6 left-0 right-0 text-center text-[0.6rem] md:text-[0.7rem] tracking-normal text-white/45'>Embedded on the About page</span>
                     </a>
-                    <Link href="/contact">
-                        <button className="group inline-flex items-center justify-center w-full px-5 py-3 gap-2 rounded-md cursor-pointer text-white tracking-widest bg-highlight border-none shadow-[0_0_25px] shadow-highlight hover:shadow-[0_0_5px,_0_0_20px,_0_0_50px] hover:scale-105 transition-all ease-in-out duration-300">
-                            <Mail className="w-[clamp(16px,2vw,20px)] h-[clamp(16px,2vw,20px)]"/>
-                            <span>Connect</span>
-                        </button>
+                    <Link href="/contact" className="btn-primary">
+                        <Mail className="w-4 h-4 md:w-5 md:h-5"/>
+                        <span>Connect</span>
                     </Link>
                 </div>
 
@@ -241,14 +238,14 @@ export default function Introduction({
             
             {/* Image */}
             <div ref={headshotContainer} className='m-10'>
-                <div className="relative overflow-visible z-10 w-[clamp(210px,50vw,410px)] h-[clamp(210px,50vw,410px)] p-2 border-t border-b border-highlight/80 rounded-full">
-                    <div className="headshot absolute z-20 top-[50%] left-[0%] -translate-x-1/2 -translate-y-1/2 bg-highlight/20 backdrop-blur-xs border border-highlight text-highlight rounded-full p-2">
-                        <FaReact className='w-[clamp(16px,2vw,24px)] h-[clamp(16px,2vw,24px)]' />
+                <div className="relative overflow-visible z-10 w-[clamp(210px,50vw,410px)] h-[clamp(210px,50vw,410px)] p-3 rounded-full border border-white/10 bg-[conic-gradient(from_210deg,transparent_0deg,color-mix(in_oklab,var(--highlight)_55%,transparent)_70deg,transparent_140deg,transparent_220deg,color-mix(in_oklab,var(--tertiary)_70%,transparent)_290deg,transparent_360deg)] shadow-[0_0_90px_-20px] shadow-highlight/50">
+                    <div className="headshot absolute z-20 top-[50%] left-[0%] -translate-x-1/2 -translate-y-1/2 eyebrow p-2! rounded-full!">
+                        <FaReact className='w-[clamp(16px,2vw,22px)] h-[clamp(16px,2vw,22px)]' />
                     </div>
-                    <div className="headshot absolute z-20 top-[50%] left-[100%] -translate-x-1/2 -translate-y-1/2 bg-highlight/20 backdrop-blur-xs border border-highlight text-highlight rounded-full p-2">
-                        <AiOutlinePython className='w-[clamp(16px,2vw,24px)] h-[clamp(16px,2vw,24px)]' />
+                    <div className="headshot absolute z-20 top-[50%] left-[100%] -translate-x-1/2 -translate-y-1/2 eyebrow p-2! rounded-full!">
+                        <AiOutlinePython className='w-[clamp(16px,2vw,22px)] h-[clamp(16px,2vw,22px)]' />
                     </div>
-                    <div className="headshot w-full h-full rounded-full border-2 border-parchment bg-[url('/headshot.jpg')] bg-cover bg-center"/>
+                    <div className="headshot w-full h-full rounded-full ring-1 ring-white/20 bg-[url('/headshot.jpg')] bg-cover bg-center shadow-[inset_0_0_40px_rgba(9,1,15,0.35)]"/>
                 </div>
             </div>
 

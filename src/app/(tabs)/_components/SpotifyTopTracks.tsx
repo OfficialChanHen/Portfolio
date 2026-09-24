@@ -42,7 +42,6 @@ export default function SpotifyTopTracks({ initialTracks, initialNowPlaying }: C
         });
 
         const cardEls = gsap.utils.toArray<HTMLAnchorElement>(".card").reverse();
-        console.log(cardEls)
         const total = cardEls.length;
 
         // --- Panel pinning ---
@@ -138,7 +137,7 @@ export default function SpotifyTopTracks({ initialTracks, initialNowPlaying }: C
     return (
         <div
             ref={containerRef}
-            className="w-screen min-h-dvh flex flex-col justify-center items-center p-10 pt-[106px] gap-10 bg-secondary"
+            className="w-screen min-h-dvh flex flex-col justify-center items-center p-10 pt-[106px] gap-10"
         >
             <div className="relative text-center">
                 <div className="fade-in-list">
@@ -149,7 +148,7 @@ export default function SpotifyTopTracks({ initialTracks, initialNowPlaying }: C
                         </span>
                     </h2>
                 </div>
-                <span className="tap-hint block opacity-0 text-[1rem] md:text-[1.5rem] text-white/80">
+                <span className="tap-hint block opacity-0 text-[1rem] md:text-[1.35rem] text-white/60">
                     Tap the card to listen
                 </span>
             </div>
@@ -161,17 +160,17 @@ export default function SpotifyTopTracks({ initialTracks, initialNowPlaying }: C
                         href={track.songUrl}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="card absolute inset-0 w-full h-full flex flex-col justify-center items-center gap-4 p-5 text-white bg-cover bg-center rounded-2xl drop-shadow-xl drop-shadow-black/80"
+                        className="card absolute inset-0 w-full h-full flex flex-col justify-end items-center gap-4 p-5 text-white bg-cover bg-center rounded-2xl ring-1 ring-white/15 shadow-[0_30px_70px_-25px_rgba(0,0,0,0.95)] overflow-hidden"
                         style={{
                             backgroundImage: `url(${track.albumImg})`,
                             zIndex: tracks.length - i,
                         }}
                     >
-                        <div className="flex flex-col justify-center items-center p-3 bg-gradient-to-br from-white/30 to-white/5 border border-white/10 text-white rounded-xl drop-shadow-lg">
-                            <span className="text-[1rem] md:text-[1.5rem] text-center font-bold text-shadow-lg/50">
+                        <div className="relative flex flex-col justify-center items-center px-4 py-2.5 bg-black/35 border border-white/15 backdrop-blur-md text-white rounded-xl shadow-[inset_0_1px_0_rgba(255,255,255,0.12)]">
+                            <span className="text-[0.6rem] md:text-[0.7rem] uppercase tracking-[0.22em] text-highlight">
                                 {track.label}
                             </span>
-                            <span className="text-[1rem] md:text-[1.5rem] text-center font-bold text-shadow-lg/50">
+                            <span className="text-[0.95rem] md:text-[1.25rem] text-center font-bold text-shadow-lg/50">
                                 {track.title}
                             </span>
                         </div>

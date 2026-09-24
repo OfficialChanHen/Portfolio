@@ -20,7 +20,7 @@ export const projects: Project[] = [
         video: "/videos/hourelle",
         tags: ["Next.js", "TypeScript", "Supabase", "Leaflet", "GSAP", "Web App"],
         description:
-        "Find the hour everyone can meet. A modern take on when2meet that covers the whole life of a plan behind one share link: mark when you're free on a shared availability grid, vote on where to go on a map, chain stops into a routed itinerary, track who's coming, and talk it over in real-time chat. Guests never need an account.",
+        "Find the hour everyone can meet. One link covers the whole plan: people mark when they're free, vote on where to go, see who's coming, and talk it over in a group chat. Guests never need an account.",
         github: "https://github.com/OfficialChanHen/Hourelle",
         link: "https://hourelle.com",
     },
@@ -48,6 +48,7 @@ export const projects: Project[] = [
         id: 4,
         title: "TANKS!",
         image: "/Tank-Thumbnail.png",
+        video: "/videos/tanks",
         tags: ["Unity", "C#", "Game Development"],
         description:
         "TANKS! is a local multiplayer arena battle game built in Unity, including a first-to-three win format, powerups, multiple tank types, and a player select screen.",

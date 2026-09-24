@@ -27,7 +27,7 @@ export default function Loading() {
     }, { scope: containerRef });
 
     return (
-        <div ref={containerRef} className="min-h-dvh w-screen flex flex-row justify-center items-center overflow-hidden bg-primary">
+        <div ref={containerRef} className="min-h-dvh w-screen flex flex-row justify-center items-center overflow-hidden">
             {letters.map((char) => (
                 <span
                     key={char}

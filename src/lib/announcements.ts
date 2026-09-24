@@ -7,7 +7,7 @@ import type { Commit } from "@/lib/github";
 export const announcements: Commit[] = [
     {
         sha: "announcement-hourelle-launch",
-        message: "Launched Hourelle — find the hour everyone can meet, now live at hourelle.com",
+        message: "Launched Hourelle, now live at hourelle.com",
         date: "2026-09-24T12:00:00-05:00",
         url: "https://hourelle.com",
     },

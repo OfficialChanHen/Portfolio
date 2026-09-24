@@ -1,6 +1,5 @@
 'use client';
 
-import StarBackground from "@/app/(tabs)/_components/StarBackground";
 import Introduction from "@/app/(tabs)/_components/Introduction";
 import RecentUpdates from "@/app/(tabs)/_components/RecentUpdates";
 import gsap from "gsap";
@@ -37,13 +36,18 @@ export default function Home() {
 
     return(
         <div className="relative min-h-dvh w-screen flex flex-col justify-start md:justify-center items-center p-10 pt-[106px] gap-5">
-            <StarBackground/>
             <Introduction setIntroDone={setIntroDone}/>
 
             {/* Call to action */}
-            <div ref={jobContainer} className='flex flex-col justify-start items-start opacity-0 w-full max-w-[1080px] gap-2 px-5 py-3 bg-gradient-to-br from-white/5 to-white/[0.02] border border-white/10 backdrop-blur-xs rounded-md'>        
-                <span className="text-highlight place-self-center md:place-self-start text-[1rem] md:text-[1.25rem]">Available For Work</span>
-                <span className="text-center md:text-left text-[0.75rem] md:text-[1rem]">I'm currently available for freelance projects, part-time work, and full-time opportunities. Let's <em>launch</em> a project that's truly out of this world together!</span>
+            <div ref={jobContainer} className='glass glass-hover flex flex-col justify-start items-start opacity-0 w-full max-w-[1080px] gap-2 px-6 py-5 rounded-2xl'>
+                <span className="flex items-center gap-3 place-self-center md:place-self-start text-[0.95rem] md:text-[1.15rem] text-white">
+                    <span className="relative flex w-2.5 h-2.5">
+                        <span className="absolute inline-flex w-full h-full rounded-full bg-emerald-400/70 animate-ping" />
+                        <span className="relative inline-flex w-2.5 h-2.5 rounded-full bg-emerald-400 shadow-[0_0_12px] shadow-emerald-400/80" />
+                    </span>
+                    Available For Work
+                </span>
+                <span className="text-center md:text-left text-[0.75rem] md:text-[0.95rem] leading-relaxed text-white/65">I'm currently available for freelance projects, part-time work, and full-time opportunities. Let's <em className="text-white/90">launch</em> a project that's truly out of this world together!</span>
             </div>
 
             <RecentUpdates reveal={updatesReady} />
