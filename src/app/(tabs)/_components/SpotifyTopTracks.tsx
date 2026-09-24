@@ -48,6 +48,7 @@ export default function SpotifyTopTracks({ initialTracks, initialNowPlaying }: C
         // --- Panel pinning ---
          const tl = gsap.timeline({
             scrollTrigger: {
+                id: "music-deck", // looked up by the About page's section nav
                 trigger: containerRef.current,
                 start: "top top",
                 end: `+=${containerRef.current.offsetHeight * 3}`,
@@ -96,6 +97,10 @@ export default function SpotifyTopTracks({ initialTracks, initialNowPlaying }: C
                 }, 
             start);
         });
+
+        // Where the first card has fully landed; the section nav scrolls here so
+        // the deck is never empty when jumped to.
+        tl.addLabel("first-card", 1 / total);
 
         // Reveal the "Tap the card to listen" hint as the first card slides in (position 0).
         // Added after the card loop so it doesn't shift the snap labels placed above.

@@ -26,6 +26,7 @@ export default function AboutPage({ initialTracks, initialNowPlaying }: Combined
     const delayTime = navigationMode === "soft" ? 0.4 : 0.6;
     const [resumeOpen, setResumeOpen] = useState(false);
     const sections = ["#resume", "#stack", "#values", "#music", "#games"];
+    const pinnedDecks: Record<string, string> = { "#music": "music-deck", "#games": "games-deck" };
 
     useEffect(() => {
         const updateNavHeight = () => {
@@ -178,8 +179,19 @@ export default function AboutPage({ initialTracks, initialNowPlaying }: Combined
         });
     }, { dependencies: [] });
 
-    function handleNavClick(navSection: String) {
+    function handleNavClick(navSection: string) {
         const scroller = ScrollSmoother.get();
+
+        // Music and Games are pinned card decks; land where the first card is showing.
+        // Stop a quarter-card short and let the deck's snap settle it into place:
+        // landing exactly on the label leaves ScrollSmoother stuck on the next jump.
+        const deck = ScrollTrigger.getById(pinnedDecks[navSection] ?? "");
+        if (deck) {
+            const firstCard = deck.labelToScroll("first-card");
+            scroller?.scrollTo(firstCard - (firstCard - deck.start) * 0.25, true);
+            return;
+        }
+
         scroller?.scrollTo(navSection, true, "top top+=66");
     }
 
