@@ -269,7 +269,7 @@ export default function Projects() {
                                         <div className="project-content">
                                             <a href={project.link} target="_blank" rel="noopener noreferrer">
                                                 <button className="group inline-flex items-center justify-center gap-2 w-fit px-6 py-3 bg-highlight rounded-full text-white font-medium cursor-pointer tracking-widest border-none shadow-[0_0_25px] shadow-highlight hover:shadow-[0_0_5px,_0_0_20px,_0_0_50px] hover:scale-105 transition-all ease-in-out duration-300">
-                                                    <span>View Projects</span>
+                                                    <span>View Project</span>
                                                     <ArrowRight className="transition-transform duration-300 group-hover:translate-x-2 w-[clamp(16px,2vw,24px)] h-[clamp(16px,2vw,24px)]" />
                                                 </button>
                                             </a>
