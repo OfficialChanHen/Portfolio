@@ -10,63 +10,13 @@ import { ScrollSmoother } from "gsap/ScrollSmoother";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { type Swiper as SwiperType } from "swiper";
 import { useMobile } from "@/providers/MobileProvider";
-
-// --- Project Data ---
-const projects = [
-    {
-        id: 1,
-        title: "Legacy Portfolio",
-        image: "/legacy-portfolio.png",
-        tags: ["React", "TypeScript", "TailwindCSS", "Next.js", "Web App"],
-        description:
-        "My first personal portfolio website, a static page built to showcase my projects and resume early in my development journey.",
-        github: "https://github.com/OfficialChanHen/PersonalPage",
-        link: "https://portfolio-five-blue.vercel.app/",
-    },
-    {
-        id: 2,
-        title: "Intraday Momentum Backtester",
-        image: "/trading.png",
-        tags: ["Python", "Data Analysis"],
-        description:
-        "A Python trading strategy script that runs a momentum-based backtest for any stock, and outputs an interactive HTML chart image with buy/sell signals.",
-        github: "https://github.com/OfficialChanHen/StockTrader",
-    },
-    {
-        id: 3,
-        title: "TANKS!",
-        image: "/Tank-Thumbnail.png",
-        tags: ["Unity", "C#", "Game Development"],
-        description:
-        "TANKS! is a local multiplayer arena battle game built in Unity, including a first-to-three win format, powerups, multiple tank types, and a player select screen.",
-        github: "https://github.com/OfficialChanHen/TANKS",
-        link: "https://play.unity.com/api/v1/games/game/94d9e7c0-b608-42aa-be14-75f5d990b8d1/build/latest/frame",
-    },
-    {
-        id: 4,
-        title: "Sketchpad",
-        image: "/sketch_example.png",
-        tags: ["JavaScript", "CSS", "Web App"],
-        description:
-        "Draw freely on a canvas, pick any color, adjust brush size, and erase mistakes.",
-        github: "https://github.com/OfficialChanHen/sketch-pad",
-        link: "https://sketch-k8rcnsc1e-officialchanhens-projects.vercel.app/",
-    },
-    {
-        id: 5,
-        title: "Aline",
-        image: "/coming-soon.jpg",
-        tags: ["Next.js", "TypeScript", "Supabase", "Leaflet", "GSAP"],
-        description:
-        "A modern take on when2meet that handles the full life of getting a group together: finding a time everyone is free on a shared availability grid, voting on where to meet on a map, building a route for multi-stop days, chatting in real time, and tracking who is actually coming. Friends and coworkers join with a share link — no account needed. In active development; live preview coming soon.",
-    },
-];
+import ProjectMedia from "@/app/(tabs)/_components/ProjectMedia";
+import { projects } from "@/lib/projects";
 
 export default function Projects() {
     const textContainer = useRef<HTMLDivElement>(null);
     const cardRef = useRef<HTMLDivElement>(null);
     const overlayRef = useRef<HTMLDivElement>(null);
-    const imgRef = useRef<HTMLImageElement>(null);
     const swiperRef = useRef<SwiperType | null>(null);
     const scrollContainerRef = useRef<HTMLDivElement>(null);
 
@@ -143,17 +93,17 @@ export default function Projects() {
         return () => scroller?.paused(false);
     }, { dependencies: [] });
 
-    // --- Swiper slide change: GSAP parallax on incoming image ---
+    // --- Swiper slide change: GSAP parallax on incoming card media ---
     function handleSlideChange(swiper: SwiperType) {
         const nextIndex = swiper.realIndex;
         const direction = nextIndex > currentIndex ? 1 : -1;
 
-        // Parallax on incoming card's image
+        // Parallax on incoming card's media
         const slides = swiper.slides;
         const activeSlide = slides[swiper.activeIndex];
-        const activeImg = activeSlide?.querySelector("img");
-        if (activeImg) {
-            gsap.fromTo(activeImg,
+        const activeMedia = activeSlide?.querySelector(".project-media");
+        if (activeMedia) {
+            gsap.fromTo(activeMedia,
                 { x: direction * -3 },
                 { x: 0, duration: 2, ease: "power2.out" }
             );
@@ -415,15 +365,7 @@ export default function Projects() {
                                             : "scale-95 opacity-50"
                                         }`}
                                 >
-                                    <img
-                                        ref={isActive ? imgRef : null}
-                                        src={proj.image}
-                                        alt={proj.title}
-                                        data-swiper-parallax-x="-25%"
-                                        data-swiper-parallax-scale="1.15"
-                                        className="w-full h-full object-cover will-change-transform"
-                                        loading="lazy"
-                                    />
+                                    <ProjectMedia project={proj} active={isActive} />
                                     <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
                                     <div className="absolute bottom-5 left-1/2 -translate-x-1/2 px-4 py-2 bg-white/20 backdrop-blur-xs rounded-full text-[clamp(0.75rem,1.5vw,1rem)] text-nowrap font-medium">
                                         {proj.title}

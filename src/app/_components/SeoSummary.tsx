@@ -27,9 +27,9 @@ export default function SeoSummary() {
             <h2>Projects</h2>
             <ul>
                 <li>
-                    Aline — a modern take on when2meet for planning group events end to end:
-                    shared availability, map-based location voting, multi-stop itineraries,
-                    real-time chat, and attendance tracking (in active development).
+                    <a href="https://hourelle.com">Hourelle</a> — a modern take on when2meet for
+                    planning group events end to end: shared availability, map-based location
+                    voting, multi-stop itineraries, real-time chat, and attendance tracking.
                 </li>
                 <li>Legacy Portfolio — my first personal portfolio site, built with React and Next.js.</li>
                 <li>Intraday Momentum Backtester — a Python momentum backtesting tool with interactive charts.</li>

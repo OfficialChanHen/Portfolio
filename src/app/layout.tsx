@@ -5,6 +5,7 @@ import { MobileProvider } from "@/providers/MobileProvider";
 import { NavigationModeProvider } from "@/providers/NavigationModeProvider";
 import { Analytics } from "@vercel/analytics/next";
 import SeoSummary from "@/app/_components/SeoSummary";
+import PreloadProjectVideos from "@/app/_components/PreloadProjectVideos";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -107,6 +108,7 @@ export default async function RootLayout({
       */}
       <body>
         <SeoSummary />
+        <PreloadProjectVideos />
         <NavigationModeProvider>
           <MobileProvider initialIsMobile={isMobile}>
             {children}
