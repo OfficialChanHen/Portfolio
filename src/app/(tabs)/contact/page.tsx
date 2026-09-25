@@ -1,11 +1,10 @@
 "use client";
 
 import { useState, useRef } from "react";
-import { MailCheck, MailX, Mail, Send, Rocket } from 'lucide-react';
+import { MailCheck, MailX, Send, Rocket } from 'lucide-react';
 import { FiGithub, FiLinkedin } from "react-icons/fi";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { MessagesSquare } from 'lucide-react';
 import playOrTrigger from "@/app/utils/playOrTrigger";
 import { useNavigationMode } from "@/providers/NavigationModeProvider";
@@ -308,18 +307,6 @@ export default function Contacts() {
                     {/* Social Connections */}
                     <div ref={socialContainer} className="glass self-start flex flex-col justify-start items-start gap-3 w-full p-8 md:p-10 rounded-3xl">
                         <span className="social mb-2 text-[1.05rem] md:text-[1.3rem] tracking-tight">Connect On Socials</span>
-
-                        <div 
-                            className="social group w-full flex flex-row items-center gap-4 -mx-3 px-3 py-2.5 rounded-xl text-[0.75rem] md:text-[1rem] text-white/85 hover:bg-white/[0.04] transition-colors"
-                        >
-                            <div className="relative w-[clamp(24px,2vw,30px)] h-[clamp(24px,2vw,30px)] flex flex-row justify-center items-center p-5 bg-linear-to-br from-tertiary to-highlight text-white rounded-lg shadow-[inset_0_1px_0_rgba(255,255,255,0.3),0_8px_24px_-8px] shadow-highlight/70 group-hover:scale-105 transition-all ease-in-out duration-300">
-                                <Mail className="absolute top-[50%] left-[50%] -translate-x-1/2 -translate-y-1/2 w-[clamp(18px,2vw,20px)] h-[clamp(18px,2vw,20px)]"/>
-                            </div>
-                            <div className="flex flex-col justify-center items-start">
-                                <span className="group-hover:text-highlight transition-colors ease-in-out duration-300">Email</span>
-                                <span className="text-white/45 group-hover:text-white/80 transition-colors ease-in-out duration-300">Chan Hen</span>
-                            </div>
-                        </div>
 
                         <a 
                             className="social group w-full flex flex-row items-center gap-4 -mx-3 px-3 py-2.5 rounded-xl text-[0.75rem] md:text-[1rem] text-white/85 hover:bg-white/[0.04] transition-colors"

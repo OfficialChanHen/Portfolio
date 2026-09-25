@@ -4,7 +4,7 @@ import Header from "@/app/(tabs)/_components/Header";
 import Footer from "@/app/(tabs)/_components/Footer";
 import VoidReveal from "@/app/(tabs)/_components/VoidReveal";
 import SpaceBackground from "@/app/(tabs)/_components/space/SpaceBackground";
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import { usePathname } from 'next/navigation';
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";

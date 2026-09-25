@@ -7,8 +7,8 @@ import { Track, NowPlaying, CombinedTracksProps } from "@/lib/music";
 
 
 export default function SpotifyTopTracks({ initialTracks, initialNowPlaying }: CombinedTracksProps) {
-    const [data, setData] = useState<Track[]>(initialTracks);
-    const [nowPlaying, setNowPlaying] = useState<NowPlaying | null>(initialNowPlaying);
+    const [data] = useState<Track[]>(initialTracks);
+    const [nowPlaying] = useState<NowPlaying | null>(initialNowPlaying);
     const containerRef = useRef<HTMLDivElement>(null);
     const tracksRef = useRef<HTMLDivElement>(null);
     const tlRef = useRef<gsap.core.Timeline | null>(null);

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { createContext, useContext, useEffect, useState } from "react";
+import React, { createContext, useContext, useState } from "react";
 
 const MobileContext = createContext<boolean | undefined>(undefined);
 
@@ -13,7 +13,7 @@ export function MobileProvider({
     children,
     initialIsMobile,
 }: MobileProdiverProps) {
-    const [isMobile, setIsMobile] = useState(initialIsMobile);
+    const [isMobile] = useState(initialIsMobile);
 
     return (
         <MobileContext.Provider value={isMobile}>

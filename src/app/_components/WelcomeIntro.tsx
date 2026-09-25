@@ -4,9 +4,6 @@ import { useState } from 'react';
 import Welcome from '@/app/_components/Welcome';
 import Warp from '@/app/_components/Warp';
 
-type WelcomeIntroProps = {
-}
-
 export default function WelcomeIntro() {
     const [toWarp, setToWarp] = useState<boolean>(false);
 

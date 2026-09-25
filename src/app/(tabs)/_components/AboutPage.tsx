@@ -1,7 +1,7 @@
 'use client'
 
 import SpotifyTopTracks from "@/app/(tabs)/_components/SpotifyTopTracks";
-import { AppWindow, Database, Wrench, BookOpenText, Rocket, Download, Zap, BugOff, Users, ChevronsDown, ArrowUp, ChevronDown } from "lucide-react";
+import { AppWindow, Database, Wrench, BookOpenText, Rocket, Zap, BugOff, Users, ChevronsDown, ChevronDown } from "lucide-react";
 import { useRef, useEffect, useState } from 'react';
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";

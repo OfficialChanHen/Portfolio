@@ -47,7 +47,7 @@ export default function Home() {
                     </span>
                     Available For Work
                 </span>
-                <span className="text-center md:text-left text-[0.75rem] md:text-[0.95rem] leading-relaxed text-white/65">I'm currently available for freelance projects, part-time work, and full-time opportunities. Let's <em className="text-white/90">launch</em> a project that's truly out of this world together!</span>
+                <span className="text-center md:text-left text-[0.75rem] md:text-[0.95rem] leading-relaxed text-white/65">I&apos;m currently available for freelance projects, part-time work, and full-time opportunities. Let&apos;s <em className="text-white/90">launch</em> a project that&apos;s truly out of this world together!</span>
             </div>
 
             <RecentUpdates reveal={updatesReady} />

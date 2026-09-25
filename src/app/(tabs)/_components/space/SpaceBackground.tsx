@@ -4,11 +4,12 @@
 "use no memo";
 
 import "@/lib/threeConsole";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState, useSyncExternalStore } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { usePathname } from "next/navigation";
 import * as THREE from "three";
 import gsap from "gsap";
+import { track } from "@vercel/analytics";
 import { useMobile } from "@/providers/MobileProvider";
 import Sky from "./Sky";
 import Stars from "./Stars";
@@ -198,7 +199,11 @@ function useIdleSupernova(pathname: string, reducedMotion: boolean) {
         const arm = () => {
             window.clearTimeout(timer);
             if (supernova.t >= 0 || document.hidden) return;
-            timer = window.setTimeout(startSupernova, IDLE_MS);
+            timer = window.setTimeout(() => {
+                startSupernova();
+                // A private count of visitors who find the easter egg (Vercel Analytics).
+                track("supernova");
+            }, IDLE_MS);
         };
         const onInput = () => { interruptSupernova(); arm(); };
         const events = ["pointermove", "pointerdown", "keydown", "wheel", "touchstart", "scroll"] as const;
@@ -213,32 +218,32 @@ function useIdleSupernova(pathname: string, reducedMotion: boolean) {
     }, [pathname, reducedMotion]);
 }
 
+const noSubscribe = () => () => {};
+const reducedMotionQuery = "(prefers-reduced-motion: reduce)";
+function subscribeReducedMotion(onChange: () => void) {
+    const mq = window.matchMedia(reducedMotionQuery);
+    mq.addEventListener("change", onChange);
+    return () => mq.removeEventListener("change", onChange);
+}
+
 export default function SpaceBackground() {
     const isMobile = useMobile();
     const pathname = usePathname();
-    const [tier, setTier] = useState<Tier | null>(null);
-    const [dpr, setDpr] = useState(1);
-    const [capped, setCapped] = useState(false);
-    const [reducedMotion, setReducedMotion] = useState(false);
-
-    useEffect(() => {
-        const t = detectTier(isMobile);
-        setTier(t);
-        setDpr(Math.min(window.devicePixelRatio || 1, TIERS[t].dpr));
-        // Weaker devices idle at 30fps from the start.
-        setCapped(t === "low");
-
-        const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
-        const update = () => setReducedMotion(mq.matches);
-        update();
-        mq.addEventListener("change", update);
-        return () => mq.removeEventListener("change", update);
-    }, [isMobile]);
+    // Client-only facts: null on the server, so the scene only mounts in the browser.
+    const tier = useSyncExternalStore(noSubscribe, () => detectTier(isMobile), () => null);
+    const reducedMotion = useSyncExternalStore(subscribeReducedMotion, () => window.matchMedia(reducedMotionQuery).matches, () => false);
+    // Frame budget cuts made at runtime (see FrameBudget). Weaker devices idle at
+    // 30fps from the start.
+    const [dprCut, setDprCut] = useState(0);
+    const [cappedBySlowFrames, setCapped] = useState(false);
+    const baseDpr = tier ? Math.min(window.devicePixelRatio || 1, TIERS[tier].dpr) : 1;
+    const dpr = Math.max(1, baseDpr - dprCut);
+    const capped = cappedBySlowFrames || tier === "low";
 
     useIdleSupernova(pathname, reducedMotion);
 
     function handleSlow() {
-        if (dpr > 1.01) setDpr((d) => Math.max(1, d - 0.35));
+        if (dpr > 1.01) setDprCut((c) => c + 0.35);
         else setCapped(true);
     }
 

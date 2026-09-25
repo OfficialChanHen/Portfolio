@@ -1,24 +1,26 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState, useSyncExternalStore } from "react";
 import { Sun, Moon } from "lucide-react";
 
 type Theme = "dark" | "light";
 
 export default function ThemeToggle() {
-    // null until mounted, so the server/client initial render match (the actual
-    // theme is applied by the no-FOUC script before hydration).
-    const [theme, setTheme] = useState<Theme | null>(null);
-
-    useEffect(() => {
-        setTheme(document.documentElement.classList.contains("light") ? "light" : "dark");
-    }, []);
+    // The theme the no-FOUC script applied before hydration; null on the server so
+    // the server and client first renders match.
+    const applied = useSyncExternalStore(
+        () => () => {},
+        (): Theme => (document.documentElement.classList.contains("light") ? "light" : "dark"),
+        () => null,
+    );
+    const [chosen, setChosen] = useState<Theme | null>(null);
+    const theme = chosen ?? applied;
 
     function toggle() {
         const next: Theme = theme === "light" ? "dark" : "light";
         document.documentElement.classList.toggle("light", next === "light");
         try { localStorage.setItem("theme", next); } catch { /* ignore */ }
-        setTheme(next);
+        setChosen(next);
     }
 
     return (

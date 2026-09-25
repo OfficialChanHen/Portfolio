@@ -1,6 +1,6 @@
 'use client';
 
-import { Sparkles, Rocket, Mail, ChevronsDown, ChevronRight, Download, ArrowRight } from 'lucide-react';
+import { Sparkles, Rocket, Mail, ChevronsDown, Download, ArrowRight } from 'lucide-react';
 import { FiGithub, FiLinkedin } from "react-icons/fi";
 import { FaReact } from "react-icons/fa";
 import { AiOutlinePython } from "react-icons/ai";
@@ -185,7 +185,7 @@ export default function Introduction({
                 </div>
                 
                 <div className="flex flex-col justify-center items-center md:justify-center md:items-start tracking-tight">
-                    <span className="intro-text text-[1.75rem] md:text-[2.25rem] text-white/85">Hi, I'm</span>
+                    <span className="intro-text text-[1.75rem] md:text-[2.25rem] text-white/85">Hi, I&apos;m</span>
                     <span className="intro-text text-[3rem] md:text-[4.25rem] leading-[1.05] tracking-tight text-gradient pb-1">
                         Chan Hen
                     </span>

@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import Image from "next/image";
 import type { Project } from "@/lib/projects";
 import { usePreloadedVideo } from "@/lib/videoPreload";
 
@@ -43,10 +44,12 @@ export default function ProjectMedia({ project, active }: { project: Project; ac
             data-swiper-parallax-scale="1.15"
             className="project-media relative w-full h-full will-change-transform"
         >
-            <img
+            <Image
                 src={project.image}
                 alt={project.title}
-                className="w-full h-full object-cover"
+                fill
+                sizes="(max-width: 768px) 300px, 500px"
+                className="object-cover"
             />
             {videoUrl && (
                 <video

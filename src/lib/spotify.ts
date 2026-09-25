@@ -14,6 +14,16 @@ const TOKEN_ENDPOINT = "https://accounts.spotify.com/api/token";
 const NOW_PLAYING_ENDPOINT = "https://api.spotify.com/v1/me/player/currently-playing";
 const TOP_TRACKS_ENDPOINT = "https://api.spotify.com/v1/me/top/tracks";
 
+// The parts of Spotify's track object we read.
+type SpotifyArtist = { name: string };
+type SpotifyTrack = {
+    id: string;
+    name: string;
+    artists: SpotifyArtist[];
+    album?: { images?: { url: string }[] };
+    external_urls?: { spotify?: string };
+};
+
 async function getAccessToken(): Promise<string | null> {
     if (!clientId || !clientSecret || !refreshToken) return null;
 
@@ -49,11 +59,11 @@ export async function getTopTracks(): Promise<Track[] | null> {
         if (!res.ok) return null;
 
         const data = await res.json();
-        const items: any[] = data?.items ?? [];
+        const items: SpotifyTrack[] = data?.items ?? [];
         return items.map((t) => ({
             id: t.id,
             title: t.name,
-            artists: t.artists.map((a: any) => a.name).join(", "),
+            artists: t.artists.map((a) => a.name).join(", "),
             albumImg: t.album?.images?.[0]?.url ?? "",
             songUrl: t.external_urls?.spotify ?? "",
         }));
@@ -75,13 +85,13 @@ export async function getNowPlaying(): Promise<NowPlaying | null> {
         if (res.status === 204) return { isPlaying: false };
         if (!res.ok) return null;
 
-        const song = await res.json();
+        const song: { is_playing: boolean; item?: SpotifyTrack } = await res.json();
         if (!song?.item) return { isPlaying: false };
 
         return {
             isPlaying: song.is_playing,
             title: song.item.name,
-            artists: song.item.artists.map((a: any) => a.name).join(", "),
+            artists: song.item.artists.map((a) => a.name).join(", "),
             albumImg: song.item.album?.images?.[0]?.url ?? "",
             songUrl: song.item.external_urls?.spotify ?? "",
         };

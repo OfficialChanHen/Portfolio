@@ -39,6 +39,7 @@ export const projects: Project[] = [
         id: 3,
         title: "Intraday Momentum Backtester",
         image: "/trading.png",
+        video: "/videos/backtest",
         tags: ["Python", "Data Analysis"],
         description:
         "A Python trading strategy script that runs a momentum-based backtest for any stock, and outputs an interactive HTML chart image with buy/sell signals.",

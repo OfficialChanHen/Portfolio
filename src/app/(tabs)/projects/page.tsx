@@ -2,13 +2,14 @@
 
 import { useNavigationMode } from "@/providers/NavigationModeProvider";
 import { useGSAP } from "@gsap/react";
-import { ArrowLeft, ArrowRight, ChevronLeft, ChevronRight, ChevronsDown, Rocket, Undo2, Wrench, X } from "lucide-react";
+import { ArrowRight, ChevronLeft, ChevronRight, ChevronsDown, Rocket, Undo2, Wrench, X } from "lucide-react";
 import { useRef, useState } from "react";
 import gsap from "gsap";
 import { ScrollSmoother } from "gsap/ScrollSmoother";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { type Swiper as SwiperType } from "swiper";
 import { useMobile } from "@/providers/MobileProvider";
+import Image from "next/image";
 import ProjectMedia from "@/app/(tabs)/_components/ProjectMedia";
 import { projects } from "@/lib/projects";
 
@@ -203,10 +204,12 @@ export default function Projects() {
             {/* Project Overlay */}
             <div ref={overlayRef} style={{ display: "none" }} className="fixed inset-0">
                 {/* Fixed background layers */}
-                <img
+                <Image
                     src={project.image}
                     alt={project.title}
-                    className="absolute inset-0 w-full h-full object-cover"
+                    fill
+                    sizes="100vw"
+                    className="object-cover"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent" />
 

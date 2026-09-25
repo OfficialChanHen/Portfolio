@@ -28,7 +28,7 @@ export default function SeoSummary() {
             <ul>
                 <li>
                     <a href="https://hourelle.com">Hourelle</a>, an app for planning group events:
-                    people mark when they're free, vote on where to go, see who's coming, and
+                    people mark when they&apos;re free, vote on where to go, see who&apos;s coming, and
                     talk it over in a group chat.
                 </li>
                 <li>Legacy Portfolio — my first personal portfolio site, built with React and Next.js.</li>

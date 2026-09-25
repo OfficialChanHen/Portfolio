@@ -115,8 +115,7 @@ export default function Welcome({ setToWarp }: WelcomeProps) {
 
     // Tap to enter: the letters float off into space, then the rings fade and the
     // warp begins. Starts at once, however far the intro has got.
-    const { contextSafe } = useGSAP({ scope: containerRef });
-    const handleEnterClick = contextSafe(() => {
+    function handleEnterClick() {
         if (leaving.current) return;
         leaving.current = true;
         introTl.current?.kill();
@@ -132,13 +131,13 @@ export default function Welcome({ setToWarp }: WelcomeProps) {
                 ease: "power1.in",
                 stagger: { amount: 0.6, from: "center" },
             })
-            .to(".circle", {
+            .to(containerRef.current?.querySelectorAll(".circle") ?? [], {
                 opacity: 0,
                 duration: speed - 0.5,
                 ease: "sine.out",
                 stagger: { amount: 0.5, from: "end" },
             }, 0.6);
-    });
+    }
 
     return(
         <div className="h-screen w-screen bg-background flex flex-col justify-center items-center font-mono overflow-hidden">
