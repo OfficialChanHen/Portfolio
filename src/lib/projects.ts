@@ -26,6 +26,26 @@ export const projects: Project[] = [
     },
     {
         id: 2,
+        title: "Job Hunt",
+        image: "/job-hunt.png",
+        tags: ["Next.js", "TypeScript", "Python", "Supabase", "GitHub Actions", "Web App"],
+        description:
+        "A job board for entry-level software roles that refreshes every morning, with a game built in to keep the search going. A Python scraper finds and scores new postings daily, and real work like applications and LeetCode solves grows a pixel village of hunters. Progress syncs between phone and computer.",
+        github: "https://github.com/OfficialChanHen/Job-Search-Script",
+        link: "https://job-search-script.vercel.app",
+    },
+    {
+        id: 3,
+        title: "Portfolio",
+        image: "/portfolio.png",
+        tags: ["Next.js", "TypeScript", "GSAP", "Three.js", "TailwindCSS", "Web App"],
+        description:
+        "The site you're on now. A trip through a solar system told with scroll animations, a project gallery with looping previews, and a supernova for anyone curious enough to find it.",
+        github: "https://github.com/OfficialChanHen/Portfolio",
+        link: "https://chanhen.space",
+    },
+    {
+        id: 4,
         title: "Legacy Portfolio",
         image: "/legacy-portfolio.png",
         video: "/videos/legacy",
@@ -36,7 +56,7 @@ export const projects: Project[] = [
         link: "https://portfolio-five-blue.vercel.app/",
     },
     {
-        id: 3,
+        id: 5,
         title: "Intraday Momentum Backtester",
         image: "/trading.png",
         video: "/videos/backtest",
@@ -46,7 +66,7 @@ export const projects: Project[] = [
         github: "https://github.com/OfficialChanHen/StockTrader",
     },
     {
-        id: 4,
+        id: 6,
         title: "TANKS!",
         image: "/Tank-Thumbnail.png",
         video: "/videos/tanks",
@@ -57,7 +77,7 @@ export const projects: Project[] = [
         link: "https://play.unity.com/api/v1/games/game/94d9e7c0-b608-42aa-be14-75f5d990b8d1/build/latest/frame",
     },
     {
-        id: 5,
+        id: 7,
         title: "Sketchpad",
         image: "/sketch_example.png",
         video: "/videos/sketch",
@@ -68,7 +88,7 @@ export const projects: Project[] = [
         link: "https://sketch-pad-one.vercel.app/",
     },
     {
-        id: 6,
+        id: 8,
         title: "Next Mission",
         image: "/coming-soon.jpg",
         tags: ["In Development"],
