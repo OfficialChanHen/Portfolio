@@ -36,13 +36,12 @@ export const projects: Project[] = [
     },
     {
         id: 3,
-        title: "Portfolio",
-        image: "/portfolio.png",
-        tags: ["Next.js", "TypeScript", "GSAP", "Three.js", "TailwindCSS", "Web App"],
+        title: "Claude HQ",
+        image: "/claude-hq.png",
+        tags: ["React", "TypeScript", "Vite", "Fastify", "WebSockets", "Developer Tools"],
         description:
-        "The site you're on now. A trip through a solar system told with scroll animations, a project gallery with looping previews, and a supernova for anyone curious enough to find it.",
-        github: "https://github.com/OfficialChanHen/Portfolio",
-        link: "https://chanhen.space",
+        "A pixel office for every Claude Code project on my machine. Each open session is a person at a desk who talks while they work, and helpers come in, get briefed and report back. Click a room to prompt that project, approve steps, or read the conversation live. Watching costs nothing, since it reads Claude Code's own session logs.",
+        github: "https://github.com/OfficialChanHen/Claude-Admin-Dashboard",
     },
     {
         id: 4,
